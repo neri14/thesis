@@ -1,0 +1,16 @@
+@startuml
+
+enum EStatus {
+	EStatus_Success
+	EStatus_Failure
+}
+
+enum EEventType {
+	EEventType_Defualt
+}
+
+enum EEventScope {
+	EEventScope_General
+}
+
+@enduml
