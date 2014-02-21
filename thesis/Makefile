@@ -66,29 +66,30 @@ visualiser_test: gmock_main
 ### TEST RUN ###
 
 TEST_RUN_ = common_test_run controller_test_run dispatcher_generic_client_test_run dispatcher_server_test_run manager_test_run simulator_test_run visualiser_test_run
+GTEST_FLAGS_ = --gtest_output=xml:bin/
 
 test_run: $(TEST_RUN_)
 
 common_test_run:
-	./bin/common_test
+	./bin/common_test $(GTEST_FLAGS_)
 
 controller_test_run:
-	./bin/controller_test
+	./bin/controller_test $(GTEST_FLAGS_)
 
 dispatcher_generic_client_test_run:
-	./bin/dispatcher_generic_client_test
+	./bin/dispatcher_generic_client_test $(GTEST_FLAGS_)
 
 dispatcher_server_test_run:
-	./bin/dispatcher_server_test
+	./bin/dispatcher_server_test $(GTEST_FLAGS_)
 
 manager_test_run:
-	./bin/manager_test
+	./bin/manager_test $(GTEST_FLAGS_)
 
 simulator_test_run:
-	./bin/simulator_test
+	./bin/simulator_test $(GTEST_FLAGS_)
 
 visualiser_test_run:
-	./bin/visualiser_test
+	./bin/visualiser_test $(GTEST_FLAGS_)
 
 .PHONY: test_run $(TEST_RUN_)
 
