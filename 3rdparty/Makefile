@@ -4,7 +4,7 @@ boost_1_55_0:
 	tar -xzf boost_1_55_0.tar.gz
 
 gmock-1.7.0:
-	unzip gmock-1.7.0.zip
+	unzip -q gmock-1.7.0.zip
 
 clean: clean_boost clean_gmock
 
