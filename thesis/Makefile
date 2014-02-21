@@ -12,22 +12,22 @@ clean: clean_bin clean_3rdparty
 SYSTEM_ = controller dispatcher_generic_client dispatcher_server manager simulator visualiser
 system: $(SYSTEM_)
 
-controller:
+controller: prepare_cmake
 	make -C ./bin controller
 
-dispatcher_generic_client:
+dispatcher_generic_client: prepare_cmake
 	make -C ./bin dispatcher_generic_client
 
-dispatcher_server:
+dispatcher_server: prepare_cmake
 	make -C ./bin dispatcher_server
 
-manager:
+manager: prepare_cmake
 	make -C ./bin manager
 
-simulator:
+simulator: prepare_cmake
 	make -C ./bin simulator
 
-visualiser:
+visualiser: prepare_cmake
 	make -C ./bin visualiser
 
 .PHONY: system $(SYSTEM_)

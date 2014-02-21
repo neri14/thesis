@@ -43,6 +43,7 @@ file(GLOB_RECURSE SRC_MAIN_VISUALISER ../visualiser/src_main/*)
 file(GLOB_RECURSE SRC_UT_VISUALISER ../visualiser/testing/*)
 
 ### TARGET ###
+include_directories(../common/src)
 
 #CONTROLLER
 add_executable(controller ${SRC_MAIN_CONTROLLER} ${SRC_CONTROLLER} ${SRC_COMMON})
