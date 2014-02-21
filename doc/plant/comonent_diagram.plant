@@ -1,0 +1,40 @@
+'COMPONENTS DISPATCHED EVENTS
+@startuml "components_dispatched_events.png"
+
+[Dispatcher] as dispatcher
+[Simulator] as simulator
+[Controller(n)] as controller
+[Manager] as manager
+
+simulator -> dispatcher : sensor_data + car_data + time_data
+controller -> dispatcher : actuator_data
+manager -> dispatcher : control_plan_data
+
+@enduml
+
+'COMPONENTS NOTIFIED EVENTS
+@startuml "components_notified_events.png"
+
+[Dispatcher] as dispatcher
+[Simulator] as simulator
+[Controller(n)] as controller
+[Manager] as manager
+
+dispatcher -> controller : sensor_data + time_data + control_plan_data
+dispatcher -> manager : sensor_data + time_data
+dispatcher -> simulator : actuator_data
+
+@enduml
+
+
+'DISPATCHER AND CLIENT
+@startuml "dispatcher_components.png"
+
+[Dispatcher Server] as server
+[Dispatcher Client] as client
+
+client -> server : registers observer for events
+client -> server : dispatches events
+server -> client : notifies about events
+
+@enduml
