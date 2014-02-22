@@ -23,11 +23,6 @@ public:
 		return payload;
 	}
 
-	const T* operator->() const
-	{
-		return &payload;
-	}
-
 protected:
 	T payload;
 };

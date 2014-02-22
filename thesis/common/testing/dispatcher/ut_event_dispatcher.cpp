@@ -25,70 +25,99 @@ protected:
 	event_dispatcher disp;
 	int events_received;
 
+	connection_handle listener;
+
 public:
 	ut_event_dispatcher() :
 		events_received(0)
 	{}
 
-	void on_event(const base_event& ev)
+	void on_event(event_handle ev)
 	{
-		ASSERT_EQ(constant::event_type_default, ev.get_type());
-		EXPECT_EQ(constant::event_scope_specific, ev.get_scope());
+		ASSERT_EQ(constant::event_type_default, ev->get_type());
+		EXPECT_EQ(constant::event_scope_specific, ev->get_scope());
 
 		const value_event< basic_payload<int> >& v_ev =
-			static_cast< const value_event< basic_payload<int> >& >(ev);
+			static_cast< const value_event< basic_payload<int> >& >(*ev);
 
-		EXPECT_EQ(constant::event_value, v_ev->value);
+		EXPECT_EQ(constant::event_value, v_ev.get_payload().value);
 
 		++events_received;
 	}
 
 protected:
+	void register_listener(const EEventType& type, const EEventScope& scope)
+	{
+		listener = disp.register_listener(type, scope,
+			boost::bind(&ut_event_dispatcher::on_event, this, _1));
+	}
+
+	void unregister_listener()
+	{
+		disp.unregister_listener(listener);
+	}
+
 	void dispatch_event()
 	{
-		value_event< basic_payload<int> > ev(
-			constant::event_type_default, constant::event_scope_specific, basic_payload<int>(constant::event_value));
+		boost::shared_ptr< value_event< basic_payload<int> > > ev(
+			new value_event< basic_payload<int> >(constant::event_type_default,
+				constant::event_scope_specific, basic_payload<int>(constant::event_value)));
 
-		EXPECT_EQ(constant::event_type_default, ev.get_type());
-		EXPECT_EQ(constant::event_scope_specific, ev.get_scope());
-		EXPECT_EQ(constant::event_value, ev->value);
-		EXPECT_EQ(constant::event_value, ev.get_payload().value);
+		EXPECT_EQ(constant::event_type_default, ev->get_type());
+		EXPECT_EQ(constant::event_scope_specific, ev->get_scope());
+		EXPECT_EQ(constant::event_value, ev->get_payload().value);
 
 		disp.dispatch(ev);
 	}
 };
 
-TEST_F(ut_event_dispatcher, event_is_dispatched_to_observer_registered_to_specific_event_scope_specific)
+TEST_F(ut_event_dispatcher, event_is_dispatched_to_listener_registered_to_specific_event_scope_specific)
 {
-	disp.register_observer(constant::event_type_default, constant::event_scope_specific,
-		boost::bind(&ut_event_dispatcher::on_event, this, _1));
+	register_listener(constant::event_type_default, constant::event_scope_specific);
+
+	dispatch_event();
+	EXPECT_EQ(1, events_received);
+
+	unregister_listener();
 
 	dispatch_event();
 	EXPECT_EQ(1, events_received);
 }
 
-TEST_F(ut_event_dispatcher, event_is_dispatched_to_observer_registered_to_any_event_scope_specific)
+TEST_F(ut_event_dispatcher, event_is_dispatched_to_listener_registered_to_any_event_scope_specific)
 {
-	disp.register_observer(constant::event_type_default, constant::event_scope_any,
-		boost::bind(&ut_event_dispatcher::on_event, this, _1));
+	register_listener(constant::event_type_default, constant::event_scope_any);
+
+	dispatch_event();
+	EXPECT_EQ(1, events_received);
+
+	unregister_listener();
 
 	dispatch_event();
 	EXPECT_EQ(1, events_received);
 }
 
-TEST_F(ut_event_dispatcher, event_is_not_dispatched_to_observer_registered_to_different_type)
+TEST_F(ut_event_dispatcher, event_is_not_dispatched_to_listener_registered_to_different_type)
 {
-	disp.register_observer(constant::event_type_basicint, constant::event_scope_specific,
-		boost::bind(&ut_event_dispatcher::on_event, this, _1));
+	register_listener(constant::event_type_basicint, constant::event_scope_specific);
+
+	dispatch_event();
+	EXPECT_EQ(0, events_received);
+
+	unregister_listener();
 
 	dispatch_event();
 	EXPECT_EQ(0, events_received);
 }
 
-TEST_F(ut_event_dispatcher, event_is_not_dispatched_to_observer_registered_to_different_scope)
+TEST_F(ut_event_dispatcher, event_is_not_dispatched_to_listener_registered_to_different_scope)
 {
-	disp.register_observer(constant::event_type_default, constant::event_scope_specific_2,
-		boost::bind(&ut_event_dispatcher::on_event, this, _1));
+	register_listener(constant::event_type_default, constant::event_scope_specific_2);
+
+	dispatch_event();
+	EXPECT_EQ(0, events_received);
+
+	unregister_listener();
 
 	dispatch_event();
 	EXPECT_EQ(0, events_received);
