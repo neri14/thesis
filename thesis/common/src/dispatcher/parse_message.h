@@ -29,15 +29,17 @@ event_handle parse(proto_event_handle p_ev)
 
 	return ev;
 }
-/*
+
 proto_event_handle parse(event_handle ev)
 {
 	proto_event_handle p_ev(new common::proto::Event());
 
-	p_ev.set_type(ev.get_type());
-	p_ev.set_scope(ev.get_scope());
-	p_ev.set_payload(ev.encode());
-}*/
+	p_ev->set_type(ev->get_type());
+	p_ev->set_scope(ev->get_scope());
+	p_ev->set_payload(ev->encode());
+
+	return p_ev;
+}
 
 } // namespace dispatcher
 } // namespace common
