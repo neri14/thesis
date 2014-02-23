@@ -6,6 +6,7 @@ namespace dispatcher {
 
 enum EEventType
 {
+	EEventType_Any,
 	EEventType_Default,
 	EEventType_BasicInt
 };

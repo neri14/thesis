@@ -33,7 +33,7 @@ void event_dispatcher::dispatch(event_handle ev)
 	logger.info()() << "Dispatching event " << ev->get_type() << ", scope: " << ev->get_scope();
 	int count = 0;
 	BOOST_FOREACH(connection_handle listener, listeners) {
-		if (ev->get_type() == listener->type &&
+		if ((ev->get_type() == listener->type || EEventType_Any == listener->type) &&
 				(ev->get_scope() == listener->scope || EEventScope_Any == listener->scope)) {
 			listener->listener(ev);
 			++count;
