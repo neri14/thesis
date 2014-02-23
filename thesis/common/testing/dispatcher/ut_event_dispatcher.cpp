@@ -133,7 +133,7 @@ TEST_F(ut_event_dispatcher, event_is_not_dispatched_to_listener_registered_to_di
 	EXPECT_EQ(0, events_received);
 }
 
-TEST_F(ut_event_dispatcher, event_can_be_encoded_and_decoded)
+TEST_F(ut_event_dispatcher, event_payload_can_be_encoded_and_decoded)
 {
 	event_handle ev_1(new event(constant::event_type_default, constant::event_scope_specific,
 		boost::shared_ptr< basic_payload<int> >(new basic_payload<int>(constant::event_value))));

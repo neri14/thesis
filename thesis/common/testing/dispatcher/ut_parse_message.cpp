@@ -18,7 +18,7 @@ class ut_parse_message : public ::testing::Test
 {
 };
 
-TEST_F(ut_parse_message, dummy)
+TEST_F(ut_parse_message, event_can_be_encoded_to_string_and_decoded_back)
 {
 	boost::shared_ptr< basic_payload<int> > payload_before(new basic_payload<int>(constant::event_value));
 	event_handle ev_before(new event(constant::event_type, constant::event_scope, payload_before));
