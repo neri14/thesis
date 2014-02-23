@@ -6,7 +6,11 @@ help:
 
 clean: clean_bin clean_3rdparty
 
-.PHONY: all help clean
+proto:
+
+proto_clean:
+
+.PHONY: all help clean proto proto_clean
 
 ### SYSTEM ###
 SYSTEM_ = controller dispatcher_generic_client dispatcher_server manager simulator visualiser
