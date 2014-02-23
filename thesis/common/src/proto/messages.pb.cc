@@ -83,7 +83,7 @@ void protobuf_AddDesc_messages_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\016messages.proto\022\014common.proto\"5\n\005Event\022"
     "\014\n\004type\030\001 \002(\005\022\r\n\005scope\030\002 \002(\005\022\017\n\007payload\030"
-    "\003 \002(\t", 85);
+    "\003 \002(\014", 85);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "messages.proto", &protobuf_RegisterTypes);
   Event::default_instance_ = new Event();
@@ -212,16 +212,13 @@ bool Event::MergePartialFromCodedStream(
         break;
       }
 
-      // required string payload = 3;
+      // required bytes payload = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_payload:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+          DO_(::google::protobuf::internal::WireFormatLite::ReadBytes(
                 input, this->mutable_payload()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-            this->payload().data(), this->payload().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
         } else {
           goto handle_uninterpreted;
         }
@@ -257,12 +254,9 @@ void Event::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->scope(), output);
   }
 
-  // required string payload = 3;
+  // required bytes payload = 3;
   if (has_payload()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->payload().data(), this->payload().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteBytes(
       3, this->payload(), output);
   }
 
@@ -284,13 +278,10 @@ void Event::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->scope(), target);
   }
 
-  // required string payload = 3;
+  // required bytes payload = 3;
   if (has_payload()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->payload().data(), this->payload().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+      ::google::protobuf::internal::WireFormatLite::WriteBytesToArray(
         3, this->payload(), target);
   }
 
@@ -319,10 +310,10 @@ int Event::ByteSize() const {
           this->scope());
     }
 
-    // required string payload = 3;
+    // required bytes payload = 3;
     if (has_payload()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
+        ::google::protobuf::internal::WireFormatLite::BytesSize(
           this->payload());
     }
 

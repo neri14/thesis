@@ -106,14 +106,14 @@ class Event : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 scope() const;
   inline void set_scope(::google::protobuf::int32 value);
 
-  // required string payload = 3;
+  // required bytes payload = 3;
   inline bool has_payload() const;
   inline void clear_payload();
   static const int kPayloadFieldNumber = 3;
   inline const ::std::string& payload() const;
   inline void set_payload(const ::std::string& value);
   inline void set_payload(const char* value);
-  inline void set_payload(const char* value, size_t size);
+  inline void set_payload(const void* value, size_t size);
   inline ::std::string* mutable_payload();
   inline ::std::string* release_payload();
   inline void set_allocated_payload(::std::string* payload);
@@ -194,7 +194,7 @@ inline void Event::set_scope(::google::protobuf::int32 value) {
   scope_ = value;
 }
 
-// required string payload = 3;
+// required bytes payload = 3;
 inline bool Event::has_payload() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -227,7 +227,7 @@ inline void Event::set_payload(const char* value) {
   }
   payload_->assign(value);
 }
-inline void Event::set_payload(const char* value, size_t size) {
+inline void Event::set_payload(const void* value, size_t size) {
   set_has_payload();
   if (payload_ == &::google::protobuf::internal::kEmptyString) {
     payload_ = new ::std::string;

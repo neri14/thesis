@@ -3,5 +3,5 @@ package common.proto;
 message Event {
 	required int32 type = 1;
 	required int32 scope = 2;
-	required string payload = 3;
+	required bytes payload = 3;
 }
