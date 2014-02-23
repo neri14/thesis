@@ -11,6 +11,7 @@ namespace dispatcher {
 namespace constant {
 	const EEventType event_type_default(EEventType_Default);
 	const EEventType event_type_basicint(EEventType_BasicInt);
+	const EEventType event_type_any(EEventType_Any);
 
 	const EEventScope event_scope_specific(EEventScope_General);
 	const EEventScope event_scope_specific_2(EEventScope_Scope_1);
@@ -67,7 +68,7 @@ protected:
 	}
 };
 
-TEST_F(ut_event_dispatcher, event_is_dispatched_to_listener_registered_to_specific_event_scope_specific)
+TEST_F(ut_event_dispatcher, event_is_dispatched_to_listener_registered_to_specific_event_scope)
 {
 	register_listener(constant::event_type_default, constant::event_scope_specific);
 
@@ -80,9 +81,22 @@ TEST_F(ut_event_dispatcher, event_is_dispatched_to_listener_registered_to_specif
 	EXPECT_EQ(1, events_received);
 }
 
-TEST_F(ut_event_dispatcher, event_is_dispatched_to_listener_registered_to_any_event_scope_specific)
+TEST_F(ut_event_dispatcher, event_is_dispatched_to_listener_registered_to_any_event_scope)
 {
 	register_listener(constant::event_type_default, constant::event_scope_any);
+
+	dispatch_event();
+	EXPECT_EQ(1, events_received);
+
+	unregister_listener();
+
+	dispatch_event();
+	EXPECT_EQ(1, events_received);
+}
+
+TEST_F(ut_event_dispatcher, event_is_dispatched_to_listener_registered_to_any_event_type)
+{
+	register_listener(constant::event_type_any, constant::event_scope_specific);
 
 	dispatch_event();
 	EXPECT_EQ(1, events_received);
