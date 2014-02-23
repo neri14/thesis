@@ -2,7 +2,7 @@
 #include <boost/bind.hpp>
 
 #include <dispatcher/event_dispatcher.h>
-#include <dispatcher/event/value_event.h>
+#include <dispatcher/event/event.h>
 #include <dispatcher/event/payload/basic_payload.h>
 
 namespace common {
@@ -37,10 +37,7 @@ public:
 		ASSERT_EQ(constant::event_type_default, ev->get_type());
 		EXPECT_EQ(constant::event_scope_specific, ev->get_scope());
 
-		const value_event< basic_payload<int> >& v_ev =
-			static_cast< const value_event< basic_payload<int> >& >(*ev);
-
-		EXPECT_EQ(constant::event_value, v_ev.get_payload().value);
+		EXPECT_EQ(constant::event_value, ev->get_payload< basic_payload<int> >()->value);
 
 		++events_received;
 	}
@@ -59,13 +56,12 @@ protected:
 
 	void dispatch_event()
 	{
-		boost::shared_ptr< value_event< basic_payload<int> > > ev(
-			new value_event< basic_payload<int> >(constant::event_type_default,
-				constant::event_scope_specific, basic_payload<int>(constant::event_value)));
+		event_handle ev(new event(constant::event_type_default, constant::event_scope_specific,
+			boost::shared_ptr< basic_payload<int> >(new basic_payload<int>(constant::event_value))));
 
 		EXPECT_EQ(constant::event_type_default, ev->get_type());
 		EXPECT_EQ(constant::event_scope_specific, ev->get_scope());
-		EXPECT_EQ(constant::event_value, ev->get_payload().value);
+		EXPECT_EQ(constant::event_value, ev->get_payload< basic_payload<int> >()->value);
 
 		disp.dispatch(ev);
 	}
@@ -121,6 +117,19 @@ TEST_F(ut_event_dispatcher, event_is_not_dispatched_to_listener_registered_to_di
 
 	dispatch_event();
 	EXPECT_EQ(0, events_received);
+}
+
+TEST_F(ut_event_dispatcher, event_can_be_encoded_and_decoded)
+{
+	event_handle ev_1(new event(constant::event_type_default, constant::event_scope_specific,
+		boost::shared_ptr< basic_payload<int> >(new basic_payload<int>(constant::event_value))));
+
+	std::string encoded = ev_1->encode();
+
+	event_handle ev_2(new event(constant::event_type_default, constant::event_scope_specific));
+	ev_2->decode< basic_payload<int> >(encoded);
+
+	EXPECT_EQ(constant::event_value, ev_2->get_payload< basic_payload<int> >()->value);
 }
 
 } // namespace dispatcher

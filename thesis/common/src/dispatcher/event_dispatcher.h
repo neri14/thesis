@@ -7,14 +7,13 @@
 
 #include <logger.h>
 #include "event/event_types.h"
-#include "event/base_event.h"
+#include "event/event.h"
 
 namespace common {
 namespace dispatcher {
 
 struct listener_connection;
 
-typedef boost::shared_ptr<base_event> event_handle;
 typedef boost::function<void(event_handle)> listener_handle;
 typedef boost::shared_ptr<listener_connection> connection_handle;
 
