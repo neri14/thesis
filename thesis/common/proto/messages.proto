@@ -1,0 +1,18 @@
+package common.proto;
+
+message Register {
+	required int32 type = 1;
+	required int32 scope = 2;
+}
+
+message Dispatch {
+	required int32 type = 1;
+	required int32 scope = 2;
+	required string event = 3;
+}
+
+message Notify {
+	required int32 type = 1;
+	required int32 scope = 2;
+	required string event = 3;
+}

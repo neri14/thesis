@@ -7,8 +7,10 @@ help:
 clean: clean_bin clean_3rdparty
 
 proto:
+	protoc --proto_path=./common/proto --cpp_out=./common/src/proto ./common/proto/*
 
 proto_clean:
+	rm -rf ./common/src/proto/*
 
 .PHONY: all help clean proto proto_clean
 

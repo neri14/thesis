@@ -5,22 +5,17 @@ participant client as "dispatcher_client"
 end box
 
 box "dispatcher_server" #Lime
-participant dispatcher as "server"
+participant server as "server"
 end box
 
-== client connecting ==
-client			->	dispatcher		: ConnectRequest(u32 client_id)
-dispatcher		-->	client			: ConnectResponse(EStatus status)
-
 == client registers for event ==
-client			->	dispatcher		: RegisterListenerRequest(EEventType type, EEventScope scope)
-dispatcher		-->	client			: RegisterListenerResponse(EStatus status)
+client			->	server			: Register(EEventType type, EEventScope scope)
 
 == client dispatches new event ==
-client			->	dispatcher		: Dispatch(EEventType type, EEventScope scope, event_t event)
+client			->	server			: Dispatch(EEventType type, EEventScope scope, event_t event)
 
 loop for each client registered on matching type and scope
-dispatcher		->	client			: Notify(EEventType type, EEventScope scope, event_t event)
+server			->	client			: Notify(EEventType type, EEventScope scope, event_t event)
 end
 
 @enduml

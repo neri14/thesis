@@ -11,6 +11,8 @@ make <target>
 				test_run
 				<component>_test_run
 				clean
+				proto
+				proto_clean
 
 <component>	:=	common		//only _test and _test_run targets
 				controller
@@ -48,4 +50,8 @@ test_run
 clean
 	Cleans repository
 
+proto
+	Prepares proto cpp files, requires installed protobuf
 
+proto_clean
+	Cleans proto cpp files
