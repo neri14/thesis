@@ -5,6 +5,7 @@ set(BOOST_ROOT ../../3rdparty/boost_1_55_0)
 set(PROTO_DIR ../../3rdparty/proto)
 find_package(Boost REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
+include_directories(${PROTO_DIR}/src)
 link_directories(${Boost_LIBRARY_DIR})
 link_directories(${PROTO_DIR})
 
