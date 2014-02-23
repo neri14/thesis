@@ -4,6 +4,8 @@
 #include "event_types.h"
 #include "payload/base_payload.h"
 
+#include <boost/shared_ptr.hpp>
+
 namespace common {
 namespace dispatcher {
 

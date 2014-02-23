@@ -8,9 +8,6 @@ box "dispatcher_server" #Lime
 participant server as "server"
 end box
 
-== client registers for event ==
-client			->	server			: Register(EEventType type, EEventScope scope)
-
 == client dispatches new event ==
 client			->	server			: Dispatch(EEventType type, EEventScope scope, event_t event)
 

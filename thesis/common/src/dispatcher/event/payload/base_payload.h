@@ -1,6 +1,8 @@
 #ifndef BASE_PAYLOAD_H
 #define BASE_PAYLOAD_H
 
+#include <boost/shared_ptr.hpp>
+
 namespace common {
 namespace dispatcher {
 

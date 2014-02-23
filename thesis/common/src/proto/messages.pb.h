@@ -34,20 +34,18 @@ void  protobuf_AddDesc_messages_2eproto();
 void protobuf_AssignDesc_messages_2eproto();
 void protobuf_ShutdownFile_messages_2eproto();
 
-class Register;
-class Dispatch;
-class Notify;
+class Event;
 
 // ===================================================================
 
-class Register : public ::google::protobuf::Message {
+class Event : public ::google::protobuf::Message {
  public:
-  Register();
-  virtual ~Register();
+  Event();
+  virtual ~Event();
 
-  Register(const Register& from);
+  Event(const Event& from);
 
-  inline Register& operator=(const Register& from) {
+  inline Event& operator=(const Event& from) {
     CopyFrom(from);
     return *this;
   }
@@ -61,17 +59,17 @@ class Register : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const Register& default_instance();
+  static const Event& default_instance();
 
-  void Swap(Register* other);
+  void Swap(Event* other);
 
   // implements Message ----------------------------------------------
 
-  Register* New() const;
+  Event* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const Register& from);
-  void MergeFrom(const Register& from);
+  void CopyFrom(const Event& from);
+  void MergeFrom(const Event& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -108,124 +106,32 @@ class Register : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 scope() const;
   inline void set_scope(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:common.proto.Register)
+  // required string payload = 3;
+  inline bool has_payload() const;
+  inline void clear_payload();
+  static const int kPayloadFieldNumber = 3;
+  inline const ::std::string& payload() const;
+  inline void set_payload(const ::std::string& value);
+  inline void set_payload(const char* value);
+  inline void set_payload(const char* value, size_t size);
+  inline ::std::string* mutable_payload();
+  inline ::std::string* release_payload();
+  inline void set_allocated_payload(::std::string* payload);
+
+  // @@protoc_insertion_point(class_scope:common.proto.Event)
  private:
   inline void set_has_type();
   inline void clear_has_type();
   inline void set_has_scope();
   inline void clear_has_scope();
+  inline void set_has_payload();
+  inline void clear_has_payload();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::int32 type_;
   ::google::protobuf::int32 scope_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
-
-  friend void  protobuf_AddDesc_messages_2eproto();
-  friend void protobuf_AssignDesc_messages_2eproto();
-  friend void protobuf_ShutdownFile_messages_2eproto();
-
-  void InitAsDefaultInstance();
-  static Register* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class Dispatch : public ::google::protobuf::Message {
- public:
-  Dispatch();
-  virtual ~Dispatch();
-
-  Dispatch(const Dispatch& from);
-
-  inline Dispatch& operator=(const Dispatch& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const Dispatch& default_instance();
-
-  void Swap(Dispatch* other);
-
-  // implements Message ----------------------------------------------
-
-  Dispatch* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const Dispatch& from);
-  void MergeFrom(const Dispatch& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required int32 type = 1;
-  inline bool has_type() const;
-  inline void clear_type();
-  static const int kTypeFieldNumber = 1;
-  inline ::google::protobuf::int32 type() const;
-  inline void set_type(::google::protobuf::int32 value);
-
-  // required int32 scope = 2;
-  inline bool has_scope() const;
-  inline void clear_scope();
-  static const int kScopeFieldNumber = 2;
-  inline ::google::protobuf::int32 scope() const;
-  inline void set_scope(::google::protobuf::int32 value);
-
-  // required string event = 3;
-  inline bool has_event() const;
-  inline void clear_event();
-  static const int kEventFieldNumber = 3;
-  inline const ::std::string& event() const;
-  inline void set_event(const ::std::string& value);
-  inline void set_event(const char* value);
-  inline void set_event(const char* value, size_t size);
-  inline ::std::string* mutable_event();
-  inline ::std::string* release_event();
-  inline void set_allocated_event(::std::string* event);
-
-  // @@protoc_insertion_point(class_scope:common.proto.Dispatch)
- private:
-  inline void set_has_type();
-  inline void clear_has_type();
-  inline void set_has_scope();
-  inline void clear_has_scope();
-  inline void set_has_event();
-  inline void clear_has_event();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::int32 type_;
-  ::google::protobuf::int32 scope_;
-  ::std::string* event_;
+  ::std::string* payload_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
@@ -235,399 +141,126 @@ class Dispatch : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_messages_2eproto();
 
   void InitAsDefaultInstance();
-  static Dispatch* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class Notify : public ::google::protobuf::Message {
- public:
-  Notify();
-  virtual ~Notify();
-
-  Notify(const Notify& from);
-
-  inline Notify& operator=(const Notify& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const Notify& default_instance();
-
-  void Swap(Notify* other);
-
-  // implements Message ----------------------------------------------
-
-  Notify* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const Notify& from);
-  void MergeFrom(const Notify& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // required int32 type = 1;
-  inline bool has_type() const;
-  inline void clear_type();
-  static const int kTypeFieldNumber = 1;
-  inline ::google::protobuf::int32 type() const;
-  inline void set_type(::google::protobuf::int32 value);
-
-  // required int32 scope = 2;
-  inline bool has_scope() const;
-  inline void clear_scope();
-  static const int kScopeFieldNumber = 2;
-  inline ::google::protobuf::int32 scope() const;
-  inline void set_scope(::google::protobuf::int32 value);
-
-  // required string event = 3;
-  inline bool has_event() const;
-  inline void clear_event();
-  static const int kEventFieldNumber = 3;
-  inline const ::std::string& event() const;
-  inline void set_event(const ::std::string& value);
-  inline void set_event(const char* value);
-  inline void set_event(const char* value, size_t size);
-  inline ::std::string* mutable_event();
-  inline ::std::string* release_event();
-  inline void set_allocated_event(::std::string* event);
-
-  // @@protoc_insertion_point(class_scope:common.proto.Notify)
- private:
-  inline void set_has_type();
-  inline void clear_has_type();
-  inline void set_has_scope();
-  inline void clear_has_scope();
-  inline void set_has_event();
-  inline void clear_has_event();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::int32 type_;
-  ::google::protobuf::int32 scope_;
-  ::std::string* event_;
-
-  mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
-
-  friend void  protobuf_AddDesc_messages_2eproto();
-  friend void protobuf_AssignDesc_messages_2eproto();
-  friend void protobuf_ShutdownFile_messages_2eproto();
-
-  void InitAsDefaultInstance();
-  static Notify* default_instance_;
+  static Event* default_instance_;
 };
 // ===================================================================
 
 
 // ===================================================================
 
-// Register
+// Event
 
 // required int32 type = 1;
-inline bool Register::has_type() const {
+inline bool Event::has_type() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Register::set_has_type() {
+inline void Event::set_has_type() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Register::clear_has_type() {
+inline void Event::clear_has_type() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void Register::clear_type() {
+inline void Event::clear_type() {
   type_ = 0;
   clear_has_type();
 }
-inline ::google::protobuf::int32 Register::type() const {
+inline ::google::protobuf::int32 Event::type() const {
   return type_;
 }
-inline void Register::set_type(::google::protobuf::int32 value) {
+inline void Event::set_type(::google::protobuf::int32 value) {
   set_has_type();
   type_ = value;
 }
 
 // required int32 scope = 2;
-inline bool Register::has_scope() const {
+inline bool Event::has_scope() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Register::set_has_scope() {
+inline void Event::set_has_scope() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Register::clear_has_scope() {
+inline void Event::clear_has_scope() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void Register::clear_scope() {
+inline void Event::clear_scope() {
   scope_ = 0;
   clear_has_scope();
 }
-inline ::google::protobuf::int32 Register::scope() const {
+inline ::google::protobuf::int32 Event::scope() const {
   return scope_;
 }
-inline void Register::set_scope(::google::protobuf::int32 value) {
+inline void Event::set_scope(::google::protobuf::int32 value) {
   set_has_scope();
   scope_ = value;
 }
 
-// -------------------------------------------------------------------
-
-// Dispatch
-
-// required int32 type = 1;
-inline bool Dispatch::has_type() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void Dispatch::set_has_type() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void Dispatch::clear_has_type() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void Dispatch::clear_type() {
-  type_ = 0;
-  clear_has_type();
-}
-inline ::google::protobuf::int32 Dispatch::type() const {
-  return type_;
-}
-inline void Dispatch::set_type(::google::protobuf::int32 value) {
-  set_has_type();
-  type_ = value;
-}
-
-// required int32 scope = 2;
-inline bool Dispatch::has_scope() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void Dispatch::set_has_scope() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void Dispatch::clear_has_scope() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void Dispatch::clear_scope() {
-  scope_ = 0;
-  clear_has_scope();
-}
-inline ::google::protobuf::int32 Dispatch::scope() const {
-  return scope_;
-}
-inline void Dispatch::set_scope(::google::protobuf::int32 value) {
-  set_has_scope();
-  scope_ = value;
-}
-
-// required string event = 3;
-inline bool Dispatch::has_event() const {
+// required string payload = 3;
+inline bool Event::has_payload() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void Dispatch::set_has_event() {
+inline void Event::set_has_payload() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void Dispatch::clear_has_event() {
+inline void Event::clear_has_payload() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void Dispatch::clear_event() {
-  if (event_ != &::google::protobuf::internal::kEmptyString) {
-    event_->clear();
+inline void Event::clear_payload() {
+  if (payload_ != &::google::protobuf::internal::kEmptyString) {
+    payload_->clear();
   }
-  clear_has_event();
+  clear_has_payload();
 }
-inline const ::std::string& Dispatch::event() const {
-  return *event_;
+inline const ::std::string& Event::payload() const {
+  return *payload_;
 }
-inline void Dispatch::set_event(const ::std::string& value) {
-  set_has_event();
-  if (event_ == &::google::protobuf::internal::kEmptyString) {
-    event_ = new ::std::string;
+inline void Event::set_payload(const ::std::string& value) {
+  set_has_payload();
+  if (payload_ == &::google::protobuf::internal::kEmptyString) {
+    payload_ = new ::std::string;
   }
-  event_->assign(value);
+  payload_->assign(value);
 }
-inline void Dispatch::set_event(const char* value) {
-  set_has_event();
-  if (event_ == &::google::protobuf::internal::kEmptyString) {
-    event_ = new ::std::string;
+inline void Event::set_payload(const char* value) {
+  set_has_payload();
+  if (payload_ == &::google::protobuf::internal::kEmptyString) {
+    payload_ = new ::std::string;
   }
-  event_->assign(value);
+  payload_->assign(value);
 }
-inline void Dispatch::set_event(const char* value, size_t size) {
-  set_has_event();
-  if (event_ == &::google::protobuf::internal::kEmptyString) {
-    event_ = new ::std::string;
+inline void Event::set_payload(const char* value, size_t size) {
+  set_has_payload();
+  if (payload_ == &::google::protobuf::internal::kEmptyString) {
+    payload_ = new ::std::string;
   }
-  event_->assign(reinterpret_cast<const char*>(value), size);
+  payload_->assign(reinterpret_cast<const char*>(value), size);
 }
-inline ::std::string* Dispatch::mutable_event() {
-  set_has_event();
-  if (event_ == &::google::protobuf::internal::kEmptyString) {
-    event_ = new ::std::string;
+inline ::std::string* Event::mutable_payload() {
+  set_has_payload();
+  if (payload_ == &::google::protobuf::internal::kEmptyString) {
+    payload_ = new ::std::string;
   }
-  return event_;
+  return payload_;
 }
-inline ::std::string* Dispatch::release_event() {
-  clear_has_event();
-  if (event_ == &::google::protobuf::internal::kEmptyString) {
+inline ::std::string* Event::release_payload() {
+  clear_has_payload();
+  if (payload_ == &::google::protobuf::internal::kEmptyString) {
     return NULL;
   } else {
-    ::std::string* temp = event_;
-    event_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    ::std::string* temp = payload_;
+    payload_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
     return temp;
   }
 }
-inline void Dispatch::set_allocated_event(::std::string* event) {
-  if (event_ != &::google::protobuf::internal::kEmptyString) {
-    delete event_;
+inline void Event::set_allocated_payload(::std::string* payload) {
+  if (payload_ != &::google::protobuf::internal::kEmptyString) {
+    delete payload_;
   }
-  if (event) {
-    set_has_event();
-    event_ = event;
+  if (payload) {
+    set_has_payload();
+    payload_ = payload;
   } else {
-    clear_has_event();
-    event_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  }
-}
-
-// -------------------------------------------------------------------
-
-// Notify
-
-// required int32 type = 1;
-inline bool Notify::has_type() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void Notify::set_has_type() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void Notify::clear_has_type() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void Notify::clear_type() {
-  type_ = 0;
-  clear_has_type();
-}
-inline ::google::protobuf::int32 Notify::type() const {
-  return type_;
-}
-inline void Notify::set_type(::google::protobuf::int32 value) {
-  set_has_type();
-  type_ = value;
-}
-
-// required int32 scope = 2;
-inline bool Notify::has_scope() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void Notify::set_has_scope() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void Notify::clear_has_scope() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void Notify::clear_scope() {
-  scope_ = 0;
-  clear_has_scope();
-}
-inline ::google::protobuf::int32 Notify::scope() const {
-  return scope_;
-}
-inline void Notify::set_scope(::google::protobuf::int32 value) {
-  set_has_scope();
-  scope_ = value;
-}
-
-// required string event = 3;
-inline bool Notify::has_event() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void Notify::set_has_event() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void Notify::clear_has_event() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void Notify::clear_event() {
-  if (event_ != &::google::protobuf::internal::kEmptyString) {
-    event_->clear();
-  }
-  clear_has_event();
-}
-inline const ::std::string& Notify::event() const {
-  return *event_;
-}
-inline void Notify::set_event(const ::std::string& value) {
-  set_has_event();
-  if (event_ == &::google::protobuf::internal::kEmptyString) {
-    event_ = new ::std::string;
-  }
-  event_->assign(value);
-}
-inline void Notify::set_event(const char* value) {
-  set_has_event();
-  if (event_ == &::google::protobuf::internal::kEmptyString) {
-    event_ = new ::std::string;
-  }
-  event_->assign(value);
-}
-inline void Notify::set_event(const char* value, size_t size) {
-  set_has_event();
-  if (event_ == &::google::protobuf::internal::kEmptyString) {
-    event_ = new ::std::string;
-  }
-  event_->assign(reinterpret_cast<const char*>(value), size);
-}
-inline ::std::string* Notify::mutable_event() {
-  set_has_event();
-  if (event_ == &::google::protobuf::internal::kEmptyString) {
-    event_ = new ::std::string;
-  }
-  return event_;
-}
-inline ::std::string* Notify::release_event() {
-  clear_has_event();
-  if (event_ == &::google::protobuf::internal::kEmptyString) {
-    return NULL;
-  } else {
-    ::std::string* temp = event_;
-    event_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-    return temp;
-  }
-}
-inline void Notify::set_allocated_event(::std::string* event) {
-  if (event_ != &::google::protobuf::internal::kEmptyString) {
-    delete event_;
-  }
-  if (event) {
-    set_has_event();
-    event_ = event;
-  } else {
-    clear_has_event();
-    event_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+    clear_has_payload();
+    payload_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
 }
 
