@@ -1,4 +1,4 @@
-@startuml
+@startuml "event_dispatching.png"
 
 box "Dispatcher Client" #LightBlue
 participant client as "dispatcher_client"
@@ -8,11 +8,66 @@ box "dispatcher_server" #Lime
 participant server as "server"
 end box
 
+== client registers for events ==
+client			->	server			: Register(EEventType type, EEventScope scope)
+
 == client dispatches new event ==
-client			->	server			: Dispatch(EEventType type, EEventScope scope, event_t event)
+client			->	server			: Event(EEventType type, EEventScope scope, event_t event)
 
 loop for each client registered on matching type and scope
-server			->	client			: Notify(EEventType type, EEventScope scope, event_t event)
+server			->	client			: Event(EEventType type, EEventScope scope, event_t event)
+end
+
+@enduml
+
+@startuml "threading_in_dispatcher.png"
+
+participant listener
+
+box "event_dispatcher"
+participant dispatch as "dispatch()"
+participant queue
+participant distribute as "distribute()"
+end box
+
+participant thread as "dispatcher_thread"
+
+== dispatching event ==
+
+listener		->	dispatch		: dispatch()
+activate dispatch
+note over dispatch : lock mutex on queue
+dispatch		->	queue			: push()
+queue			-->	dispatch
+note over dispatch : free mutex on queue
+dispatch		-->	listener
+deactivate dispatch
+
+== distributing event ==
+thread			->	distribute		: distribute()
+
+loop until queue is empty
+
+note over distribute : lock mutex on queue
+
+activate distribute
+distribute		->	queue			: front()
+activate queue
+queue			-->	distribute
+deactivate queue
+distribute		->	queue			: pop()
+queue			-->	distribute
+
+note over distribute : free mutex on queue
+
+loop for each listener
+distribute		->	listener		: notify_cb()
+listener		-->	distribute
+end
+
+distribute		-->	thread
+deactivate distribute
+
 end
 
 @enduml

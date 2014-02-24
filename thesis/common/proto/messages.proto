@@ -5,3 +5,8 @@ message Event {
 	required int32 scope = 2;
 	required bytes payload = 3;
 }
+
+message Register {
+	required int32 type = 1;
+	required int32 scope = 2;
+}

@@ -35,6 +35,7 @@ void protobuf_AssignDesc_messages_2eproto();
 void protobuf_ShutdownFile_messages_2eproto();
 
 class Event;
+class Register;
 
 // ===================================================================
 
@@ -142,6 +143,98 @@ class Event : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static Event* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class Register : public ::google::protobuf::Message {
+ public:
+  Register();
+  virtual ~Register();
+
+  Register(const Register& from);
+
+  inline Register& operator=(const Register& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Register& default_instance();
+
+  void Swap(Register* other);
+
+  // implements Message ----------------------------------------------
+
+  Register* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Register& from);
+  void MergeFrom(const Register& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // required int32 type = 1;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 1;
+  inline ::google::protobuf::int32 type() const;
+  inline void set_type(::google::protobuf::int32 value);
+
+  // required int32 scope = 2;
+  inline bool has_scope() const;
+  inline void clear_scope();
+  static const int kScopeFieldNumber = 2;
+  inline ::google::protobuf::int32 scope() const;
+  inline void set_scope(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:common.proto.Register)
+ private:
+  inline void set_has_type();
+  inline void clear_has_type();
+  inline void set_has_scope();
+  inline void clear_has_scope();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 type_;
+  ::google::protobuf::int32 scope_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+
+  friend void  protobuf_AddDesc_messages_2eproto();
+  friend void protobuf_AssignDesc_messages_2eproto();
+  friend void protobuf_ShutdownFile_messages_2eproto();
+
+  void InitAsDefaultInstance();
+  static Register* default_instance_;
 };
 // ===================================================================
 
@@ -262,6 +355,54 @@ inline void Event::set_allocated_payload(::std::string* payload) {
     clear_has_payload();
     payload_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
   }
+}
+
+// -------------------------------------------------------------------
+
+// Register
+
+// required int32 type = 1;
+inline bool Register::has_type() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Register::set_has_type() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Register::clear_has_type() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Register::clear_type() {
+  type_ = 0;
+  clear_has_type();
+}
+inline ::google::protobuf::int32 Register::type() const {
+  return type_;
+}
+inline void Register::set_type(::google::protobuf::int32 value) {
+  set_has_type();
+  type_ = value;
+}
+
+// required int32 scope = 2;
+inline bool Register::has_scope() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Register::set_has_scope() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Register::clear_has_scope() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void Register::clear_scope() {
+  scope_ = 0;
+  clear_has_scope();
+}
+inline ::google::protobuf::int32 Register::scope() const {
+  return scope_;
+}
+inline void Register::set_scope(::google::protobuf::int32 value) {
+  set_has_scope();
+  scope_ = value;
 }
 
 
