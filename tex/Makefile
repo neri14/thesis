@@ -1,4 +1,4 @@
-all: print archive
+all: print archive stats
 
 print:
 	sh ./build/print.sh
@@ -6,9 +6,12 @@ print:
 archive:
 	sh ./build/archive.sh
 
+stats: print archive
+	sh ./build/stats.sh
+
 clean:
 	rm -rf ./bin/printmode/*
 	rm -rf ./bin/archivemode/*
 	rm -rf ./bin/out/*
 
-.PHONY: all print archive clean
+.PHONY: all print archive stats clean
