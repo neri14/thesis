@@ -2,8 +2,11 @@
 #define EVENT_DISPATCHER_H
 
 #include <set>
+#include <queue>
+
 #include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/thread/mutex.hpp>
 
 #include <logger.h>
 #include "event/event_types.h"
@@ -43,9 +46,17 @@ public:
 
 	virtual void dispatch(event_handle ev);
 
+	virtual void distribute();
+
 protected:
+	event_handle get_event();
+
 	common::logger logger;
+
+	boost::mutex mtx_events;
+	boost::mutex mtx_listeners;
 	std::set<connection_handle> listeners;
+	std::queue<event_handle> event_queue;
 };
 
 } // namespace dispatcher

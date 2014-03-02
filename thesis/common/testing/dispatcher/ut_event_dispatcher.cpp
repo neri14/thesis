@@ -73,11 +73,15 @@ TEST_F(ut_event_dispatcher, event_is_dispatched_to_listener_registered_to_specif
 	register_listener(constant::event_type_default, constant::event_scope_specific);
 
 	dispatch_event();
+	EXPECT_EQ(0, events_received);
+	disp.distribute();
 	EXPECT_EQ(1, events_received);
 
 	unregister_listener();
 
 	dispatch_event();
+	EXPECT_EQ(1, events_received);
+	disp.distribute();
 	EXPECT_EQ(1, events_received);
 }
 
@@ -86,11 +90,15 @@ TEST_F(ut_event_dispatcher, event_is_dispatched_to_listener_registered_to_any_ev
 	register_listener(constant::event_type_default, constant::event_scope_any);
 
 	dispatch_event();
+	EXPECT_EQ(0, events_received);
+	disp.distribute();
 	EXPECT_EQ(1, events_received);
 
 	unregister_listener();
 
 	dispatch_event();
+	EXPECT_EQ(1, events_received);
+	disp.distribute();
 	EXPECT_EQ(1, events_received);
 }
 
@@ -99,12 +107,87 @@ TEST_F(ut_event_dispatcher, event_is_dispatched_to_listener_registered_to_any_ev
 	register_listener(constant::event_type_any, constant::event_scope_specific);
 
 	dispatch_event();
+	EXPECT_EQ(0, events_received);
+	disp.distribute();
 	EXPECT_EQ(1, events_received);
 
 	unregister_listener();
 
 	dispatch_event();
 	EXPECT_EQ(1, events_received);
+	disp.distribute();
+	EXPECT_EQ(1, events_received);
+}
+
+TEST_F(ut_event_dispatcher, event_is_dispatched_to_multiple_listeners)
+{
+	connection_handle listener_1 = disp.register_listener(constant::event_type_default,
+		constant::event_scope_specific, boost::bind(&ut_event_dispatcher::on_event, this, _1));
+	connection_handle listener_2 = disp.register_listener(constant::event_type_any,
+		constant::event_scope_specific, boost::bind(&ut_event_dispatcher::on_event, this, _1));
+	connection_handle listener_3 = disp.register_listener(constant::event_type_default,
+		constant::event_scope_any, boost::bind(&ut_event_dispatcher::on_event, this, _1));
+
+	dispatch_event();
+	EXPECT_EQ(0, events_received);
+	disp.distribute();
+	EXPECT_EQ(3, events_received);
+
+	disp.unregister_listener(listener_1);
+	disp.unregister_listener(listener_2);
+	disp.unregister_listener(listener_3);
+
+	dispatch_event();
+	EXPECT_EQ(3, events_received);
+	disp.distribute();
+	EXPECT_EQ(3, events_received);
+}
+
+TEST_F(ut_event_dispatcher, multiple_events_are_dispatched)
+{
+	register_listener(constant::event_type_default, constant::event_scope_specific);
+
+	dispatch_event();
+	dispatch_event();
+	dispatch_event();
+	EXPECT_EQ(0, events_received);
+	disp.distribute();
+	EXPECT_EQ(3, events_received);
+
+	unregister_listener();
+
+	dispatch_event();
+	dispatch_event();
+	EXPECT_EQ(3, events_received);
+	disp.distribute();
+	EXPECT_EQ(3, events_received);
+}
+
+TEST_F(ut_event_dispatcher, multiple_events_are_dispatched_to_multiple_listeners)
+{
+	connection_handle listener_1 = disp.register_listener(constant::event_type_default,
+		constant::event_scope_specific, boost::bind(&ut_event_dispatcher::on_event, this, _1));
+	connection_handle listener_2 = disp.register_listener(constant::event_type_any,
+		constant::event_scope_specific, boost::bind(&ut_event_dispatcher::on_event, this, _1));
+	connection_handle listener_3 = disp.register_listener(constant::event_type_default,
+		constant::event_scope_any, boost::bind(&ut_event_dispatcher::on_event, this, _1));
+
+	dispatch_event();
+	dispatch_event();
+	dispatch_event();
+	EXPECT_EQ(0, events_received);
+	disp.distribute();
+	EXPECT_EQ(9, events_received);
+
+	disp.unregister_listener(listener_1);
+	disp.unregister_listener(listener_2);
+	disp.unregister_listener(listener_3);
+
+	dispatch_event();
+	dispatch_event();
+	EXPECT_EQ(9, events_received);
+	disp.distribute();
+	EXPECT_EQ(9, events_received);
 }
 
 TEST_F(ut_event_dispatcher, event_is_not_dispatched_to_listener_registered_to_different_type)
@@ -113,10 +196,14 @@ TEST_F(ut_event_dispatcher, event_is_not_dispatched_to_listener_registered_to_di
 
 	dispatch_event();
 	EXPECT_EQ(0, events_received);
+	disp.distribute();
+	EXPECT_EQ(0, events_received);
 
 	unregister_listener();
 
 	dispatch_event();
+	EXPECT_EQ(0, events_received);
+	disp.distribute();
 	EXPECT_EQ(0, events_received);
 }
 
@@ -126,10 +213,14 @@ TEST_F(ut_event_dispatcher, event_is_not_dispatched_to_listener_registered_to_di
 
 	dispatch_event();
 	EXPECT_EQ(0, events_received);
+	disp.distribute();
+	EXPECT_EQ(0, events_received);
 
 	unregister_listener();
 
 	dispatch_event();
+	EXPECT_EQ(0, events_received);
+	disp.distribute();
 	EXPECT_EQ(0, events_received);
 }
 
