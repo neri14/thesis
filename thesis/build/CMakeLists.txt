@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 
 #BOOST
-set(BOOST_ROOT ../../3rdparty/boost_1_55_0)
-set(PROTO_DIR ../../3rdparty/proto)
+set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/boost_1_55_0)
+set(PROTO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/proto)
 find_package(Boost REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 include_directories(${PROTO_DIR}/src)
@@ -12,41 +12,41 @@ link_directories(${PROTO_DIR})
 ### FILES ###
 
 #COMMON CODE
-file(GLOB_RECURSE SRC_COMMON ../common/src/*)
-file(GLOB_RECURSE SRC_UT_COMMON ../common/testing/*)
+file(GLOB_RECURSE SRC_COMMON ${CMAKE_CURRENT_SOURCE_DIR}/../common/src/*)
+file(GLOB_RECURSE SRC_UT_COMMON ${CMAKE_CURRENT_SOURCE_DIR}/../common/testing/*)
 
 #CONTROLLER
-file(GLOB_RECURSE SRC_CONTROLLER ../controller/src/*)
-file(GLOB_RECURSE SRC_MAIN_CONTROLLER ../controller/src_main/*)
-file(GLOB_RECURSE SRC_UT_CONTROLLER ../controller/testing/*)
+file(GLOB_RECURSE SRC_CONTROLLER ${CMAKE_CURRENT_SOURCE_DIR}/../controller/src/*)
+file(GLOB_RECURSE SRC_MAIN_CONTROLLER ${CMAKE_CURRENT_SOURCE_DIR}/../controller/src_main/*)
+file(GLOB_RECURSE SRC_UT_CONTROLLER ${CMAKE_CURRENT_SOURCE_DIR}/../controller/testing/*)
 
 #DISPATCHER_GENERIC_CLIENT
-file(GLOB_RECURSE SRC_DISPATCHER_GENERIC_CLIENT ../dispatcher_generic_client/src/*)
-file(GLOB_RECURSE SRC_MAIN_DISPATCHER_GENERIC_CLIENT ../dispatcher_generic_client/src_main/*)
-file(GLOB_RECURSE SRC_UT_DISPATCHER_GENERIC_CLIENT ../dispatcher_generic_client/testing/*)
+file(GLOB_RECURSE SRC_DISPATCHER_GENERIC_CLIENT ${CMAKE_CURRENT_SOURCE_DIR}/../dispatcher_generic_client/src/*)
+file(GLOB_RECURSE SRC_MAIN_DISPATCHER_GENERIC_CLIENT ${CMAKE_CURRENT_SOURCE_DIR}/../dispatcher_generic_client/src_main/*)
+file(GLOB_RECURSE SRC_UT_DISPATCHER_GENERIC_CLIENT ${CMAKE_CURRENT_SOURCE_DIR}/../dispatcher_generic_client/testing/*)
 
 #DISPATCHER_SERVER
-file(GLOB_RECURSE SRC_DISPATCHER_SERVER ../dispatcher_server/src/*)
-file(GLOB_RECURSE SRC_MAIN_DISPATCHER_SERVER ../dispatcher_server/src_main/*)
-file(GLOB_RECURSE SRC_UT_DISPATCHER_SERVER ../dispatcher_server/testing/*)
+file(GLOB_RECURSE SRC_DISPATCHER_SERVER ${CMAKE_CURRENT_SOURCE_DIR}/../dispatcher_server/src/*)
+file(GLOB_RECURSE SRC_MAIN_DISPATCHER_SERVER ${CMAKE_CURRENT_SOURCE_DIR}/../dispatcher_server/src_main/*)
+file(GLOB_RECURSE SRC_UT_DISPATCHER_SERVER ${CMAKE_CURRENT_SOURCE_DIR}/../dispatcher_server/testing/*)
 
 #MANAGER
-file(GLOB_RECURSE SRC_MANAGER ../manager/src/*)
-file(GLOB_RECURSE SRC_MAIN_MANAGER ../manager/src_main/*)
-file(GLOB_RECURSE SRC_UT_MANAGER ../manager/testing/*)
+file(GLOB_RECURSE SRC_MANAGER ${CMAKE_CURRENT_SOURCE_DIR}/../manager/src/*)
+file(GLOB_RECURSE SRC_MAIN_MANAGER ${CMAKE_CURRENT_SOURCE_DIR}/../manager/src_main/*)
+file(GLOB_RECURSE SRC_UT_MANAGER ${CMAKE_CURRENT_SOURCE_DIR}/../manager/testing/*)
 
 #SIMULATOR
-file(GLOB_RECURSE SRC_SIMULATOR ../simulator/src/*)
-file(GLOB_RECURSE SRC_MAIN_SIMULATOR ../simulator/src_main/*)
-file(GLOB_RECURSE SRC_UT_SIMULATOR ../simulator/testing/*)
+file(GLOB_RECURSE SRC_SIMULATOR ${CMAKE_CURRENT_SOURCE_DIR}/../simulator/src/*)
+file(GLOB_RECURSE SRC_MAIN_SIMULATOR ${CMAKE_CURRENT_SOURCE_DIR}/../simulator/src_main/*)
+file(GLOB_RECURSE SRC_UT_SIMULATOR ${CMAKE_CURRENT_SOURCE_DIR}/../simulator/testing/*)
 
 #VISUALISER
-file(GLOB_RECURSE SRC_VISUALISER ../visualiser/src/*)
-file(GLOB_RECURSE SRC_MAIN_VISUALISER ../visualiser/src_main/*)
-file(GLOB_RECURSE SRC_UT_VISUALISER ../visualiser/testing/*)
+file(GLOB_RECURSE SRC_VISUALISER ${CMAKE_CURRENT_SOURCE_DIR}/../visualiser/src/*)
+file(GLOB_RECURSE SRC_MAIN_VISUALISER ${CMAKE_CURRENT_SOURCE_DIR}/../visualiser/src_main/*)
+file(GLOB_RECURSE SRC_UT_VISUALISER ${CMAKE_CURRENT_SOURCE_DIR}/../visualiser/testing/*)
 
 ### TARGET ###
-include_directories(../common/src)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../common/src)
 
 #CONTROLLER
 add_executable(controller ${SRC_MAIN_CONTROLLER} ${SRC_CONTROLLER} ${SRC_COMMON})
@@ -74,8 +74,8 @@ target_link_libraries(visualiser ${Boost_LIBRARIES} protobuf)
 
 ### TESTS ###
 #GMOCK
-set(GMOCK_ROOT_DIR ../../3rdparty/gmock-1.7.0)
-set(GMOCK_BIN_DIR ../bin/gmock)
+set(GMOCK_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/gmock-1.7.0)
+set(GMOCK_BIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../bin/gmock)
 add_subdirectory(${GMOCK_ROOT_DIR} ${GMOCK_BIN_DIR})
 
 enable_testing()
