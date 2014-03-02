@@ -3,11 +3,14 @@ cmake_minimum_required(VERSION 2.8)
 #BOOST
 set(BOOST_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/boost_1_55_0)
 set(PROTO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdparty/proto)
-find_package(Boost REQUIRED)
-include_directories(${Boost_INCLUDE_DIR})
+include_directories(${BOOST_ROOT})
 include_directories(${PROTO_DIR}/src)
-link_directories(${Boost_LIBRARY_DIR})
+link_directories(${BOOST_ROOT}/stage/lib)
 link_directories(${PROTO_DIR})
+
+set(BOOST_LIBS boost_system boost_thread)
+
+set(MAIN_LIBS ${BOOST_LIBS} protobuf)
 
 ### FILES ###
 
@@ -50,27 +53,27 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../common/src)
 
 #CONTROLLER
 add_executable(controller ${SRC_MAIN_CONTROLLER} ${SRC_CONTROLLER} ${SRC_COMMON})
-target_link_libraries(controller ${Boost_LIBRARIES} protobuf)
+target_link_libraries(controller ${MAIN_LIBS})
 
 #DISPATCHER_GENERIC_CLIENT
 add_executable(dispatcher_generic_client ${SRC_MAIN_DISPATCHER_GENERIC_CLIENT} ${SRC_DISPATCHER_GENERIC_CLIENT} ${SRC_COMMON})
-target_link_libraries(dispatcher_generic_client ${Boost_LIBRARIES} protobuf)
+target_link_libraries(dispatcher_generic_client ${MAIN_LIBS})
 
 #DISPATCHER_SERVER
 add_executable(dispatcher_server ${SRC_MAIN_DISPATCHER_SERVER} ${SRC_DISPATCHER_SERVER} ${SRC_COMMON})
-target_link_libraries(dispatcher_server ${Boost_LIBRARIES} protobuf)
+target_link_libraries(dispatcher_server ${MAIN_LIBS})
 
 #MANAGER
 add_executable(manager ${SRC_MAIN_MANAGER} ${SRC_MANAGER} ${SRC_COMMON})
-target_link_libraries(manager ${Boost_LIBRARIES} protobuf)
+target_link_libraries(manager ${MAIN_LIBS})
 
 #SIMULATOR
 add_executable(simulator ${SRC_MAIN_SIMULATOR} ${SRC_SIMULATOR} ${SRC_COMMON})
-target_link_libraries(simulator ${Boost_LIBRARIES} protobuf)
+target_link_libraries(simulator ${MAIN_LIBS})
 
 #VISUALISER
 add_executable(visualiser ${SRC_MAIN_VISUALISER} ${SRC_VISUALISER} ${SRC_COMMON})
-target_link_libraries(visualiser ${Boost_LIBRARIES} protobuf)
+target_link_libraries(visualiser ${MAIN_LIBS})
 
 ### TESTS ###
 #GMOCK
@@ -84,28 +87,28 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} ${gmock_SOUR
 
 #COMMON
 add_executable(common_test ${SRC_COMMON} ${SRC_UT_COMMON})
-target_link_libraries(common_test gtest gtest_main gmock gmock_main protobuf)
+target_link_libraries(common_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
 
 #CONTROLLER
 add_executable(controller_test ${SRC_CONTROLLER} ${SRC_UT_CONTROLLER})
-target_link_libraries(controller_test gtest gtest_main gmock gmock_main protobuf)
+target_link_libraries(controller_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
 
 #DISPATCHER_GENERIC_CLIENT
 add_executable(dispatcher_generic_client_test ${SRC_DISPATCHER_GENERIC_CLIENT} ${SRC_UT_DISPATCHER_GENERIC_CLIENT})
-target_link_libraries(dispatcher_generic_client_test gtest gtest_main gmock gmock_main protobuf)
+target_link_libraries(dispatcher_generic_client_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
 
 #DISPATCHER_SERVER
 add_executable(dispatcher_server_test ${SRC_DISPATCHER_SERVER} ${SRC_UT_DISPATCHER_SERVER})
-target_link_libraries(dispatcher_server_test gtest gtest_main gmock gmock_main protobuf)
+target_link_libraries(dispatcher_server_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
 
 #MANAGER
 add_executable(manager_test ${SRC_MANAGER} ${SRC_UT_MANAGER})
-target_link_libraries(manager_test gtest gtest_main gmock gmock_main protobuf)
+target_link_libraries(manager_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
 
 #SIMULATOR
 add_executable(simulator_test ${SRC_SIMULATOR} ${SRC_UT_SIMULATOR})
-target_link_libraries(simulator_test gtest gtest_main gmock gmock_main protobuf)
+target_link_libraries(simulator_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
 
 #VISUALISER
 add_executable(visualiser_test ${SRC_VISUALISER} ${SRC_UT_VISUALISER})
-target_link_libraries(visualiser_test gtest gtest_main gmock gmock_main protobuf)
+target_link_libraries(visualiser_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
