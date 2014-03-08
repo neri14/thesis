@@ -1,7 +1,7 @@
 #ifndef COMMON_THREAD_H
 #define COMMON_THREAD_H
 
-#include <logger.h>
+#include <my_logger.h>
 #include <boost/scoped_ptr.hpp>
 #include <boost/thread.hpp>
 
@@ -24,7 +24,7 @@ protected:
 
 	boost::scoped_ptr<boost::thread> thread;
 	bool run_flag;
-	logger log;
+	my_logger logger;
 };
 
 }

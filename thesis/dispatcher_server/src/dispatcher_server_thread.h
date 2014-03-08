@@ -20,7 +20,7 @@ protected:
 	void run_impl()
 	{
 		boost::this_thread::sleep(boost::posix_time::seconds(1));
-		log.debug()() << "still alive";
+		logger.debug()() << "still alive";
 	}
 	void cleanup() {}
 };

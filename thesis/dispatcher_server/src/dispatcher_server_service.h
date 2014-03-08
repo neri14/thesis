@@ -2,7 +2,7 @@
 #define DISPATCHER_SERVER_SERVICE_H
 
 #include <common_service.h>
-#include <logger.h>
+#include <my_logger.h>
 
 namespace dispatcher_server {
 
@@ -15,7 +15,7 @@ public:
 	virtual int start();
 
 private:
-	common::logger logger;
+	common::my_logger logger;
 };
 
 } // namespace dispatcher_server

@@ -5,7 +5,7 @@
 namespace common {
 
 common_thread::common_thread(const std::string& name) :
-	log(name),
+	logger(name),
 	run_flag(false)
 {}
 
@@ -14,7 +14,7 @@ common_thread::~common_thread()
 
 void common_thread::start()
 {
-	log.info()() << "starting";
+	logger.info()() << "starting";
 	run_flag = true;
 
 	thread.reset(new boost::thread(boost::bind(&common_thread::run, this)));
@@ -22,23 +22,23 @@ void common_thread::start()
 
 void common_thread::stop()
 {
-	log.info()() << "stopping";
+	logger.info()() << "stopping";
 	run_flag = false;
 	thread->join();
-	log.info()() << "stopped";
+	logger.info()() << "stopped";
 }
 
 void common_thread::run()
 {
-	log.info()() << "preparing";
+	logger.info()() << "preparing";
 	prepare();
 
-	log.info()() << "entering loop";
+	logger.info()() << "entering loop";
 	while (run_flag) {
 		run_impl();
 	}
 
-	log.info()() << "cleaning up";
+	logger.info()() << "cleaning up";
 	cleanup();
 }
 

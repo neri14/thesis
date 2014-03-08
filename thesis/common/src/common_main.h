@@ -2,7 +2,7 @@
 #define COMMON_MAIN_H
 
 #include <string>
-#include <logger.h>
+#include <my_logger.h>
 #include <common_service.h>
 
 namespace common {
@@ -10,13 +10,13 @@ namespace common {
 template <class SERVICE>
 int common_main(int argc, char ** argv, const char * name)
 {
-	logger log(name);
-	log.info()() << "=== STARTING UP ===";
+	my_logger logger(name);
+	logger.info()() << "=== STARTING UP ===";
 
 	SERVICE service;
 	int result = service.start();
 
-	log.info()() << "=== SHUTTING DOWN ===";
+	logger.info()() << "=== SHUTTING DOWN ===";
 	return result;
 }
 

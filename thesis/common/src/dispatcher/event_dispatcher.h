@@ -8,7 +8,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/thread/mutex.hpp>
 
-#include <logger.h>
+#include <my_logger.h>
 #include "event/event_types.h"
 #include "event/event.h"
 
@@ -51,7 +51,7 @@ public:
 protected:
 	event_handle get_event();
 
-	common::logger logger;
+	common::my_logger logger;
 
 	boost::mutex mtx_events;
 	boost::mutex mtx_listeners;

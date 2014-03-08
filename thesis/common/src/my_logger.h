@@ -1,5 +1,5 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef MY_LOGGER_H
+#define MY_LOGGER_H
 
 #include <sstream>
 #include <string>
@@ -10,11 +10,11 @@
 
 namespace common {
 
-class logger_stream
+class my_logger_stream
 {
 public:
-	logger_stream(const ELogLevel& level, const std::string& prefix);
-	virtual ~logger_stream();
+	my_logger_stream(const ELogLevel& level, const std::string& prefix);
+	virtual ~my_logger_stream();
 
 	std::ostringstream& out();
 	std::ostringstream& operator()();
@@ -27,15 +27,15 @@ private:
 	bool level_allowed;
 };
 
-class logger
+class my_logger
 {
 public:
-	logger(std::string prefix_);
+	my_logger(std::string prefix_);
 
-	logger_stream error();
-	logger_stream warning();
-	logger_stream info();
-	logger_stream debug();
+	my_logger_stream error();
+	my_logger_stream warning();
+	my_logger_stream info();
+	my_logger_stream debug();
 
 private:
 	std::string prefix;
@@ -43,4 +43,4 @@ private:
 
 } // namespace common
 
-#endif // LOGGER_H
+#endif // MY_LOGGER_H
