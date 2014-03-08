@@ -6,6 +6,12 @@ namespace common {
 class common_service
 {
 public:
+	common_service()
+	{}
+
+	virtual ~common_service()
+	{}
+
 	virtual int start() = 0;
 };
 
