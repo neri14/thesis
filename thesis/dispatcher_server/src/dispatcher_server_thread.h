@@ -8,21 +8,15 @@ namespace dispatcher_server {
 class dispatcher_server_thread : public common::common_thread
 {
 public:
-	dispatcher_server_thread() :
-		common::common_thread("dispatcher_server_thread")
-	{}
-
-	virtual ~dispatcher_server_thread()
-	{}
+	dispatcher_server_thread();
+	virtual ~dispatcher_server_thread();
 
 protected:
-	void prepare() {}
-	void run_impl()
-	{
-		boost::this_thread::sleep(boost::posix_time::seconds(1));
-		logger.debug()() << "still alive";
-	}
-	void cleanup() {}
+	void prepare();
+	void run();
+	void stop_impl();
+
+	bool keep_alive;
 };
 
 } // namespace dispatcher_server

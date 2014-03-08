@@ -12,16 +12,20 @@ dispatcher_server_service::~dispatcher_server_service()
 
 int dispatcher_server_service::start()
 {
-	dispatcher_server_thread th;
-	th.start();
+	try {
+		dispatcher_server_thread thread;
+		thread.start();
 
-	std::string str;
-	while (str != "stop") {
-		std::cout << "write \"stop\" to stop execution" << std::endl;
-		std::cin >> str;
+		std::string str;
+		while (str != "stop") {
+			std::cout << "write \"stop\" to stop execution" << std::endl;
+			std::cin >> str;
+		}
+
+		thread.stop();
+	} catch (std::exception& e) {
+		logger.error()() << "io_service error " << e.what();
 	}
-
-	th.stop();
 
 	return 0;
 }

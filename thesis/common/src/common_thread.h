@@ -13,17 +13,16 @@ public:
 	common_thread(const std::string& name);
 	virtual ~common_thread();
 
+	//DO NOT implement implement these methods, implement prepare, run and stop_impl instead
 	void start();
 	void stop();
 
 protected:
-	void run();
 	virtual void prepare() = 0;
-	virtual void run_impl() = 0;
-	virtual void cleanup() = 0;
+	virtual void run() = 0;
+	virtual void stop_impl() = 0;
 
 	boost::scoped_ptr<boost::thread> thread;
-	bool run_flag;
 	my_logger logger;
 };
 
