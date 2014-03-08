@@ -1,6 +1,8 @@
-#include <iostream>
+#include <common_main.h>
+#include "../src/dispatcher_server_service.h"
 
-int main()
+int main(int argc, char** argv)
 {
-	std::cout << "dispatcher_server not yet implemented" << std::endl;
+	return common::common_main<dispatcher_server::dispatcher_server_service>(
+		argc, argv, "dispatcher_server_main");
 }

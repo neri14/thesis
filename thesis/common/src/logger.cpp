@@ -36,11 +36,16 @@ std::ostringstream& logger_stream::operator()()
 
 std::string logger_stream::timestamp()
 {
-	struct timeval tp;
-	gettimeofday(&tp, NULL);
-	long int ms = tp.tv_sec * 1000 + tp.tv_usec / 1000;
+	timeval cur_time;
+	gettimeofday(&cur_time, NULL);
+	int milli = cur_time.tv_usec / 1000;
 
-	return boost::lexical_cast<std::string>(ms);
+	char buffer[20];
+	strftime(buffer, 20,  "%Y%m%dT%H%M%S", localtime(&cur_time.tv_sec));
+
+	std::ostringstream ss;
+	ss << buffer << "." << milli;
+	return ss.str();
 }
 
 std::string logger_stream::level_prefix(ELogLevel level)
