@@ -90,25 +90,25 @@ add_executable(common_test ${SRC_COMMON} ${SRC_UT_COMMON})
 target_link_libraries(common_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
 
 #CONTROLLER
-add_executable(controller_test ${SRC_CONTROLLER} ${SRC_UT_CONTROLLER})
+add_executable(controller_test ${SRC_CONTROLLER} ${SRC_COMMON} ${SRC_UT_CONTROLLER})
 target_link_libraries(controller_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
 
 #DISPATCHER_GENERIC_CLIENT
-add_executable(dispatcher_generic_client_test ${SRC_DISPATCHER_GENERIC_CLIENT} ${SRC_UT_DISPATCHER_GENERIC_CLIENT})
+add_executable(dispatcher_generic_client_test ${SRC_DISPATCHER_GENERIC_CLIENT} ${SRC_COMMON} ${SRC_UT_DISPATCHER_GENERIC_CLIENT})
 target_link_libraries(dispatcher_generic_client_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
 
 #DISPATCHER_SERVER
-add_executable(dispatcher_server_test ${SRC_DISPATCHER_SERVER} ${SRC_UT_DISPATCHER_SERVER})
+add_executable(dispatcher_server_test ${SRC_DISPATCHER_SERVER} ${SRC_COMMON} ${SRC_UT_DISPATCHER_SERVER})
 target_link_libraries(dispatcher_server_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
 
 #MANAGER
-add_executable(manager_test ${SRC_MANAGER} ${SRC_UT_MANAGER})
+add_executable(manager_test ${SRC_MANAGER} ${SRC_COMMON} ${SRC_UT_MANAGER})
 target_link_libraries(manager_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
 
 #SIMULATOR
-add_executable(simulator_test ${SRC_SIMULATOR} ${SRC_UT_SIMULATOR})
+add_executable(simulator_test ${SRC_SIMULATOR} ${SRC_COMMON} ${SRC_UT_SIMULATOR})
 target_link_libraries(simulator_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)
 
 #VISUALISER
-add_executable(visualiser_test ${SRC_VISUALISER} ${SRC_UT_VISUALISER})
+add_executable(visualiser_test ${SRC_VISUALISER} ${SRC_COMMON} ${SRC_UT_VISUALISER})
 target_link_libraries(visualiser_test ${MAIN_LIBS} gtest gtest_main gmock gmock_main protobuf)

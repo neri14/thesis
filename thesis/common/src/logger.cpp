@@ -5,6 +5,10 @@
 #include <boost/lexical_cast.hpp>
 
 namespace common {
+namespace constant {
+const int timestamp_buffer_size(20);
+const std::string time_format("%Y%m%dT%H%M%S");
+} // namespace constant
 
 logger_stream::logger_stream(const ELogLevel& level, const std::string& prefix) :
 	stream(new std::ostringstream()),
@@ -40,8 +44,8 @@ std::string logger_stream::timestamp()
 	gettimeofday(&cur_time, NULL);
 	int milli = cur_time.tv_usec / 1000;
 
-	char buffer[20];
-	strftime(buffer, 20,  "%Y%m%dT%H%M%S", localtime(&cur_time.tv_sec));
+	char buffer[constant::timestamp_buffer_size];
+	strftime(buffer, constant::timestamp_buffer_size,  constant::time_format.c_str(), localtime(&cur_time.tv_sec));
 
 	std::ostringstream ss;
 	ss << buffer << "." << milli;
