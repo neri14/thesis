@@ -15,7 +15,12 @@ int dispatcher_server_service::start()
 	dispatcher_server_thread th;
 	th.start();
 
-	boost::this_thread::sleep(boost::posix_time::seconds(10));
+	std::string str;
+	while (str != "stop") {
+		std::cout << "write \"stop\" to stop execution" << std::endl;
+		std::cin >> str;
+	}
+
 	th.stop();
 
 	return 0;
