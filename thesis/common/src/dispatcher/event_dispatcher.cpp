@@ -37,16 +37,16 @@ void event_dispatcher::dispatch(event_handle ev)
 	logger.debug()() << "Dispatching event of type " << ev->get_type()
 		<< " and scope " << ev->get_scope();
 
-	mtx_events.lock();
+	boost::mutex::scoped_lock lock(mtx_events);
 	event_queue.push(ev);
 	logger.debug()() << event_queue.size() << " events waiting for distribution";
-	mtx_events.unlock();
 }
 
 void event_dispatcher::distribute()
 {
 	int ev_count = 0;
 	for (event_handle ev = get_event(); ev; ev = get_event()) {
+		boost::mutex::scoped_lock lock(mtx_listeners);
 		int list_count = 0;
 		BOOST_FOREACH(connection_handle listener, listeners) {
 			if ((ev->get_type() == listener->type || EEventType_Any == listener->type) &&
@@ -63,13 +63,12 @@ void event_dispatcher::distribute()
 
 event_handle event_dispatcher::get_event()
 {
-	mtx_events.lock();
+	boost::mutex::scoped_lock lock(mtx_events);
 	event_handle ev;
 	if (!event_queue.empty()) {
 		ev = event_queue.front();
 		event_queue.pop();
 	}
-	mtx_events.unlock();
 
 	return ev;
 }
