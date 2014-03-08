@@ -18,10 +18,8 @@ connection_handle event_dispatcher::register_listener(
 	logger.debug()() << "Registering listener for type " << type << " and scope " << scope;
 	connection_handle handle = connection_handle(new listener_connection(type, scope, listener));
 
-	mtx_listeners.lock();
+	boost::mutex::scoped_lock lock(mtx_listeners);
 	listeners.insert(handle);
-	mtx_listeners.unlock();
-
 	return handle;
 }
 
@@ -30,9 +28,8 @@ void event_dispatcher::unregister_listener(connection_handle listener)
 	logger.debug()() << "Unregistering listener registered for type "
 		<< listener->type << " and scope " << listener->scope;
 
-	mtx_listeners.lock();
+	boost::mutex::scoped_lock lock(mtx_listeners);
 	listeners.erase(listener);
-	mtx_listeners.unlock();
 }
 
 void event_dispatcher::dispatch(event_handle ev)
