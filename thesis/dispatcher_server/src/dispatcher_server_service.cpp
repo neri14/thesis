@@ -13,7 +13,10 @@ dispatcher_server_service::~dispatcher_server_service()
 int dispatcher_server_service::start()
 {
 	try {
-		dispatcher_server_thread thread;
+		distributor_thread distributor;
+		distributor.start();
+
+		dispatcher_server_thread thread(distributor);
 		thread.start();
 
 		std::string str;
@@ -23,6 +26,7 @@ int dispatcher_server_service::start()
 		}
 
 		thread.stop();
+		distributor.stop();
 	} catch (std::exception& e) {
 		logger.error()() << "io_service error " << e.what();
 	}

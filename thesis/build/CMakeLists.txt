@@ -10,7 +10,7 @@ link_directories(${PROTO_DIR})
 
 set(BOOST_LIBS boost_system boost_thread)
 
-set(MAIN_LIBS ${BOOST_LIBS} protobuf)
+set(MAIN_LIBS ${BOOST_LIBS} protobuf pthread)
 
 ### FILES ###
 

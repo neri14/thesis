@@ -59,6 +59,8 @@ protected:
 	std::queue<event_handle> event_queue;
 };
 
+event_dispatcher& get_dispatcher();
+
 } // namespace dispatcher
 } // namespace common
 
