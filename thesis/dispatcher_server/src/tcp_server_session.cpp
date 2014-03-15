@@ -1,28 +1,36 @@
-#include "tcp_session.h"
+#include "tcp_server_session.h"
 
 #include <dispatcher/parse_message.h>
 #include <dispatcher/event_dispatcher.h>
+#include <net/encoder.h>
 
 #include <boost/foreach.hpp>
 #include <boost/bind.hpp>
 #include <sstream>
 
 namespace dispatcher_server {
+namespace constant {
+	const int header_size(sizeof(int));
+}
 
 int last_id = 0;
 
-tcp_session::tcp_session(boost::asio::io_service& io_service_, session_exit_cb_type cb,
-		distributor_thread& distributor_) :
+tcp_server_session::tcp_server_session(boost::asio::io_service& io_service_, session_exit_cb_type cb,
+		common::dispatcher::distributor_thread& distributor_) :
 	id(++last_id),
 	logger(create_session_name(id)),
 	socket(io_service_),
 	distributor(distributor_),
 	session_exit_cb(cb)
 {
-	distributor_connection = distributor.add_session(boost::bind(&tcp_session::dispatch, this));
 }
 
-tcp_session::~tcp_session()
+void tcp_server_session::connect()
+{
+	distributor_connection = distributor.add_session(boost::bind(&tcp_server_session::dispatch, this));
+}
+
+tcp_server_session::~tcp_server_session()
 {
 	BOOST_FOREACH(common::dispatcher::connection_handle l, connections) {
 		common::dispatcher::get_dispatcher().unregister_listener(l);
@@ -30,35 +38,57 @@ tcp_session::~tcp_session()
 	distributor.remove_session(distributor_connection);
 }
 
-boost::asio::ip::tcp::socket& tcp_session::get_socket()
+boost::asio::ip::tcp::socket& tcp_server_session::get_socket()
 {
 	return socket;
 }
 
-void tcp_session::start()
+void tcp_server_session::start()
 {
 	logger.debug()() << "starting session";
-	socket.async_read_some(boost::asio::buffer(in_buffer, constant::buffer_size),
-		boost::bind(&tcp_session::handle_read, this,
+	read_header();
+}
+
+void tcp_server_session::read_header()
+{
+	boost::asio::async_read(socket, boost::asio::buffer(in_buffer, constant::header_size),
+		boost::bind(&tcp_server_session::read_message, this,
 			boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
 }
 
-void tcp_session::handle_read(const boost::system::error_code& error,
+void tcp_server_session::read_message(const boost::system::error_code& error,
+	size_t bytes_transferred)
+{
+	if (!error) {
+		int size = 0;
+		try {
+			size = common::net::decode_header(std::string(in_buffer, bytes_transferred));
+		} catch(std::exception& e) {
+			logger.error()() << "can't parse message header, killing connection";
+			session_exit_cb(this);
+		}
+		boost::asio::async_read(socket, boost::asio::buffer(in_buffer, size),
+			boost::bind(&tcp_server_session::handle_read, this,
+				boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
+	} else {
+		logger.warning()() << "connection lost";
+		session_exit_cb(this);
+	}
+}
+
+void tcp_server_session::handle_read(const boost::system::error_code& error,
 	size_t bytes_transferred)
 {
 	if (!error) {
 		parse_message(std::string(in_buffer, bytes_transferred));
-
-		socket.async_read_some(boost::asio::buffer(in_buffer, constant::buffer_size),
-			boost::bind(&tcp_session::handle_read, this,
-				boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
+		read_header();
 	} else {
 		logger.debug()() << "connection lost";
 		session_exit_cb(this);
 	}
 }
 
-void tcp_session::parse_message(std::string str)
+void tcp_server_session::parse_message(std::string str)
 {
 	common::dispatcher::proto_event_handle event(new common::proto::Event());
 
@@ -75,26 +105,25 @@ void tcp_session::parse_message(std::string str)
 			common::dispatcher::get_dispatcher().register_listener(
 				static_cast<common::dispatcher::EEventType>(reg.type()),
 				static_cast<common::dispatcher::EEventScope>(reg.scope()),
-				boost::bind(&tcp_session::add_event, this, _1)
+				boost::bind(&tcp_server_session::add_event, this, _1)
 			)
 		);
 	}
 }
 
-void tcp_session::add_event(common::dispatcher::event_handle e)
+void tcp_server_session::add_event(common::dispatcher::event_handle e)
 {
 	boost::mutex::scoped_lock lock(mtx_events);
 	events.insert(e);
 	logger.debug()() << "added event to send";
 }
 
-void tcp_session::dispatch()
+void tcp_server_session::dispatch()
 {
-	logger.debug()() << "dispatching events triggered";
 	dispatch_impl();
 }
 
-void tcp_session::dispatch_impl()
+void tcp_server_session::dispatch_impl()
 {
 	boost::mutex::scoped_lock lock(mtx_events);
 	if (events.size() <= 0) {
@@ -109,18 +138,18 @@ void tcp_session::dispatch_impl()
 
 	common::dispatcher::proto_event_handle proto = parse(ev);
 	std::string str;
-	if (proto->SerializeToString(&str)) {
+	if (common::net::encode(proto, str)) {
 		logger.debug()() << "sending event";
 		memcpy(out_buffer, str.c_str(), str.length());
 		boost::asio::async_write(socket, boost::asio::buffer(out_buffer, str.length()),
-			boost::bind(&tcp_session::handle_write, this, boost::asio::placeholders::error));
+			boost::bind(&tcp_server_session::handle_write, this, boost::asio::placeholders::error));
 	} else {
-		logger.warning()() << "could not serializing event";
+		logger.warning()() << "could not serialize event";
 		dispatch_impl();
 	}
 }
 
-void tcp_session::handle_write(const boost::system::error_code& error)
+void tcp_server_session::handle_write(const boost::system::error_code& error)
 {
 	if (!error) {
 		logger.debug()() << "sent event";
@@ -131,20 +160,11 @@ void tcp_session::handle_write(const boost::system::error_code& error)
 	}
 }
 
-std::string tcp_session::create_session_name(int id)
+std::string tcp_server_session::create_session_name(int id)
 {
 	std::ostringstream ss;
-	ss << "tcp_session_" << id;
+	ss << "tcp_server_session_" << id;
 	return ss.str();
 }
-
-//distributed event dispatching:
-
-// dispatching thread:
-// 1. runs distribute on dispatcher
-//   1a. each callback adds events to set - one copy only survives
-// 2. runs dispatch_messages on each session and sets done callbacks (!!! callbacks will be propably run from different thread)
-// 3. waits (some kind of wait/lock/thingy) for counter of callbacks to reach number of runned dispatch_messages
-// 4. repeat
 
 } // namespace dispatcher_server

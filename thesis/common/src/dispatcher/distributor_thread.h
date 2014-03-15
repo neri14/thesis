@@ -4,7 +4,8 @@
 #include <vector>
 #include <common_thread.h>
 
-namespace dispatcher_server {
+namespace common {
+namespace dispatcher {
 
 typedef boost::function<void()> session_cb_type;
 struct session_connection
@@ -38,6 +39,7 @@ protected:
 	std::vector<session_connection_handle> sessions;
 };
 
-} // namespace dispatcher_server
+} // namespace dispatcher
+} // namespace common
 
 #endif /* DISTRIBUTOR_THREAD_H */

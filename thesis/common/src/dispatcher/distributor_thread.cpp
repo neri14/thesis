@@ -2,7 +2,8 @@
 #include <dispatcher/event_dispatcher.h>
 #include <boost/foreach.hpp>
 
-namespace dispatcher_server {
+namespace common {
+namespace dispatcher {
 
 distributor_thread::distributor_thread() :
 	common::common_thread("distributor_thread"),
@@ -22,7 +23,7 @@ void distributor_thread::run()
 {
 	while (keep_alive) {
 		dispatched_count = 0;
-		common::dispatcher::get_dispatcher().distribute();
+		get_dispatcher().distribute();
 		boost::mutex::scoped_lock(sessions_mtx);
 		BOOST_FOREACH(session_connection_handle session, sessions)
 		{
@@ -31,8 +32,9 @@ void distributor_thread::run()
 		}
 
 		while (dispatched_count > 0) {
-			boost::this_thread::sleep(boost::posix_time::milliseconds(50));
+			boost::this_thread::sleep(boost::posix_time::milliseconds(10));
 		}
+		boost::this_thread::sleep(boost::posix_time::milliseconds(10));
 	}
 }
 
@@ -66,4 +68,5 @@ void distributor_thread::remove_session(session_connection_handle session)
 	}
 }
 
-} // namespace dispatcher_server
+} // namespace dispatcher
+} // namespace common

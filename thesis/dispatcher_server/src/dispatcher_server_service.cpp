@@ -13,7 +13,7 @@ dispatcher_server_service::~dispatcher_server_service()
 int dispatcher_server_service::start()
 {
 	try {
-		distributor_thread distributor;
+		common::dispatcher::distributor_thread distributor;
 		distributor.start();
 
 		dispatcher_server_thread thread(distributor);

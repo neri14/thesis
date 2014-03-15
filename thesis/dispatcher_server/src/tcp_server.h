@@ -8,30 +8,30 @@
 #include <boost/thread/mutex.hpp>
 
 #include <my_logger.h>
-#include "tcp_session.h"
+#include "tcp_server_session.h"
 
 namespace dispatcher_server {
 
 class tcp_server
 {
 public:
-	tcp_server(boost::asio::io_service& io_service_, distributor_thread& distributor_);
+	tcp_server(boost::asio::io_service& io_service_, common::dispatcher::distributor_thread& distributor_);
 
 private:
 	void start_accept();
-	void handle_accept(boost::shared_ptr<tcp_session> session,
+	void handle_accept(boost::shared_ptr<tcp_server_session> session,
 		const boost::system::error_code& error);
 
-	void session_exit(tcp_session* session_ptr);
+	void session_exit(tcp_server_session* session_ptr);
 
 	common::my_logger logger;
 	boost::mutex mtx_sessions;
 
 	boost::asio::io_service& io_service;
 	boost::asio::ip::tcp::acceptor acceptor;
-	distributor_thread& distributor;
+	common::dispatcher::distributor_thread& distributor;
 
-	std::set< boost::shared_ptr<tcp_session> > active_sessions;
+	std::set< boost::shared_ptr<tcp_server_session> > active_sessions;
 };
 
 //tcp_server::last_id = 0;

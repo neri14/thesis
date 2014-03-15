@@ -19,6 +19,9 @@ connection_handle event_dispatcher::register_listener(
 	connection_handle handle = connection_handle(new listener_connection(type, scope, listener));
 
 	boost::mutex::scoped_lock lock(mtx_listeners);
+	if (register_callback) {
+		register_callback(type, scope);
+	}
 	listeners.insert(handle);
 	return handle;
 }
@@ -58,7 +61,19 @@ void event_dispatcher::distribute()
 		logger.debug()() << "Event distributed to " << list_count << " listeners";
 		++ev_count;
 	}
-	logger.debug()() << ev_count << " events distributed";
+	if (ev_count) {
+		logger.debug()() << ev_count << " events distributed";
+	}
+}
+
+void event_dispatcher::set_register_callback(register_callback_type cb)
+{
+	register_callback = cb;
+}
+
+void event_dispatcher::reset_register_callback()
+{
+	register_callback.clear();
 }
 
 event_handle event_dispatcher::get_event()

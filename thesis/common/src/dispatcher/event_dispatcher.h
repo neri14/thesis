@@ -18,6 +18,7 @@ namespace dispatcher {
 struct listener_connection;
 
 typedef boost::function<void(event_handle)> listener_handle;
+typedef boost::function<void(EEventType,EEventScope)> register_callback_type;
 typedef boost::shared_ptr<listener_connection> connection_handle;
 
 struct listener_connection
@@ -48,6 +49,9 @@ public:
 
 	virtual void distribute();
 
+	virtual void set_register_callback(register_callback_type cb);
+	virtual void reset_register_callback();
+
 protected:
 	event_handle get_event();
 
@@ -57,6 +61,8 @@ protected:
 	boost::mutex mtx_listeners;
 	std::set<connection_handle> listeners;
 	std::queue<event_handle> event_queue;
+
+	register_callback_type register_callback;
 };
 
 event_dispatcher& get_dispatcher();

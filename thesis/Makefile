@@ -101,7 +101,7 @@ visualiser_test_run:
 
 ### HELPERS ###
 prepare_cmake: prepare_3rdparty
-	sh ./build/prepare_cmake.sh
+	sh ./build/prepare_cmake.sh ${debug}
 
 prepare_3rdparty:
 	make -C ../3rdparty

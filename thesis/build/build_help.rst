@@ -1,7 +1,7 @@
 1. Build targets
 ====================
 
-make <target>
+make <target> <options>
 
 <target>	:=	help
 				system
@@ -21,6 +21,8 @@ make <target>
 				manager
 				simulator
 				visualiser
+
+<options>   :=  debug=1
 
 
 2. Description
@@ -55,3 +57,6 @@ proto
 
 proto_clean
 	Cleans proto cpp files
+
+debug=1
+	Prepares cmake for compilation with debug flags

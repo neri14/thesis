@@ -3,7 +3,7 @@
 
 namespace dispatcher_server {
 
-dispatcher_server_thread::dispatcher_server_thread(distributor_thread& distributor_) :
+dispatcher_server_thread::dispatcher_server_thread(common::dispatcher::distributor_thread& distributor_) :
 	common::common_thread("dispatcher_server_thread"),
 	distributor(distributor_)
 {}
