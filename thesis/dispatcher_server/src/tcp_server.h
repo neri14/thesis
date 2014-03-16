@@ -22,7 +22,7 @@ private:
 	void handle_accept(boost::shared_ptr<tcp_server_session> session,
 		const boost::system::error_code& error);
 
-	void session_exit(tcp_server_session* session_ptr);
+	void session_exit(boost::shared_ptr<tcp_server_session> session_ptr);
 
 	common::my_logger logger;
 	boost::mutex mtx_sessions;

@@ -47,7 +47,9 @@ tcp_client_session::~tcp_client_session()
 	BOOST_FOREACH(common::dispatcher::connection_handle l, connections) {
 		common::dispatcher::get_dispatcher().unregister_listener(l);
 	}
-	distributor.remove_session(distributor_connection);
+	if (distributor_connection) {
+		distributor.remove_session(distributor_connection);
+	}
 }
 
 boost::asio::ip::tcp::socket& tcp_client_session::get_socket()
@@ -77,14 +79,14 @@ void tcp_client_session::read_message(const boost::system::error_code& error,
 			size = common::net::decode_header(std::string(in_buffer, bytes_transferred));
 		} catch(std::exception& e) {
 			logger.error()() << "can't parse message header, killing connection";
-			session_exit_cb(this);
+			session_exit_cb();
 		}
 		boost::asio::async_read(socket, boost::asio::buffer(in_buffer, size),
 			boost::bind(&tcp_client_session::handle_read, this,
 				boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
 	} else {
 		logger.warning()() << "connection lost";
-		session_exit_cb(this);
+		session_exit_cb();
 	}
 }
 
@@ -96,7 +98,7 @@ void tcp_client_session::handle_read(const boost::system::error_code& error,
 		read_header();
 	} else {
 		logger.debug()() << "connection lost";
-		session_exit_cb(this);
+		session_exit_cb();
 	}
 }
 
@@ -192,7 +194,7 @@ void tcp_client_session::handle_write(const boost::system::error_code& error)
 		dispatch_impl();
 	} else {
 		logger.debug()() << "connection lost";
-		session_exit_cb(this);
+		session_exit_cb();
 	}
 }
 
@@ -203,7 +205,7 @@ void tcp_client_session::handle_write_listener(const boost::system::error_code& 
 		dispatch_listeners();
 	} else {
 		logger.debug()() << "connection lost";
-		session_exit_cb(this);
+		session_exit_cb();
 	}
 }
 

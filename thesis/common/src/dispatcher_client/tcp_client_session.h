@@ -21,7 +21,7 @@ namespace constant {
 class tcp_client_session
 {
 public:
-	typedef boost::function<void(tcp_client_session*)> session_exit_cb_type;
+	typedef boost::function<void()> session_exit_cb_type;
 	typedef boost::function<void()> dispatch_cb_type;
 
 	tcp_client_session(boost::asio::io_service& io_service_, session_exit_cb_type cb,

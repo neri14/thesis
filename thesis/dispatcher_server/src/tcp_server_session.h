@@ -7,6 +7,7 @@
 #include <dispatcher/event_dispatcher.h>
 #include <my_logger.h>
 
+#include <boost/enable_shared_from_this.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/function.hpp>
 #include <boost/asio.hpp>
@@ -16,10 +17,10 @@ namespace constant {
 	const int buffer_size(1024*1024);
 }
 
-class tcp_server_session
+class tcp_server_session : public boost::enable_shared_from_this<tcp_server_session>
 {
 public:
-	typedef boost::function<void(tcp_server_session*)> session_exit_cb_type;
+	typedef boost::function<void(boost::shared_ptr<tcp_server_session>)> session_exit_cb_type;
 	typedef boost::function<void()> dispatch_cb_type;
 
 	tcp_server_session(boost::asio::io_service& io_service_, session_exit_cb_type cb,

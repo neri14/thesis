@@ -28,7 +28,6 @@ void tcp_client::connect()
 	session.reset(
 		new tcp_client_session(io_service,
 			boost::bind(&tcp_client::session_exit, this), distributor));
-	session->connect();
 
 	boost::asio::ip::tcp::resolver resolver(io_service);
 	boost::asio::ip::tcp::resolver::query query(constant::host, constant::port);
@@ -43,6 +42,8 @@ void tcp_client::handle_connect(const boost::system::error_code& error)
 	if (!error) {
 		logger.info()() << "connected";
 		boost::mutex::scoped_lock lock(mtx_session);
+
+		session->connect();
 		session->start();
 	} else {
 		session_exit();

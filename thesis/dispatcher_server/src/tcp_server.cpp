@@ -38,24 +38,17 @@ void tcp_server::handle_accept(boost::shared_ptr<tcp_server_session> session,
 		logger.info()() << "accepting new connection";
 		session->start();
 	} else {
-		session_exit(session.get());
+		session_exit(session);
 	}
 
 	start_accept();
 }
 
-void tcp_server::session_exit(tcp_server_session* session_ptr)
+void tcp_server::session_exit(boost::shared_ptr<tcp_server_session> session_ptr)
 {
 	logger.debug()() << "session exit";
 	boost::mutex::scoped_lock lock(mtx_sessions);
-
-	for (std::set< boost::shared_ptr<tcp_server_session> >::iterator it = active_sessions.begin();
-			it != active_sessions.end(); ++it) {
-		if (it->get() == session_ptr) {
-			active_sessions.erase(it);
-			break;
-		}
-	}
+	active_sessions.erase(session_ptr);
 	logger.debug()() << "sessions count " << active_sessions.size();
 }
 

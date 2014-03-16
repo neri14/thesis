@@ -1,7 +1,7 @@
 #ifndef DISTRIBUTOR_THREAD_H
 #define DISTRIBUTOR_THREAD_H
 
-#include <vector>
+#include <set>
 #include <common_thread.h>
 
 namespace common {
@@ -36,7 +36,7 @@ protected:
 	int dispatched_count;
 
 	boost::mutex sessions_mtx;
-	std::vector<session_connection_handle> sessions;
+	std::set<session_connection_handle> sessions;
 };
 
 } // namespace dispatcher
