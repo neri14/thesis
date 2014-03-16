@@ -29,7 +29,7 @@ public:
 
 protected:
 	void prepare();
-	void run();
+	void run_impl();
 	void stop_impl();
 
 	bool keep_alive;

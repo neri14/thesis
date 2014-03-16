@@ -5,7 +5,8 @@
 namespace common {
 
 common_thread::common_thread(const std::string& name) :
-	logger(name)
+	logger(name),
+	status(EThreadStatus_NotStarted)
 {}
 
 common_thread::~common_thread()
@@ -25,6 +26,18 @@ void common_thread::stop()
 	stop_impl();
 	thread->join();
 	logger.info()() << "stopped thread";
+}
+
+void common_thread::run()
+{
+	status = EThreadStatus_Running;
+	run_impl();
+	status = EThreadStatus_Finished;
+}
+
+EThreadStatus common_thread::get_status()
+{
+	return status;
 }
 
 } // namespace common

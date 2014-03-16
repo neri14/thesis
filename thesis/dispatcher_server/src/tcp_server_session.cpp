@@ -10,7 +10,7 @@
 
 namespace dispatcher_server {
 namespace constant {
-	const int header_size(sizeof(int));
+	const int header_size(7);
 }
 
 int last_id = 0;

@@ -16,7 +16,7 @@ public:
 
 protected:
 	void prepare();
-	void run();
+	void run_impl();
 	void stop_impl();
 
 	boost::asio::io_service io_service;

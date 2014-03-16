@@ -1,4 +1,5 @@
 #include "dispatcher_generic_client_service.h"
+#include "event_spammer_thread.h"
 
 #include <dispatcher/distributor_thread.h>
 #include <dispatcher_client/dispatcher_client_thread.h>
@@ -21,12 +22,16 @@ int dispatcher_generic_client_service::start()
 		common::dispatcher_client::dispatcher_client_thread client_thread(distributor);
 		client_thread.start();
 
+		event_spammer_thread spammer;
+		spammer.start();
+
 		std::string str;
 		while (str != "stop") {
 			std::cout << "write \"stop\" to stop execution" << std::endl;
 			std::cin >> str;
 		}
 
+		spammer.stop();
 		client_thread.stop();
 		distributor.stop();
 	} catch (std::exception& e) {

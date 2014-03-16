@@ -19,7 +19,7 @@ void distributor_thread::prepare()
 	keep_alive = true;
 }
 
-void distributor_thread::run()
+void distributor_thread::run_impl()
 {
 	while (keep_alive) {
 		dispatched_count = 0;

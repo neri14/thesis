@@ -15,7 +15,7 @@ dispatcher_client_thread::~dispatcher_client_thread()
 void dispatcher_client_thread::prepare()
 {}
 
-void dispatcher_client_thread::run()
+void dispatcher_client_thread::run_impl()
 {
 	logger.debug()() << "thread run begin";
 	try {
