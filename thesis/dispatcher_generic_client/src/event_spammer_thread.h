@@ -20,6 +20,7 @@ protected:
 	void on_event(common::dispatcher::event_handle ev);
 
 	bool keep_alive;
+	common::dispatcher::connection_handle listener;
 };
 
 } // namespace dispatcher_generic_client

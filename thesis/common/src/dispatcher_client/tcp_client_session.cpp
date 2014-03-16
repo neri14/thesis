@@ -30,7 +30,7 @@ void tcp_client_session::connect()
 {
 	distributor_connection = distributor.add_session(boost::bind(&tcp_client_session::dispatch, this));
 
-	connections.push_back(
+	connections.insert(
 		common::dispatcher::get_dispatcher().register_listener(
 			common::dispatcher::EEventType_Any, common::dispatcher::EEventScope_Any,
 			boost::bind(&tcp_client_session::add_event, this, _1)
@@ -61,6 +61,15 @@ void tcp_client_session::start()
 {
 	logger.debug()() << "starting session";
 	read_header();
+
+	const std::set<common::dispatcher::connection_handle>& list =
+		common::dispatcher::get_dispatcher().get_listeners();
+	BOOST_FOREACH(const common::dispatcher::connection_handle conn, list)
+	{
+		if (connections.find(conn) == connections.end()) {
+			register_listener(conn->type, conn->scope);
+		}
+	}
 }
 
 void tcp_client_session::read_header()
@@ -108,7 +117,7 @@ void tcp_client_session::parse_message(std::string str)
 
 	if (event->ParseFromString(str)) {
 		logger.debug()() << "received event message";
-		common::dispatcher::get_dispatcher().dispatch(common::dispatcher::parse(event));
+		common::dispatcher::get_dispatcher().dispatch(common::dispatcher::parse(event, id));
 		return;
 	}
 }
@@ -116,8 +125,11 @@ void tcp_client_session::parse_message(std::string str)
 void tcp_client_session::add_event(common::dispatcher::event_handle e)
 {
 	boost::mutex::scoped_lock lock(mtx_events);
-	events.insert(e);
-	logger.debug()() << "added event to send";
+
+	if (e->get_origin() != id) {
+		events.insert(e);
+		logger.debug()() << "added event to send";
+	}
 }
 
 void tcp_client_session::register_listener(

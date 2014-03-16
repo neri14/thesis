@@ -12,7 +12,7 @@ namespace dispatcher {
 typedef boost::shared_ptr<common::proto::Event> proto_event_handle;
 typedef boost::shared_ptr<common::proto::Register> proto_register_handle;
 
-event_handle parse(proto_event_handle p_ev);
+event_handle parse(proto_event_handle p_ev, int origin = 0);
 proto_event_handle parse(event_handle ev);
 
 std::pair<EEventType, EEventScope> parse(proto_register_handle p_reg);

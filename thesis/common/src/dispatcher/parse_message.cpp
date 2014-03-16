@@ -3,12 +3,12 @@
 namespace common {
 namespace dispatcher {
 
-event_handle parse(proto_event_handle p_ev)
+event_handle parse(proto_event_handle p_ev, int origin)
 {
 	EEventType type = static_cast<EEventType>(p_ev->type());
 	EEventScope scope = static_cast<EEventScope>(p_ev->scope());
 
-	event_handle ev(new event(type, scope));
+	event_handle ev(new event(type, scope, origin));
 
 	switch (type) {	
 		default:

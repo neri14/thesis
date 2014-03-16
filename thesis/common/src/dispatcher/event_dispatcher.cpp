@@ -76,6 +76,11 @@ void event_dispatcher::reset_register_callback()
 	register_callback.clear();
 }
 
+const std::set<connection_handle>& event_dispatcher::get_listeners()
+{
+	return listeners;
+}
+
 event_handle event_dispatcher::get_event()
 {
 	boost::mutex::scoped_lock lock(mtx_events);

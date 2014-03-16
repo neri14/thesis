@@ -60,7 +60,7 @@ private:
 	std::set<common::dispatcher::event_handle> events;
 	std::set< std::pair<common::dispatcher::EEventType, common::dispatcher::EEventScope> > listeners;
 
-	std::vector<common::dispatcher::connection_handle> connections;
+	std::set<common::dispatcher::connection_handle> connections;
 
 	session_exit_cb_type session_exit_cb;
 	common::dispatcher::session_connection_handle distributor_connection;

@@ -52,6 +52,8 @@ public:
 	virtual void set_register_callback(register_callback_type cb);
 	virtual void reset_register_callback();
 
+	virtual const std::set<connection_handle>& get_listeners();
+
 protected:
 	event_handle get_event();
 

@@ -15,15 +15,17 @@ typedef boost::shared_ptr<event> event_handle;
 class event
 {
 public:
-	event(const EEventType& type_, const EEventScope& scope_, payload_handle payload_) :
+	event(const EEventType& type_, const EEventScope& scope_, payload_handle payload_, int origin_ = 0) :
 		type(type_),
 		scope(scope_),
-		payload(payload_)
+		payload(payload_),
+		origin(origin_)
 	{}
 
-	event(const EEventType& type_, const EEventScope& scope_) :
+	event(const EEventType& type_, const EEventScope& scope_, int origin_ = 0) :
 		type(type_),
-		scope(scope_)
+		scope(scope_),
+		origin(origin_)
 	{}
 
 	virtual ~event()
@@ -62,10 +64,17 @@ public:
 		payload = payload_handle(new T(*reinterpret_cast<const T*>(str.c_str())));
 	}
 
+	int get_origin()
+	{
+		return origin;
+	}
+
 protected:
 	EEventType type;
 	EEventScope scope;
 	payload_handle payload;
+
+	int origin;
 };
 
 } // namespace dispatcher

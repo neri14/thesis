@@ -97,7 +97,7 @@ void tcp_server_session::parse_message(std::string str)
 
 	if (event->ParseFromString(str)) {
 		logger.debug()() << "received event message";
-		common::dispatcher::get_dispatcher().dispatch(common::dispatcher::parse(event));
+		common::dispatcher::get_dispatcher().dispatch(common::dispatcher::parse(event, id));
 		return;
 	}
 
@@ -117,8 +117,10 @@ void tcp_server_session::parse_message(std::string str)
 void tcp_server_session::add_event(common::dispatcher::event_handle e)
 {
 	boost::mutex::scoped_lock lock(mtx_events);
-	events.insert(e);
-	logger.debug()() << "added event to send";
+	if (e->get_origin() != id) {
+		events.insert(e);
+		logger.debug()() << "added event to send";
+	}
 }
 
 void tcp_server_session::dispatch()
