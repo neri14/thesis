@@ -21,7 +21,7 @@ public:
 
 private:
 	std::string timestamp();
-	std::string level_prefix(ELogLevel level);
+	std::string level_prefix(ELogLevel level) const;
 
 	boost::shared_ptr<std::ostringstream> stream;
 	bool level_allowed;

@@ -64,7 +64,7 @@ public:
 		payload = payload_handle(new T(*reinterpret_cast<const T*>(str.c_str())));
 	}
 
-	int get_origin()
+	int get_origin() const
 	{
 		return origin;
 	}

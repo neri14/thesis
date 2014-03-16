@@ -148,7 +148,7 @@ void tcp_client_session::dispatch()
 void tcp_client_session::dispatch_impl()
 {
 	boost::mutex::scoped_lock lock(mtx_events);
-	if (events.size() <= 0) {
+	if (events.empty()) {
 		lock.unlock();
 		dispatch_listeners();
 		return;
@@ -176,7 +176,7 @@ void tcp_client_session::dispatch_listeners()
 {
 	boost::mutex::scoped_lock lock(mtx_listeners);
 
-	if (listeners.size() <= 0) {
+	if (listeners.empty()) {
 		distributor.session_finished();
 		return;
 	}

@@ -52,7 +52,7 @@ std::string my_logger_stream::timestamp()
 	return ss.str();
 }
 
-std::string my_logger_stream::level_prefix(ELogLevel level)
+std::string my_logger_stream::level_prefix(ELogLevel level) const
 {
 	switch (level) {
 		default:

@@ -23,7 +23,7 @@ public:
 	void start();
 	void stop();
 
-	EThreadStatus get_status();
+	EThreadStatus get_status() const;
 
 private:
 	void run();

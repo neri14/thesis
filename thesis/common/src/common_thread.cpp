@@ -35,7 +35,7 @@ void common_thread::run()
 	status = EThreadStatus_Finished;
 }
 
-EThreadStatus common_thread::get_status()
+EThreadStatus common_thread::get_status() const
 {
 	return status;
 }
