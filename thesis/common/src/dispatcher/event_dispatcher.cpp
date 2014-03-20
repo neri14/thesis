@@ -95,11 +95,8 @@ event_handle event_dispatcher::get_event()
 
 event_dispatcher& get_dispatcher()
 {
-	static boost::shared_ptr<event_dispatcher> dispatcher_instance;
-	if (!dispatcher_instance) {
-		dispatcher_instance.reset(new event_dispatcher());
-	}
-	return *dispatcher_instance;
+	static event_dispatcher instance;
+	return instance;
 }
 
 } // namespace dispatcher
