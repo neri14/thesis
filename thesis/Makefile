@@ -38,6 +38,29 @@ visualiser: prepare_cmake
 
 .PHONY: system $(SYSTEM_)
 
+### SYSTEM RUN ###
+SYSTEM_RUN_ = controller_run dispatcher_generic_client_run dispatcher_server_run manager_run simulator_run visualiser_run
+
+controller_run:
+	./bin/controller --config ../controller/etc/config.ini
+
+dispatcher_generic_client_run:
+	./bin/dispatcher_generic_client --config ../dispatcher_generic_client/etc/config.ini
+
+dispatcher_server_run:
+	./bin/dispatcher_server --config ../dispatcher_server/etc/config.ini
+
+manager_run:
+	./bin/manager --config ../manager/etc/config.ini
+
+simulator_run:
+	./bin/simulator --config ../simulator/etc/config.ini
+
+visualiser_run:
+	./bin/visualiser --config ../visualiser/etc/config.ini
+
+.PHONY: system $(SYSTEM_)
+
 ### TEST ###
 TEST_ = common_test controller_test dispatcher_generic_client_test dispatcher_server_test manager_test simulator_test visualiser_test
 

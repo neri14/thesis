@@ -4,12 +4,12 @@
 #include "common_def.h"
 
 namespace common {
-namespace config {
+//namespace config {
 
 extern int log_level;
 extern int log_output;
 
-} // namespace config
+//} // namespace config
 } // namespace common
 
 #endif // COMMON_CONFIG_H

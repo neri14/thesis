@@ -12,7 +12,7 @@ const std::string time_format("%Y%m%dT%H%M%S");
 
 my_logger_stream::my_logger_stream(const ELogLevel& level, const std::string& prefix) :
 	stream(new std::ostringstream()),
-	level_allowed(level & common::config::log_level)
+	level_allowed(level & common::log_level)
 {
 	if (level_allowed) {
 		(*stream) << timestamp() << "\t" << level_prefix(level) << "\t" << prefix << ": ";
@@ -22,7 +22,7 @@ my_logger_stream::my_logger_stream(const ELogLevel& level, const std::string& pr
 my_logger_stream::~my_logger_stream()
 {
 	if (level_allowed) {
-		if (common::config::log_output & ELogOutput_StdOut) {
+		if (common::log_output & ELogOutput_StdOut) {
 			std::cout << stream->str() << std::endl;
 		}
 	}

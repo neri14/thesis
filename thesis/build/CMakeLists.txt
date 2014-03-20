@@ -8,7 +8,7 @@ include_directories(${PROTO_DIR}/src)
 link_directories(${BOOST_ROOT}/stage/lib)
 link_directories(${PROTO_DIR})
 
-set(BOOST_LIBS boost_system boost_thread)
+set(BOOST_LIBS boost_system boost_thread boost_program_options)
 
 set(MAIN_LIBS ${BOOST_LIBS} protobuf pthread)
 

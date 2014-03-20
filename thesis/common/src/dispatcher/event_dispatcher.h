@@ -7,6 +7,7 @@
 #include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/thread/mutex.hpp>
+#include <boost/noncopyable.hpp>
 
 #include <my_logger.h>
 #include "event/event_types.h"
@@ -34,7 +35,7 @@ struct listener_connection
 	listener_handle listener;
 };
 
-class event_dispatcher
+class event_dispatcher : public boost::noncopyable
 {
 public:
 	event_dispatcher();
