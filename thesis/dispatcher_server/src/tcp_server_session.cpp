@@ -119,7 +119,6 @@ void tcp_server_session::add_event(common::dispatcher::event_handle e)
 	boost::mutex::scoped_lock lock(mtx_events);
 	if (e->get_origin() != id) {
 		events.insert(e);
-		logger.debug()() << "added event to send";
 	}
 }
 
@@ -136,7 +135,6 @@ void tcp_server_session::dispatch_impl()
 		return;
 	}
 
-	logger.debug()() <<  events.size() << " events to send";
 	common::dispatcher::event_handle ev = *(events.begin());
 	events.erase(events.begin());
 	lock.unlock();
@@ -144,7 +142,6 @@ void tcp_server_session::dispatch_impl()
 	common::dispatcher::proto_event_handle proto = parse(ev);
 	std::string str;
 	if (common::net::encode(proto, str)) {
-		logger.debug()() << "sending event";
 		memcpy(out_buffer, str.c_str(), str.length());
 		boost::asio::async_write(socket, boost::asio::buffer(out_buffer, str.length()),
 			boost::bind(&tcp_server_session::handle_write, this, boost::asio::placeholders::error));
@@ -157,7 +154,7 @@ void tcp_server_session::dispatch_impl()
 void tcp_server_session::handle_write(const boost::system::error_code& error)
 {
 	if (!error) {
-		logger.debug()() << "sent event";
+		logger.debug()() << "sent event message";
 		dispatch_impl();
 	} else {
 		logger.debug()() << "connection lost";

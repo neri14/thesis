@@ -128,7 +128,6 @@ void tcp_client_session::add_event(common::dispatcher::event_handle e)
 
 	if (e->get_origin() != id) {
 		events.insert(e);
-		logger.debug()() << "added event to send";
 	}
 }
 
@@ -137,7 +136,6 @@ void tcp_client_session::register_listener(
 {
 	boost::mutex::scoped_lock lock(mtx_listeners);
 	listeners.insert(std::make_pair(type, scope));
-	logger.debug()() << "added listener to send";
 }
 
 void tcp_client_session::dispatch()
@@ -154,7 +152,6 @@ void tcp_client_session::dispatch_impl()
 		return;
 	}
 
-	logger.debug()() <<  events.size() << " events to send";
 	common::dispatcher::event_handle ev = *(events.begin());
 	events.erase(events.begin());
 	lock.unlock();
@@ -162,7 +159,6 @@ void tcp_client_session::dispatch_impl()
 	common::dispatcher::proto_event_handle proto = parse(ev);
 	std::string str;
 	if (common::net::encode(proto, str)) {
-		logger.debug()() << "sending event";
 		memcpy(out_buffer, str.c_str(), str.length());
 		boost::asio::async_write(socket, boost::asio::buffer(out_buffer, str.length()),
 			boost::bind(&tcp_client_session::handle_write, this, boost::asio::placeholders::error));
@@ -180,7 +176,6 @@ void tcp_client_session::dispatch_listeners()
 		distributor.session_finished();
 		return;
 	}
-	logger.debug()() << listeners.size() << " listeners to send";
 	std::pair<common::dispatcher::EEventType, common::dispatcher::EEventScope> listener =
 		*(listeners.begin());
 	listeners.erase(listeners.begin());
@@ -189,7 +184,6 @@ void tcp_client_session::dispatch_listeners()
 	common::dispatcher::proto_register_handle proto = parse(listener);
 	std::string str;
 	if (common::net::encode(proto, str)) {
-		logger.debug()() << "sending listener";
 		memcpy(out_buffer, str.c_str(), str.length());
 		boost::asio::async_write(socket, boost::asio::buffer(out_buffer, str.length()),
 			boost::bind(&tcp_client_session::handle_write_listener, this, boost::asio::placeholders::error));
@@ -202,7 +196,7 @@ void tcp_client_session::dispatch_listeners()
 void tcp_client_session::handle_write(const boost::system::error_code& error)
 {
 	if (!error) {
-		logger.debug()() << "sent event";
+		logger.debug()() << "sent event message";
 		dispatch_impl();
 	} else {
 		logger.debug()() << "connection lost";
@@ -213,7 +207,7 @@ void tcp_client_session::handle_write(const boost::system::error_code& error)
 void tcp_client_session::handle_write_listener(const boost::system::error_code& error)
 {
 	if (!error) {
-		logger.debug()() << "sent listener";
+		logger.debug()() << "sent register message";
 		dispatch_listeners();
 	} else {
 		logger.debug()() << "connection lost";

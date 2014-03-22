@@ -37,17 +37,12 @@ void event_dispatcher::unregister_listener(connection_handle listener)
 
 void event_dispatcher::dispatch(event_handle ev)
 {
-	logger.debug()() << "Dispatching event of type " << ev->get_type()
-		<< " and scope " << ev->get_scope();
-
 	boost::mutex::scoped_lock lock(mtx_events);
 	event_queue.push(ev);
-	logger.debug()() << event_queue.size() << " events waiting for distribution";
 }
 
 void event_dispatcher::distribute()
 {
-	int ev_count = 0;
 	for (event_handle ev = get_event(); ev; ev = get_event()) {
 		boost::mutex::scoped_lock lock(mtx_listeners);
 		int list_count = 0;
@@ -58,11 +53,8 @@ void event_dispatcher::distribute()
 				++list_count;
 			}
 		}
-		logger.debug()() << "Event distributed to " << list_count << " listeners";
-		++ev_count;
-	}
-	if (ev_count) {
-		logger.debug()() << ev_count << " events distributed";
+		logger.debug()() << "Event (type=" << ev->get_type() << " scope=" << ev->get_scope()
+			<< ") distributed to " << list_count << " listeners";
 	}
 }
 
