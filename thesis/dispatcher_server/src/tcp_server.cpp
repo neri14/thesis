@@ -1,4 +1,7 @@
 #include "tcp_server.h"
+
+#include <config/config.h>
+
 #include <boost/bind.hpp>
 
 namespace dispatcher_server {
@@ -10,10 +13,12 @@ tcp_server::tcp_server(boost::asio::io_service& io_service_,
 		common::dispatcher::distributor_thread& distributor_) :
 	logger("tcp_server"),
 	io_service(io_service_),
-	acceptor(io_service, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(), constant::port)),
+	acceptor(io_service, boost::asio::ip::tcp::endpoint(boost::asio::ip::tcp::v4(),
+		common::get_config().get<int>("server_port"))),
 	distributor(distributor_)
 {
 	start_accept();
+	logger.info()() << "starting server on port " << common::get_config().get<std::string>("server_port");
 }
 
 void tcp_server::start_accept()

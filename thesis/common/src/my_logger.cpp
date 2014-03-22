@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <sys/time.h>
+#include <config/config.h>
+
 #include <boost/lexical_cast.hpp>
 
 namespace common {
@@ -10,9 +12,11 @@ const int timestamp_buffer_size(20);
 const std::string time_format("%Y%m%dT%H%M%S");
 } // namespace constant
 
-my_logger_stream::my_logger_stream(const ELogLevel& level, const std::string& prefix) :
+my_logger_stream::my_logger_stream(
+		const ELogLevel& level, const std::string& prefix, int log_level, int log_output) :
 	stream(new std::ostringstream()),
-	level_allowed(level & common::log_level)
+	level_allowed(level & log_level),
+	allowed_output(log_output)
 {
 	if (level_allowed) {
 		(*stream) << timestamp() << "\t" << level_prefix(level) << "\t" << prefix << ": ";
@@ -22,7 +26,7 @@ my_logger_stream::my_logger_stream(const ELogLevel& level, const std::string& pr
 my_logger_stream::~my_logger_stream()
 {
 	if (level_allowed) {
-		if (common::log_output & ELogOutput_StdOut) {
+		if (allowed_output & ELogOutput_StdOut) {
 			std::cout << stream->str() << std::endl;
 		}
 	}
@@ -68,27 +72,36 @@ std::string my_logger_stream::level_prefix(ELogLevel level) const
 }
 
 my_logger::my_logger(std::string prefix_) :
-	prefix(prefix_)
-{}
+	prefix(prefix_),
+	log_level(0),
+	log_output(0)
+{
+	common::config& cfg = common::get_config();
+	log_level = log_level | (cfg.get<bool>("log_error") ? ELogLevel_Error : 0);
+	log_level = log_level | (cfg.get<bool>("log_warning") ? ELogLevel_Warning : 0);
+	log_level = log_level | (cfg.get<bool>("log_info") ? ELogLevel_Info : 0);
+	log_level = log_level | (cfg.get<bool>("log_debug") ? ELogLevel_Debug : 0);
+	log_output = log_output | (cfg.get<bool>("log_std_out") ? ELogOutput_StdOut : 0);
+}
 
 my_logger_stream my_logger::error()
 {
-	return my_logger_stream(ELogLevel_Error, prefix);
+	return my_logger_stream(ELogLevel_Error, prefix, log_level, log_output);
 }
 
 my_logger_stream my_logger::warning()
 {
-	return my_logger_stream(ELogLevel_Warning, prefix);
+	return my_logger_stream(ELogLevel_Warning, prefix, log_level, log_output);
 }
 
 my_logger_stream my_logger::info()
 {
-	return my_logger_stream(ELogLevel_Info, prefix);
+	return my_logger_stream(ELogLevel_Info, prefix, log_level, log_output);
 }
 
 my_logger_stream my_logger::debug()
 {
-	return my_logger_stream(ELogLevel_Debug, prefix);
+	return my_logger_stream(ELogLevel_Debug, prefix, log_level, log_output);
 }
 
 } // namespace common

@@ -1,11 +1,9 @@
 #include "tcp_client.h"
 
+#include <config/config.h>
+
 namespace common {
 namespace dispatcher_client {
-namespace constant {
-	const std::string host("127.0.0.1");
-	const std::string port("56789");
-} // namespace constant
 
 tcp_client::tcp_client(boost::asio::io_service& io_service_,
 		common::dispatcher::distributor_thread& distributor_) :
@@ -29,10 +27,14 @@ void tcp_client::connect()
 		new tcp_client_session(io_service,
 			boost::bind(&tcp_client::session_exit, this), distributor));
 
+	std::string host = get_config().get<std::string>("server_host");
+	std::string port = get_config().get<std::string>("server_port");
+
 	boost::asio::ip::tcp::resolver resolver(io_service);
-	boost::asio::ip::tcp::resolver::query query(constant::host, constant::port);
+	boost::asio::ip::tcp::resolver::query query(host, port);
 	boost::asio::ip::tcp::resolver::iterator endpoint = resolver.resolve(query);
 
+	logger.info()() << "connecting to server " << host << ":" << port;
 	boost::asio::async_connect(session->get_socket(), endpoint,
 		boost::bind(&tcp_client::handle_connect, this, boost::asio::placeholders::error));
 }
