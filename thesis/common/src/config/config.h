@@ -6,6 +6,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 namespace common {
 
@@ -15,14 +16,16 @@ class config : public boost::noncopyable
 {
 public:
 	bool load(int argc, char** argv);
+	bool load_file(const std::string& filename_);
 
 	std::string config_filename();
 
+	void add(const std::string& key, const std::string& value);
 	template <typename T>
 	T get(const std::string& key);
 
 private:
-	bool load_file(const std::string& filename_);
+	void load_tree(const boost::property_tree::ptree& pt);
 
 	std::string filename;
 	cfg_map_type cfg_map;

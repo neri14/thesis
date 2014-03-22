@@ -1,7 +1,9 @@
 #include "config.h"
 #include <my_logger.h>
 
+#include <boost/foreach.hpp>
 #include <boost/program_options.hpp>
+#include <boost/property_tree/ini_parser.hpp>
 
 namespace common {
 
@@ -35,8 +37,35 @@ bool config::load_file(const std::string& filename_)
 {
 	filename = filename_;
 
-	//TODO load file
+	boost::property_tree::ptree pt;
+
+	try {
+		boost::property_tree::ini_parser::read_ini(filename, pt);
+	}
+	catch(std::exception& e) {
+		std::cerr << e.what() << std::endl;
+		return false;
+	}
+
+	load_tree(pt);
+
 	return true;
+}
+
+void config::add(const std::string& key, const std::string& value)
+{
+	cfg_map.insert(std::make_pair(key, value));
+}
+
+void config::load_tree(const boost::property_tree::ptree& pt)
+{
+	BOOST_FOREACH(const boost::property_tree::ptree::value_type& v, pt) {
+		if (v.second.data().length()) {
+			add(v.first, v.second.data());
+			std::cout << "config: " << v.first << " = " << v.second.data() << std::endl;
+		}
+		load_tree(v.second);
+	}
 }
 
 config& get_config()
