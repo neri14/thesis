@@ -1,0 +1,61 @@
+% -*- TeX:PL -*-
+% $Id: $
+\documentclass[17pt]{beamer}
+\usepackage[T1]{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{lipsum}
+\usepackage{multimedia}
+
+\author{Przemysław Rokosz}
+\title{Systemy CDN}
+ \subtitle{metody, algorytmy}
+ \date{}
+ \institute{Wydział Informatyki i Zarządzania\\\vspace{\baselineskip}Seminarium - Systemy Webowe\\cz 10:15 - 13:00}
+ \subject{Systemy CDN metody algorytmy}
+ \keywords{Systemy CDB, metody, algorytmy}
+ \titlegraphic{}
+
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+
+\setbeamersize{text margin left=0mm,text margin right=2.5mm}
+\usetheme[]{pwr}
+
+\setbeamertemplate{footline}
+{
+\leavevmode
+\hbox{
+\begin{beamercolorbox}[wd=.88\paperwidth,ht=2.5ex,dp=1.125ex,right]{title in head/foot}
+\end{beamercolorbox}
+\begin{beamercolorbox}[wd=.1\paperwidth,ht=2.5ex,dp=1.125ex,center]{title in head/foot}
+\usebeamerfont{author in head/foot} \insertframenumber/\inserttotalframenumber
+\end{beamercolorbox}
+}
+\vskip0pt%
+}
+
+\setbeamertemplate{navigation symbols}{}
+
+\hypersetup{
+ urlcolor=blue
+}
+
+\begin{document}
+\begin{frame}[plain,t]
+ \maketitle
+\end{frame}
+
+\begin{frame}[shrink=5]
+ \frametitle{\vspace{22px}Plan prezentacji}
+ \begin{itemize}
+  \item{Co to jest CDN?}
+  \item{Sposoby dostarczania treści}
+  \item{Współpraca serwerów krawędziowych}
+  \item{Algorytmy rozmieszczenia treści}
+  \item{Metody globalnego kierowania żądań}
+  \item{Wybór najlepszego serwera dla żądania}
+  \item{Podsumowanie}
+  \item{Bibliografia}
+ \end{itemize}
+\end{frame}
+
+\end{document}
