@@ -1,5 +1,8 @@
 all: seminarka_1
 
+run:
+	impressive -T 0 ./bin/out/sem_1.pdf
+
 seminarka_1:
 	sh ./build/sem_1.sh
 
