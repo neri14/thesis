@@ -1,0 +1,23 @@
+<areas>
+	<area>
+		<name>AREA_MAIN</name>
+		<actuators>
+			<name>SIGNAL_W01</name>
+			<name>SIGNAL_W02</name>
+			<name>SIGNAL_S01</name>
+			<name>SIGNAL_S02</name>
+			<name>SIGNAL_E01</name>
+		</actuators>
+		<flow_sensors>
+			<name>FLOW_W01</name>
+			<name>FLOW_S01</name>
+			<name>FLOW_E01</name>
+		</flow_sensors>
+		<queue_sensors>
+			<name>QUEUE_W01</name>
+			<name>QUEUE_W02</name>
+			<name>QUEUE_S01</name>
+			<name>QUEUE_E01</name>
+		</queue_sensors>
+	</area>
+</areas>

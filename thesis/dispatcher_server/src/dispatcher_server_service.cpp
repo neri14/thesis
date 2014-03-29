@@ -20,8 +20,8 @@ int dispatcher_server_service::start()
 		thread.start();
 
 		std::string str;
-		while (str != "stop") {
-			std::cout << "write \"stop\" to stop execution" << std::endl;
+		while (str != "exit") {
+			std::cout << "write \"exit\" to stop execution" << std::endl;
 			std::cin >> str;
 		}
 

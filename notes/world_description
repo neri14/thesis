@@ -1,0 +1,107 @@
+==node types==
+
+type		ent. cnt	exits cnt
+----------------------------------
+ENTRANCE		0			1
+EXIT			1			0
+SPLIT			1			2
+JOIN			2			1
+INTERSECT		2			2		always ent0->exit0 and ent1->exit1
+SIMPLE			1			1
+
+
+
+//distances in meters - should be recalculated to vehicle slots (5m)
+//when creating cellular automata representation
+==world description hierarchy==
+each file can be further split into subfiles
+
+--world.xml--
+world
+	config
+		speed_limit		int
+	files
+		file			string
+
+--nodes.xml--
+nodes
+	node
+		type			string
+		name			string
+
+--connections.xml--
+connections
+	connection
+		node_from
+			name		string
+			exit		int
+		node_to
+			name		string
+			entrance	int
+		distance		int
+
+--creators.xml--
+creators
+	creator
+		node_name		string
+		create_rate		int			can create n cars per hour
+
+--destroyers.xml
+destroyers
+	destoyer
+		node_name		string
+		destroy_rate	int			can destroy n cars per hour
+
+--actuators.xml--
+actuators
+	actuator
+		name			string
+		node_name		string
+		exit_number		int			number of controlled exit
+
+--flow_sensors.xml--
+flow_sensors
+	flow_sensor
+		name			string
+		node_name		string
+		exit_number		int			number of measured exit flow
+
+--queue_sensors--
+queue_sensors
+	queue_sensor
+		name			string
+		node_from		string
+		node_to			string
+
+--areas--
+areas
+	area
+		name			string
+		actuators
+			name		string
+		flow_sensors
+			name		string
+		queue_sensors
+			name		string
+
+--paths--
+paths
+	path
+		name			string
+		nodes						sequence of nodes passed in path
+			node		string
+
+--priorities--
+priorities
+	priority
+		node_name		string
+		entrance		int			specifies entrance with higher priority
+
+--simulation--
+simulation
+	duration			int			duration of simulation in seconds
+	path_flows
+		path_flow
+			path_name	string
+			flow		int			veh/h
+			start_time	int			start time of given flow

@@ -1,6 +1,8 @@
-#include <iostream>
+#include <common_main.h>
+#include "../src/simulator_service.h"
 
-int main()
+int main(int argc, char** argv)
 {
-	std::cout << "simulator not yet implemented" << std::endl;
+	return common::common_main<simulator::simulator_service>(
+		argc, argv, "simulator_main");
 }

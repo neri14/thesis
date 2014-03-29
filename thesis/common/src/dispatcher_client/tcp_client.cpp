@@ -48,6 +48,7 @@ void tcp_client::handle_connect(const boost::system::error_code& error)
 		session->connect();
 		session->start();
 	} else {
+		logger.error()() << "could not connect to server";
 		session_exit();
 	}
 }

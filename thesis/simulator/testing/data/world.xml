@@ -1,0 +1,18 @@
+<world>
+	<config>
+		<speed_limit>50</speed_limit>
+	</config>
+	<files>
+		<file>nodes.xml</file>
+		<file>connections.xml</file>
+		<file>creators.xml</file>
+		<file>destroyers.xml</file>
+		<file>actuators.xml</file>
+		<file>flow_sensors.xml</file>
+		<file>queue_sensors.xml</file>
+		<file>areas.xml</file>
+		<file>paths.xml</file>
+		<file>priorities.xml</file>
+		<file>simulation.xml</file>
+	</files>
+</world>

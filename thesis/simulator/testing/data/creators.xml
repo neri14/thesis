@@ -1,0 +1,14 @@
+<creators>
+	<creator>
+		<node_name>ENTRANCE_W01</node_name>
+		<create_rate>1600</create_rate>
+	</creator>
+	<creator>
+		<node_name>ENTRANCE_E01</node_name>
+		<create_rate>1600</create_rate>
+	</creator>
+	<creator>
+		<node_name>ENTRANCE_S01</node_name>
+		<create_rate>900</create_rate>
+	</creator>
+</creators>
