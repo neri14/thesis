@@ -1,27 +1,29 @@
-<actuators>
-	<actuator>
-		<name>SIGNAL_W01</name>
-		<node_name>SIMPLE_W02</node_name>
-		<exit_number>0</exit_number>
-	</actuator>
-	<actuator>
-		<name>SIGNAL_W02</name>
-		<node_name>SIMPLE_W04</node_name>
-		<exit_number>0</exit_number>
-	</actuator>
-	<actuator>
-		<name>SIGNAL_S01</name>
-		<node_name>SPLIT_S01</node_name>
-		<exit_number>0</exit_number>
-	</actuator>
-	<actuator>
-		<name>SIGNAL_S02</name>
-		<node_name>SPLIT_S01</node_name>
-		<exit_number>1</exit_number>
-	</actuator>
-	<actuator>
-		<name>SIGNAL_E01</name>
-		<node_name>SIMPLE_E02</node_name>
-		<exit_number>0</exit_number>
-	</actuator>
-</actuators>
+<world>
+	<actuators>
+		<actuator>
+			<name>SIGNAL_W01</name>
+			<node_name>SIMPLE_W02</node_name>
+			<exit_number>0</exit_number>
+		</actuator>
+		<actuator>
+			<name>SIGNAL_W02</name>
+			<node_name>SIMPLE_W04</node_name>
+			<exit_number>0</exit_number>
+		</actuator>
+		<actuator>
+			<name>SIGNAL_S01</name>
+			<node_name>SPLIT_S01</node_name>
+			<exit_number>0</exit_number>
+		</actuator>
+		<actuator>
+			<name>SIGNAL_S02</name>
+			<node_name>SPLIT_S01</node_name>
+			<exit_number>1</exit_number>
+		</actuator>
+		<actuator>
+			<name>SIGNAL_E01</name>
+			<node_name>SIMPLE_E02</node_name>
+			<exit_number>0</exit_number>
+		</actuator>
+	</actuators>
+</world>

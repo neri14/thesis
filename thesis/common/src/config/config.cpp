@@ -55,6 +55,7 @@ bool config::load_file(const std::string& filename_)
 void config::add(const std::string& key, const std::string& value)
 {
 	cfg_map.insert(std::make_pair(key, value));
+	std::cout << "config: " << key << " = " << value << std::endl;
 }
 
 void config::load_tree(const boost::property_tree::ptree& pt)
@@ -62,7 +63,6 @@ void config::load_tree(const boost::property_tree::ptree& pt)
 	BOOST_FOREACH(const boost::property_tree::ptree::value_type& v, pt) {
 		if (v.second.data().length()) {
 			add(v.first, v.second.data());
-			std::cout << "config: " << v.first << " = " << v.second.data() << std::endl;
 		}
 		load_tree(v.second);
 	}
