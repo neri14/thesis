@@ -39,6 +39,8 @@ private:
 	bool parse_priorities(const boost::property_tree::ptree& pt);
 	bool parse_simulation(const boost::property_tree::ptree& pt);
 
+	std::pair<int,int> find_connection(world_node_handle node_from, world_node_handle node_to);
+
 	common::my_logger logger;
 	std::queue<std::string> files;
 

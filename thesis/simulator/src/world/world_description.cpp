@@ -51,5 +51,19 @@ world_node::world_node(const std::string& name_, ENodeType type_) :
 	}
 }
 
+world_actuator::world_actuator(const std::string& name_, world_node_handle node_, int exit_) :
+	name(name_), node(node_), exit(exit_)
+{}
+
+world_flow_sensor::world_flow_sensor(const std::string& name_, world_node_handle node_, int exit_) :
+	name(name_), node(node_), exit(exit_)
+{}
+
+world_queue_sensor::world_queue_sensor(const std::string& name_, world_node_handle node_from_,
+		world_node_handle node_to_, int node_from_exit_, int node_to_entrance_) :
+	name(name_), node_from(node_from_), node_to(node_to_),
+	node_from_exit(node_from_exit_), node_to_entrance(node_to_entrance_)
+{}
+
 }// namespace simulator
 }// namespace world

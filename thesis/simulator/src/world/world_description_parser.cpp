@@ -120,19 +120,19 @@ bool world_description_parser::parse_nodes(const boost::property_tree::ptree& pt
 			std::string type = v.second.get<std::string>("type");
 			mapping_t::const_iterator it = mapping.find(type);
 
-			if (it != mapping.end()) {
-				world_node_handle n(new world_node(v.second.get<std::string>("name"), it->second));
-
-				if (desc->nodes.insert(std::make_pair(n->name, n)).second) {
-					logger.debug()() << "added node (" << n->name << "," << type << ")";
-				} else {
-					logger.error()() << "duplicated node name: " << n->name;
-					return false;
-				}
-			} else {
+			if (it == mapping.end()) {
 				logger.error()() << "wrong node type: " << type;
 				return false;
 			}
+
+			world_node_handle n(new world_node(v.second.get<std::string>("name"), it->second));
+
+			if (!desc->nodes.insert(std::make_pair(n->name, n)).second) {
+				logger.error()() << "duplicated node name: " << n->name;
+				return false;
+			}
+
+			logger.debug()() << "added node (" << n->name << "," << type << ")";
 		} else {
 			logger.warning()() << "unexpected xml tag: " << v.first;
 		}
@@ -152,25 +152,26 @@ bool world_description_parser::parse_connections(const boost::property_tree::ptr
 			int distance = v.second.get<int>("distance");
 
 			world_node_handle node_from;
-			if (desc->nodes.find(from_name) != desc->nodes.end()) {
-				node_from = desc->nodes.find(from_name)->second;
-			} else {
+			world_node_handle node_to;
+
+			if (desc->nodes.find(from_name) == desc->nodes.end()) {
 				logger.error()() << "wrong node name: " << from_name;
 				return false;
 			}
 
-			world_node_handle node_to;
-			if (desc->nodes.find(to_name) != desc->nodes.end()) {
-				node_to = desc->nodes.find(to_name)->second;
-			} else {
+			if (desc->nodes.find(to_name) == desc->nodes.end()) {
 				logger.error()() << "wrong node name: " << to_name;
 				return false;
 			}
+
+			node_from = desc->nodes.find(from_name)->second;
+			node_to = desc->nodes.find(to_name)->second;
 
 			if (!node_from->exits.count(from_exit)) {
 				logger.error()() << "wrong exit for given node: (" << from_name << "," << from_exit << ")";
 				return false;
 			}
+
 			if (!node_to->entrances.count(to_entrance)) {
 				logger.error()() << "wrong entrance for given node: (" << to_name << "," << to_entrance << ")";
 				return false;
@@ -178,19 +179,19 @@ bool world_description_parser::parse_connections(const boost::property_tree::ptr
 
 			world_connection_handle conn(new world_connection(distance));
 
-			if (!node_from->exits[from_exit]) {
-				node_from->exits[from_exit] = conn;
-			} else {
+			if (node_from->exits[from_exit]) {
 				logger.error()() << "multiple use of exit: (" << from_name << "," << from_exit << ")";
 				return false;
 			}
-			if (!node_to->entrances[to_entrance]) {
-				node_to->entrances[to_entrance] = conn;
-			} else {
+
+			if (node_to->entrances[to_entrance]) {
 				logger.error()() << "multiple use of entrance: (" << to_name << "," << to_entrance << ")";
 				return false;
 			}
 
+			node_from->exits[from_exit] = conn;
+			node_to->entrances[to_entrance] = conn;
+			desc->connections.insert(conn);
 			logger.debug()() << "added connection (" << from_name << "," << from_exit << ") -> (" <<
 				to_name << "," << to_entrance << ")";
 		} else {
@@ -211,13 +212,13 @@ bool world_description_parser::parse_creators(const boost::property_tree::ptree&
 				rate = 0;
 			}
 
-			if (desc->nodes.find(node) != desc->nodes.end()) {
-				desc->nodes.find(node)->second->max_create_rate = rate;
-				logger.debug()() << "set node " << node << " max create rate to " << rate;
-			} else {
+			if (desc->nodes.find(node) == desc->nodes.end()) {
 				logger.error()() << "wrong node name: " << node;
 				return false;
 			}
+
+			desc->nodes.find(node)->second->max_create_rate = rate;
+			logger.debug()() << "set node " << node << " max create rate to " << rate;
 		} else {
 			logger.warning()() << "unexpected xml tag: " << v.first;
 		}
@@ -236,13 +237,13 @@ bool world_description_parser::parse_destroyers(const boost::property_tree::ptre
 				rate = 0;
 			}
 
-			if (desc->nodes.find(node) != desc->nodes.end()) {
-				desc->nodes.find(node)->second->max_destroy_rate = rate;
-				logger.debug()() << "set node " << node << " max destroy rate to " << rate;
-			} else {
+			if (desc->nodes.find(node) == desc->nodes.end()) {
 				logger.error()() << "wrong node name: " << node;
 				return false;
 			}
+
+			desc->nodes.find(node)->second->max_destroy_rate = rate;
+			logger.debug()() << "set node " << node << " max destroy rate to " << rate;
 		} else {
 			logger.warning()() << "unexpected xml tag: " << v.first;
 		}
@@ -250,12 +251,126 @@ bool world_description_parser::parse_destroyers(const boost::property_tree::ptre
 	return true;
 }
 
-bool world_description_parser::parse_actuators(const boost::property_tree::ptree& pt) {return true;}
-//TODO parse_actuators
-bool world_description_parser::parse_flow_sensors(const boost::property_tree::ptree& pt) {return true;}
-//TODO parse_flow_sensors
-bool world_description_parser::parse_queue_sensors(const boost::property_tree::ptree& pt) {return true;}
-//TODO parse_queue_sensors
+bool world_description_parser::parse_actuators(const boost::property_tree::ptree& pt)
+{
+	using boost::property_tree::ptree;
+	BOOST_FOREACH(const ptree::value_type& v, pt) {
+		if ("actuator" == v.first) {
+			std::string name = v.second.get<std::string>("name");
+			std::string node = v.second.get<std::string>("node_name");
+			int exit = v.second.get<int>("exit_number");
+
+			if (desc->nodes.find(node) == desc->nodes.end()) {
+				logger.error()() << "wrong node name: " << node;
+				return false;
+			}
+
+			world_node_handle n = desc->nodes.find(node)->second;
+
+			if (n->exits.find(exit) == n->exits.end()) {
+				logger.error()() << "wrong node exit: (" << node << "," << exit << ")";
+				return false;
+			}
+
+			if (desc->actuators.find(name) != desc->actuators.end()) {
+				logger.error()() << "duplicated actuator name: " << name;
+				return false;
+			}
+
+			desc->actuators.insert(std::make_pair(name,
+				world_actuator_handle(new world_actuator(name, n, exit))));
+			logger.debug()() << "added actuator: (" << name << ") -> (" << node << "," << exit << ")";
+		} else {
+			logger.warning()() << "unexpected xml tag: " << v.first;
+		}
+	}
+	return true;
+}
+
+bool world_description_parser::parse_flow_sensors(const boost::property_tree::ptree& pt)
+{
+	using boost::property_tree::ptree;
+	BOOST_FOREACH(const ptree::value_type& v, pt) {
+		if ("flow_sensor" == v.first) {
+			std::string name = v.second.get<std::string>("name");
+			std::string node = v.second.get<std::string>("node_name");
+			int exit = v.second.get<int>("exit_number");
+
+			if (desc->nodes.find(node) == desc->nodes.end()) {
+				logger.error()() << "wrong node name: " << node;
+				return false;
+			}
+
+			world_node_handle n = desc->nodes.find(node)->second;
+
+			if (n->exits.find(exit) == n->exits.end()) {
+				logger.error()() << "wrong node exit: (" << node << "," << exit << ")";
+				return false;
+			}
+
+			if (desc->flow_sensors.find(name) != desc->flow_sensors.end() ||
+					desc->queue_sensors.find(name) != desc->queue_sensors.end()) {
+				logger.error()() << "duplicated sensor name: " << name;
+				return false;
+			}
+
+			desc->flow_sensors.insert(std::make_pair(name,
+				world_flow_sensor_handle(new world_flow_sensor(name, n, exit))));
+			logger.debug()() << "added flow sensor: (" << node << "," << exit << ") -> (" << name << ")";
+		} else {
+			logger.warning()() << "unexpected xml tag: " << v.first;
+		}
+	}
+	return true;
+}
+
+bool world_description_parser::parse_queue_sensors(const boost::property_tree::ptree& pt)
+{
+	using boost::property_tree::ptree;
+	BOOST_FOREACH(const ptree::value_type& v, pt) {
+		if ("queue_sensor" == v.first) {
+			std::string name = v.second.get<std::string>("name");
+			std::string from = v.second.get<std::string>("node_from");
+			std::string to = v.second.get<std::string>("node_to");
+
+			if (desc->nodes.find(from) == desc->nodes.end()) {
+				logger.error()() << "wrong node name: " << from;
+				return false;
+			}
+			if (desc->nodes.find(to) == desc->nodes.end()) {
+				logger.error()() << "wrong node name: " << to;
+				return false;
+			}
+
+			world_node_handle node_from = desc->nodes.find(from)->second;
+			world_node_handle node_to = desc->nodes.find(to)->second;
+
+			std::pair<int,int> tmp_pair = find_connection(node_from, node_to);
+			int exit = tmp_pair.first;
+			int entrance = tmp_pair.second;
+
+			if (exit == -1 || entrance == -1) {
+				logger.error()() << "could not find connection between nodes: " << from << " -> " << to;
+				return false;
+			}
+
+			if (desc->flow_sensors.find(name) != desc->flow_sensors.end() ||
+					desc->queue_sensors.find(name) != desc->queue_sensors.end()) {
+				logger.error()() << "duplicated sensor name: " << name;
+				return false;
+			}
+
+			desc->queue_sensors.insert(std::make_pair(name, world_queue_sensor_handle(
+				new world_queue_sensor(name, node_from, node_to, exit, entrance))));
+
+			logger.debug()() << "added queue sensor: (" << from << ") - (" << to << ") -> (" << name << ")";
+		} else {
+			logger.warning()() << "unexpected xml tag: " << v.first;
+		}
+	}
+	return true;
+}
+
 bool world_description_parser::parse_areas(const boost::property_tree::ptree& pt) {return true;}
 //TODO parse_areas
 bool world_description_parser::parse_paths(const boost::property_tree::ptree& pt) {return true;}
@@ -264,6 +379,25 @@ bool world_description_parser::parse_priorities(const boost::property_tree::ptre
 //TODO parse_priorities
 bool world_description_parser::parse_simulation(const boost::property_tree::ptree& pt) {return true;}
 //TODO parse_simulation
+
+std::pair<int,int> world_description_parser::find_connection(
+		world_node_handle node_from, world_node_handle node_to)
+{
+	int exit = -1;
+	int entrance = -1;
+
+	typedef std::pair<int, world_connection_handle> conn_pair_type;
+	BOOST_FOREACH (conn_pair_type conn_from, node_from->exits) {
+		BOOST_FOREACH (conn_pair_type conn_to, node_to->entrances) {
+			if (conn_from.second == conn_to.second) {
+				exit = conn_from.first;
+				entrance = conn_to.first;
+			}
+		}
+	}
+
+	return std::make_pair(exit, entrance);
+}
 
 } // namespace world
 } // namespace simulator
