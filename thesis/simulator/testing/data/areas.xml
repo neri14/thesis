@@ -2,6 +2,7 @@
 	<areas>
 		<area>
 			<name>AREA_MAIN</name>
+			<scope>101</scope>
 			<actuators>
 				<name>SIGNAL_W01</name>
 				<name>SIGNAL_W02</name>

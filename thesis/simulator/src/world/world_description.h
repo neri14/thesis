@@ -3,6 +3,7 @@
 
 #include <map>
 #include <set>
+#include <vector>
 #include <string>
 #include <boost/shared_ptr.hpp>
 
@@ -30,10 +31,13 @@ typedef boost::shared_ptr<world_connection> world_connection_handle;
 struct world_node
 {
 	world_node(const std::string& name_, ENodeType type_);
+	std::pair<int,int> find_connection_to(const world_node& node_to);
+
 	std::string name;
 	ENodeType type;
 	int max_create_rate;
 	int max_destroy_rate;
+	int priority_entrance;
 
 	std::map<int, world_connection_handle> entrances;
 	std::map<int, world_connection_handle> exits;
@@ -73,13 +77,48 @@ struct world_queue_sensor
 };
 typedef boost::shared_ptr<world_queue_sensor> world_queue_sensor_handle;
 
+struct world_area
+{
+	world_area(const std::string& name_, int scope_);
+
+	std::string name;
+	int scope;
+	
+	std::set<world_actuator_handle> actuators;
+	std::set<world_flow_sensor_handle> flow_sensors;
+	std::set<world_queue_sensor_handle> queue_sensors;
+};
+typedef boost::shared_ptr<world_area> world_area_handle;
+
+struct world_path
+{
+	world_path(const std::string& name_);
+	int get_length() const;
+
+	std::string name;
+
+	std::vector<world_node_handle> nodes;
+};
+typedef boost::shared_ptr<world_path> world_path_handle;
+
+struct world_simulation
+{
+	int duration;
+	//<start_time <flow, path> >
+	std::multimap<int, std::pair<int, world_path_handle> > path_flows;
+};
+typedef boost::shared_ptr<world_simulation> world_simulation_handle;
+
 struct world_description
 {
+	world_simulation_handle simulation;
 	std::map<std::string, world_node_handle> nodes;
 	std::set<world_connection_handle> connections;
 	std::map<std::string, world_actuator_handle> actuators;
 	std::map<std::string, world_flow_sensor_handle> flow_sensors;
 	std::map<std::string, world_queue_sensor_handle> queue_sensors;
+	std::map<std::string, world_area_handle> areas;
+	std::map<std::string, world_path_handle> paths;
 };
 typedef boost::shared_ptr<world_description> world_description_handle;
 

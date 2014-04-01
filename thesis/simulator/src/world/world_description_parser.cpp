@@ -345,7 +345,7 @@ bool world_description_parser::parse_queue_sensors(const boost::property_tree::p
 			world_node_handle node_from = desc->nodes.find(from)->second;
 			world_node_handle node_to = desc->nodes.find(to)->second;
 
-			std::pair<int,int> tmp_pair = find_connection(node_from, node_to);
+			std::pair<int,int> tmp_pair = node_from->find_connection_to(*node_to);
 			int exit = tmp_pair.first;
 			int entrance = tmp_pair.second;
 
@@ -371,33 +371,131 @@ bool world_description_parser::parse_queue_sensors(const boost::property_tree::p
 	return true;
 }
 
-bool world_description_parser::parse_areas(const boost::property_tree::ptree& pt) {return true;}
-//TODO parse_areas
-bool world_description_parser::parse_paths(const boost::property_tree::ptree& pt) {return true;}
-//TODO parse_paths
-bool world_description_parser::parse_priorities(const boost::property_tree::ptree& pt) {return true;}
-//TODO parse_priorities
-bool world_description_parser::parse_simulation(const boost::property_tree::ptree& pt) {return true;}
-//TODO parse_simulation
-
-std::pair<int,int> world_description_parser::find_connection(
-		world_node_handle node_from, world_node_handle node_to)
+bool world_description_parser::parse_areas(const boost::property_tree::ptree& pt)
 {
-	int exit = -1;
-	int entrance = -1;
+	using boost::property_tree::ptree;
+	BOOST_FOREACH(const ptree::value_type& v, pt) {
+		if ("area" == v.first) {
+			std::string area_name = v.second.get<std::string>("name");
+			int scope = v.second.get<int>("scope");
 
-	typedef std::pair<int, world_connection_handle> conn_pair_type;
-	BOOST_FOREACH (conn_pair_type conn_from, node_from->exits) {
-		BOOST_FOREACH (conn_pair_type conn_to, node_to->entrances) {
-			if (conn_from.second == conn_to.second) {
-				exit = conn_from.first;
-				entrance = conn_to.first;
+			if (desc->areas.find(area_name) != desc->areas.end()) {
+				logger.error()() << "duplicated area name: " << area_name;
+				return false;
 			}
+			world_area_handle area(new world_area(area_name, scope));
+
+			BOOST_FOREACH(const ptree::value_type& tree, v.second.get_child("actuators")) {
+				if ("name" == tree.first) {
+					if (desc->actuators.end() == desc->actuators.find(tree.second.data())) {
+						logger.error()() << "wrong actuator name: " << tree.second.data();
+						return false;
+					}
+					area->actuators.insert(desc->actuators.find(tree.second.data())->second);
+				} else {
+					logger.warning()() << "unexpected xml tag: " << tree.first;
+				}
+			}
+			BOOST_FOREACH(const ptree::value_type& tree, v.second.get_child("flow_sensors")) {
+				if ("name" == tree.first) {
+					if (desc->flow_sensors.end() == desc->flow_sensors.find(tree.second.data())) {
+						logger.error()() << "wrong flow sensor name: " << tree.second.data();
+						return false;
+					}
+					area->flow_sensors.insert(desc->flow_sensors.find(tree.second.data())->second);
+				} else {
+					logger.warning()() << "unexpected xml tag: " << tree.first;
+				}
+			}
+			BOOST_FOREACH(const ptree::value_type& tree, v.second.get_child("queue_sensors")) {
+				if ("name" == tree.first) {
+					if (desc->queue_sensors.end() == desc->queue_sensors.find(tree.second.data())) {
+						logger.error()() << "wrong queue sensor name: " << tree.second.data();
+						return false;
+					}
+					area->queue_sensors.insert(desc->queue_sensors.find(tree.second.data())->second);
+				} else {
+					logger.warning()() << "unexpected xml tag: " << tree.first;
+				}
+			}
+
+			desc->areas.insert(std::make_pair(area_name, area));
+			logger.debug()() << "added area: " << area_name << ", scope: " << scope <<
+				" (" << area->actuators.size() << " actuators, " << area->flow_sensors.size() <<
+				" flow sensors, " << area->queue_sensors.size() << " queue sensors)";
+		} else {
+			logger.warning()() << "unexpected xml tag: " << v.first;
 		}
 	}
-
-	return std::make_pair(exit, entrance);
+	return true;
 }
+
+bool world_description_parser::parse_paths(const boost::property_tree::ptree& pt)
+{
+	using boost::property_tree::ptree;
+	BOOST_FOREACH(const ptree::value_type& v, pt) {
+		if ("path" == v.first) {
+			std::string path_name = v.second.get<std::string>("name");
+
+			if (desc->paths.find(path_name) != desc->paths.end()) {
+				logger.error()() << "duplicated path name: " << path_name;
+				return false;
+			}
+			world_path_handle path(new world_path(path_name));
+
+			BOOST_FOREACH(const ptree::value_type& tree, v.second.get_child("nodes")) {
+				if ("node" == tree.first) {
+					if (desc->nodes.end() == desc->nodes.find(tree.second.data())) {
+						logger.error()() << "wrong node name: " << tree.second.data();
+						return false;
+					}
+					path->nodes.push_back(desc->nodes.find(tree.second.data())->second);
+				} else {
+					logger.warning()() << "unexpected xml tag: " << tree.first;
+				}
+			}
+
+			desc->paths.insert(std::make_pair(path_name, path));
+			logger.debug()() << "added path: " << path_name << ", nodes: " << path->nodes.size() <<
+				" length: " << path->get_length();
+		} else {
+			logger.warning()() << "unexpected xml tag: " << v.first;
+		}
+	}
+	return true;
+}
+
+bool world_description_parser::parse_priorities(const boost::property_tree::ptree& pt)
+{
+	using boost::property_tree::ptree;
+	BOOST_FOREACH(const ptree::value_type& v, pt) {
+		if ("priority" == v.first) {
+			std::string node_name = v.second.get<std::string>("node_name");
+			int entrance = v.second.get<int>("entrance");
+
+			if (desc->nodes.find(node_name) == desc->nodes.end()) {
+				logger.error()() << "wrong node name: " << node_name;
+				return false;
+			}
+
+			world_node_handle node = desc->nodes.find(node_name)->second;
+
+			if (entrance < 0 || node->entrances.size() <= entrance) {
+				logger.error()() << "wrong entrance number: " << entrance;
+				return false;
+			}
+
+			node->priority_entrance = entrance;
+			logger.debug()() << "node " << node_name << " priority entrance set to " << entrance;
+		} else {
+			logger.warning()() << "unexpected xml tag: " << v.first;
+		}
+	}
+	return true;
+}
+
+bool world_description_parser::parse_simulation(const boost::property_tree::ptree& pt) {return true;}
+//TODO parse_simulation
 
 } // namespace world
 } // namespace simulator

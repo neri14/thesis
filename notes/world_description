@@ -83,6 +83,7 @@ world
 	areas
 		area
 			name			string
+			scope			int
 			actuators
 				name		string
 			flow_sensors
