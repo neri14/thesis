@@ -494,8 +494,44 @@ bool world_description_parser::parse_priorities(const boost::property_tree::ptre
 	return true;
 }
 
-bool world_description_parser::parse_simulation(const boost::property_tree::ptree& pt) {return true;}
-//TODO parse_simulation
+bool world_description_parser::parse_simulation(const boost::property_tree::ptree& pt)
+{
+	using boost::property_tree::ptree;
+	desc->simulation.reset(new world_simulation());
+
+	BOOST_FOREACH(const ptree::value_type& v, pt) {
+		if ("duration" == v.first) {
+			desc->simulation->duration = v.second.get_value<int>();
+		} else if ("path_flows" == v.first) {
+			BOOST_FOREACH(const ptree::value_type& tree, v.second) {
+				if ("path_flow" == tree.first) {
+					std::string path_name = tree.second.get<std::string>("path_name");
+					if (desc->paths.end() == desc->paths.find(path_name)) {
+						logger.error()() << "wrong path name: " << tree.second.data();
+						return false;
+					}
+
+					world_path_handle path = desc->paths.find(path_name)->second;
+					int start_time = tree.second.get<int>("start_time");
+					int flow = tree.second.get<int>("flow");
+
+					desc->simulation->path_flows.insert(
+						std::make_pair(start_time, std::make_pair(flow, path)));
+					logger.debug()() << "added path flow, start_time: " << start_time <<
+						", flow: " << flow << ", path: " << path_name;
+				} else {
+					logger.warning()() << "unexpected xml tag: " << tree.first;
+				}
+			}
+		} else {
+			logger.warning()() << "unexpected xml tag: " << v.first;
+		}
+	}
+
+	logger.debug()() << "simulation duration: " << desc->simulation->duration <<
+		"s, path flows number: " << desc->simulation->path_flows.size();
+	return true;
+}
 
 } // namespace world
 } // namespace simulator

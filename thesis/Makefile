@@ -123,6 +123,8 @@ visualiser_test_run:
 .PHONY: test_run $(TEST_RUN_)
 
 ### HELPERS ###
+prepare: prepare_cmake prepare_3rdparty
+
 prepare_cmake: prepare_3rdparty
 	sh ./build/prepare_cmake.sh ${debug}
 
