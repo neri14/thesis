@@ -13,6 +13,10 @@ bool world_description_validator::validate()
 {
 	bool result = true;
 	result = check_loose_ends() && result;
+	result = check_paths_integrity() && result;
+	result = check_actuators_area_membership() && result;
+	result = check_flow_sensors_area_membership() && result;
+	result = check_queue_sensors_area_membership() && result;
 
 	if (result) {
 		logger.info()() << "world description is correct";
@@ -43,6 +47,99 @@ bool world_description_validator::check_loose_ends()
 
 	if (result) {
 		logger.debug()() << "no loose ends";
+	}
+	return result;
+}
+
+bool world_description_validator::check_paths_integrity()
+{
+	typedef std::pair<std::string, world_path_handle> path_pair_t;
+
+	bool result = true;
+	BOOST_FOREACH(path_pair_t path, desc->paths) {
+		if (path.second->get_length() < 0) {
+			logger.error()() << "can't determine path length - path not ok: " << path.second->name;
+			result = false;
+		}
+	}
+
+	if (result) {
+		logger.debug()() << "all paths are ok";
+	}
+	return result;
+}
+
+bool world_description_validator::check_actuators_area_membership()
+{
+	typedef std::pair<std::string, world_actuator_handle> act_pair_t;
+	typedef std::pair<std::string, world_area_handle> area_pair_t;
+
+	bool result = true;
+	BOOST_FOREACH(act_pair_t act, desc->actuators) {
+		bool member = false;
+		BOOST_FOREACH(area_pair_t area, desc->areas) {
+			if (area.second->actuators.find(act.second) != area.second->actuators.end()) {
+				member = true;
+			}
+		}
+
+		if (!member) {
+			logger.error()() << "actuator is not a member of any area: " << act.second->name;
+			result = false;
+		}
+	}
+	if (result) {
+		logger.debug()() << "all actuators are members of areas";
+	}
+	return result;
+}
+
+bool world_description_validator::check_flow_sensors_area_membership()
+{
+	typedef std::pair<std::string, world_flow_sensor_handle> flow_pair_t;
+	typedef std::pair<std::string, world_area_handle> area_pair_t;
+
+	bool result = true;
+	BOOST_FOREACH(flow_pair_t flow, desc->flow_sensors) {
+		bool member = false;
+		BOOST_FOREACH(area_pair_t area, desc->areas) {
+			if (area.second->flow_sensors.find(flow.second) != area.second->flow_sensors.end()) {
+				member = true;
+			}
+		}
+
+		if (!member) {
+			logger.error()() << "flow sensor is not a member of any area: " << flow.second->name;
+			result = false;
+		}
+	}
+	if (result) {
+		logger.debug()() << "all flow sensors are members of areas";
+	}
+	return result;
+}
+
+bool world_description_validator::check_queue_sensors_area_membership()
+{
+	typedef std::pair<std::string, world_queue_sensor_handle> que_pair_t;
+	typedef std::pair<std::string, world_area_handle> area_pair_t;
+
+	bool result = true;
+	BOOST_FOREACH(que_pair_t que, desc->queue_sensors) {
+		bool member = false;
+		BOOST_FOREACH(area_pair_t area, desc->areas) {
+			if (area.second->queue_sensors.find(que.second) != area.second->queue_sensors.end()) {
+				member = true;
+			}
+		}
+
+		if (!member) {
+			logger.error()() << "queue sensor is not a member of any area: " << que.second->name;
+			result = false;
+		}
+	}
+	if (result) {
+		logger.debug()() << "all queue sensors are members of areas";
 	}
 	return result;
 }

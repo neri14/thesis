@@ -97,14 +97,19 @@ world_path::world_path(const std::string& name_) :
 int world_path::get_length() const
 {
 	int sum = 0;
-	world_node_handle prev;
-	BOOST_FOREACH(world_node_handle node, nodes) {
-		if (prev) {
-			sum += node->entrances.find(prev->find_connection_to(*node).second)->second->distance;
+	try {
+		world_node_handle prev;
+		BOOST_FOREACH(world_node_handle node, nodes) {
+			if (prev) {
+				sum += node->entrances.find(prev->find_connection_to(*node).second)->second->distance;
+			}
+			prev = node;
 		}
-		prev = node;
+	} catch (std::exception&) {
+		return -1;
 	}
 	return sum;
+	
 }
 
 }// namespace simulator
