@@ -1,0 +1,8 @@
+
+-I./3rdparty/boost_1_55_0
+-I./3rdparty/proto/src
+-I./thesis/common/src
+-I./3rdparty/gmock-1.7.0
+-I./3rdparty/gmock-1.7.0/include
+-I./3rdparty/gmock-1.7.0/gtest
+-I./3rdparty/gmock-1.7.0/gtest/include
