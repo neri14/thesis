@@ -502,6 +502,10 @@ bool world_description_parser::parse_simulation(const boost::property_tree::ptre
 	BOOST_FOREACH(const ptree::value_type& v, pt) {
 		if ("duration" == v.first) {
 			desc->simulation->duration = v.second.get_value<int>();
+		} else if ("cell_size" == v.first) {
+			desc->simulation->cell_size = v.second.get_value<double>();
+		} else if ("max_speed" == v.first) {
+			desc->simulation->max_speed = v.second.get_value<int>();
 		} else if ("path_flows" == v.first) {
 			BOOST_FOREACH(const ptree::value_type& tree, v.second) {
 				if ("path_flow" == tree.first) {

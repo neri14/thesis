@@ -1,0 +1,24 @@
+<world>
+	<queue_sensors>
+		<queue_sensor>
+			<name>QUEUE_W01</name>
+			<node_from>SIMPLE_W01</node_from>
+			<node_to>SIMPLE_W02</node_to>
+		</queue_sensor>
+		<queue_sensor>
+			<name>QUEUE_W02</name>
+			<node_from>SIMPLE_W03</node_from>
+			<node_to>SIMPLE_W04</node_to>
+		</queue_sensor>
+		<queue_sensor>
+			<name>QUEUE_S01</name>
+			<node_from>SIMPLE_S01</node_from>
+			<node_to>SPLIT_S01</node_to>
+		</queue_sensor>
+		<queue_sensor>
+			<name>QUEUE_E01</name>
+			<node_from>SIMPLE_E01</node_from>
+			<node_to>SIMPLE_E02</node_to>
+		</queue_sensor>
+	</queue_sensors>
+</world>

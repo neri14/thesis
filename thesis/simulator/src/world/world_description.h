@@ -104,6 +104,9 @@ typedef boost::shared_ptr<world_path> world_path_handle;
 struct world_simulation
 {
 	int duration;
+	double cell_size;
+	int max_speed; // in cells per second
+
 	//<start_time <flow, path> >
 	std::multimap<int, std::pair<int, world_path_handle> > path_flows;
 };

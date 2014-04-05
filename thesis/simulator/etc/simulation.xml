@@ -2,7 +2,6 @@
 	<simulation>
 		<duration>600</duration>
 		<cell_size>7.5</cell_size>
-		<!-- max speed in cells per second -->
 		<max_speed>3</max_speed>
 		<path_flows>
 			<path_flow>

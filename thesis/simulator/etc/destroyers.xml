@@ -1,0 +1,16 @@
+<world>
+	<destroyers>
+		<destroyer>
+			<node_name>EXIT_W01</node_name>
+			<destroy_rate>1800</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>EXIT_E01</node_name>
+			<destroy_rate>1800</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>EXIT_S01</node_name>
+			<destroy_rate>1200</destroy_rate>
+		</destroyer>
+	</destroyers>
+</world>
