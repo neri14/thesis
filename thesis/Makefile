@@ -95,7 +95,13 @@ visualiser_test: gmock_main
 ### TEST RUN ###
 
 TEST_RUN_ = common_test_run controller_test_run dispatcher_generic_client_test_run dispatcher_server_test_run manager_test_run simulator_test_run visualiser_test_run
-GTEST_FLAGS_ = --gtest_output=xml:bin/
+GTEST_OUTPUT_ = --gtest_output=xml:bin/
+
+ifdef testfilter
+GTEST_FLAGS_ = $(GTEST_OUTPUT_) --gtest_filter=${testfilter}
+else
+GTEST_FLAGS_ = $(GTEST_OUTPUT_)
+endif
 
 test_run: $(TEST_RUN_)
 

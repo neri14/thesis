@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 namespace simulator {
 namespace world {
@@ -20,11 +21,15 @@ enum ENodeType
 	ENodeType_Simple
 };
 
+struct world_node;
+
 struct world_connection
 {
 	world_connection(int distance_);
 
 	int distance;
+	boost::weak_ptr<world_node> from;
+	boost::weak_ptr<world_node> to;
 };
 typedef boost::shared_ptr<world_connection> world_connection_handle;
 
@@ -103,6 +108,8 @@ typedef boost::shared_ptr<world_path> world_path_handle;
 
 struct world_simulation
 {
+	world_simulation();
+
 	int duration;
 	double cell_size;
 	int max_speed; // in cells per second

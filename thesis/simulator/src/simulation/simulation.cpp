@@ -1,9 +1,12 @@
 #include "simulation.h"
 
+#include "../world/world_description.h"
 #include "../world/world_description_parser.h"
 #include "../world/world_description_validator.h"
 
 #include <config/config.h>
+
+#include <boost/foreach.hpp>
 
 namespace simulator {
 namespace simulation {
@@ -15,19 +18,19 @@ simulation::simulation(const std::string& desc_filename_) :
 
 bool simulation::prepare()
 {
-	logger.info()() << "Parsing world description file";
+	logger.info()() << "parsing world description file";
 	world::world_description_parser parser(common::get_config().get<std::string>("world_description_file"));
 	if (!parser.parse()) {
 		return false;
 	}
 
-	logger.info()() << "Validating world description";
+	logger.info()() << "validating world description";
 	world::world_description_validator validator(parser.get_world_description());
 	if (!validator.validate()) {
 		return false;
 	}
 
-	logger.info()() << "Translating graph representation of world description to cellular representation";
+	logger.info()() << "translating graph representation of world description to cellular representation";
 	if (!translate_to_cell_representation(parser.get_world_description())) {
 		return false;
 	}
@@ -36,14 +39,10 @@ bool simulation::prepare()
 
 bool simulation::translate_to_cell_representation(world::world_description_handle desc)
 {
-	//TODO translating desc->nodes
-	// - create cells based on nodes,exits,entrances (save priority_entrance_number)
-	// - add node based cells to cell_names map
-	// - add creators for nodes (connected to cells) with max_create_rate > 0
-	// - add destroyers for nodes with max_destroy_rate > 0
-
-	//TODO nodes - second pass
-	// - set priority_entrance based given priority_entrance_number
+	logger.info()() << "translating nodes";
+	if (!translate_nodes(desc)) {
+		return false;
+	}
 
 	//TODO translating desc->actuators
 	// - add actuators, waiting for specyfic event and controlling exit of specyfic cell
@@ -62,12 +61,43 @@ bool simulation::translate_to_cell_representation(world::world_description_handl
 
 	//TODO translating desc->paths
 	// - add paths with cells to visit queues
-	// - connect paths with creators
+	// - connect paths to creators
 
 	//TODO translating desc->simulation
 	// - save settings
 	// - set creators-paths rates of creation vehicles
 
+	return true;
+}
+
+bool simulation::translate_nodes(world::world_description_handle desc)
+{
+	typedef std::pair<std::string, world::world_node_handle> node_pair_t;
+	//create cells based on nodes (+ add them to cell_names map)
+	BOOST_FOREACH(node_pair_t node, desc->nodes) {
+		cell_handle c(new cell());
+		c->priority_entrance_number = node.second->priority_entrance;
+
+		cells.insert(c);
+		cell_names.insert(std::make_pair(node.first, c));
+
+		logger.debug()() << "created cell for node " << node.first;
+	}
+	logger.debug()() << "created cells for " << cells.size() << " nodes";
+
+	//create cells based on connection (betweent previous ones)
+
+	//create creators
+	//create destroyers
+
+	//TODO translating desc->nodes
+	// - create cells based on nodes,exits,entrances (save priority_entrance_number)
+	// - add node based cells to cell_names map
+	// - add creators for nodes (connected to cells) with max_create_rate > 0
+	// - add destroyers for nodes with max_destroy_rate > 0
+
+	//TODO nodes - second pass
+	// - set priority_entrance based given priority_entrance_number
 	return true;
 }
 

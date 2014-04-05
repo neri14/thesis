@@ -109,8 +109,11 @@ int world_path::get_length() const
 		return -1;
 	}
 	return sum;
-	
 }
+
+world_simulation::world_simulation() :
+	duration(0), cell_size(0), max_speed(0)
+{}
 
 }// namespace simulator
 }// namespace world

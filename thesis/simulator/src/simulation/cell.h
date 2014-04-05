@@ -17,14 +17,10 @@ enum EExitState {
 	EExitState_Yellow
 };
 
-//namespace constant {
-//std::map<EExitState, bool> exit_allowed = boost::assign::map_list_of
-//	(EExitState_Off, true) (EExitState_Red, false) (EExitState_RedYellow, true)
-//	(EExitState_Green, true) (EExitState_Yellow, false);
-//} // namespace constant
-
 struct cell
 {
+	cell();
+
 	std::map<int, boost::weak_ptr<cell> > prev;
 	std::map<int, boost::weak_ptr<cell> > next;
 
@@ -33,7 +29,7 @@ struct cell
 	int priority_entrance_number;
 	boost::weak_ptr<cell> priority_entrance;
 
-	bool occupied;
+	bool occupied;//FIXME replace bool with ptr to vehicle
 };
 typedef boost::shared_ptr<cell> cell_handle;
 

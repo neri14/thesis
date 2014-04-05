@@ -23,6 +23,7 @@ make <target> <options>
 				visualiser
 
 <options>   :=  debug=1
+				testfilter=<filter>
 
 
 2. Description
@@ -60,3 +61,6 @@ proto_clean
 
 debug=1
 	Prepares cmake for compilation with debug flags
+
+testfilter=<filter>
+	Runs tests with given filter

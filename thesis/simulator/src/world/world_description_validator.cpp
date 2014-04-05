@@ -44,6 +44,12 @@ bool world_description_validator::check_loose_ends()
 			}
 		}
 	}
+	BOOST_FOREACH(world_connection_handle conn, desc->connections) {
+		if (!conn->from.lock() || !conn->to.lock()) {
+			logger.error()() << "loose end in connection";
+			result = false;
+		}
+	}
 
 	if (result) {
 		logger.debug()() << "no loose ends";

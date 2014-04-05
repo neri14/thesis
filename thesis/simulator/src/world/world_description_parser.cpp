@@ -178,6 +178,8 @@ bool world_description_parser::parse_connections(const boost::property_tree::ptr
 			}
 
 			world_connection_handle conn(new world_connection(distance));
+			conn->from = node_from;
+			conn->to = node_to;
 
 			if (node_from->exits[from_exit]) {
 				logger.error()() << "multiple use of exit: (" << from_name << "," << from_exit << ")";

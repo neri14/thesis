@@ -6,3 +6,4 @@
 -I./3rdparty/gmock-1.7.0/include
 -I./3rdparty/gmock-1.7.0/gtest
 -I./3rdparty/gmock-1.7.0/gtest/include
+-DUNIT_TEST
