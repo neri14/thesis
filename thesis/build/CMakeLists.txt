@@ -82,6 +82,7 @@ set(GMOCK_BIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../bin/gmock)
 add_subdirectory(${GMOCK_ROOT_DIR} ${GMOCK_BIN_DIR})
 
 enable_testing()
+add_definitions(-DUNIT_TEST)
 
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR} ${gmock_SOURCE_DIR}/include ${gmock_SOURCE_DIR})
 

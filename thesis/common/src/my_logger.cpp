@@ -76,12 +76,19 @@ my_logger::my_logger(std::string prefix_) :
 	log_level(0),
 	log_output(0)
 {
+#ifndef UNIT_TEST
 	common::config& cfg = common::get_config();
 	log_level = log_level | (cfg.get<bool>("log_error") ? ELogLevel_Error : 0);
 	log_level = log_level | (cfg.get<bool>("log_warning") ? ELogLevel_Warning : 0);
 	log_level = log_level | (cfg.get<bool>("log_info") ? ELogLevel_Info : 0);
 	log_level = log_level | (cfg.get<bool>("log_debug") ? ELogLevel_Debug : 0);
 	log_output = log_output | (cfg.get<bool>("log_std_out") ? ELogOutput_StdOut : 0);
+#endif
+
+#ifdef UNIT_TEST
+	log_level = ELogLevel_Error | ELogLevel_Warning | ELogLevel_Info | ELogLevel_Debug;
+	log_output = ELogOutput_StdOut;
+#endif
 }
 
 my_logger_stream my_logger::error()

@@ -29,12 +29,6 @@ protected:
 
 	ut_world_description_parser()
 	{
-		common::get_config().add("log_error", "1");
-		common::get_config().add("log_warning", "1");
-		common::get_config().add("log_info", "1");
-		common::get_config().add("log_debug", "1");
-		common::get_config().add("log_std_out", "1");
-
 		parser.reset(new world_description_parser(constant::filename));
 	}
 };
