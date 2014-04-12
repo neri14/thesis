@@ -159,7 +159,7 @@ bool simulation::translate_nodes(world::world_description_handle desc)
 
 bool simulation::translate_actuators(world::world_description_handle desc)
 {
-	return false;
+	return true;
 }
 
 //TODO simulation::start
