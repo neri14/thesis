@@ -6,7 +6,10 @@
 
 #include <config/config.h>
 
+#include <cmath>
+
 #include <boost/foreach.hpp>
+#include <boost/assert.hpp>
 
 namespace simulator {
 namespace simulation {
@@ -44,6 +47,9 @@ bool simulation::translate_to_cell_representation(world::world_description_handl
 		return false;
 	}
 
+	if (!translate_actuators(desc)) {
+		return false;
+	}
 	//TODO translating desc->actuators
 	// - add actuators, waiting for specyfic event and controlling exit of specyfic cell
 
@@ -78,27 +84,82 @@ bool simulation::translate_nodes(world::world_description_handle desc)
 		cell_handle c(new cell());
 		c->priority_entrance_number = node.second->priority_entrance;
 
+		if (node.second->max_create_rate) {
+			creator_handle tmp(new creator(c, node.second->max_create_rate));
+			creators.insert(std::make_pair(c, tmp));
+		}
+		if (node.second->max_destroy_rate) {
+			destroyer_handle tmp(new destroyer(c, node.second->max_destroy_rate));
+			destroyers.insert(std::make_pair(c, tmp));
+		}
+
 		cells.insert(c);
 		cell_names.insert(std::make_pair(node.first, c));
 
 		logger.debug()() << "created cell for node " << node.first;
 	}
 	logger.debug()() << "created cells for " << cells.size() << " nodes";
+	logger.debug()() << "created " << creators.size() << " creators";
+	logger.debug()() << "created " << destroyers.size() << " destroyers";
 
 	//create cells based on connection (betweent previous ones)
+	BOOST_FOREACH (world::world_connection_handle conn, desc->connections) {
+		world::world_node_handle node_from = conn->from.lock();
+		world::world_node_handle node_to = conn->to.lock();
 
-	//create creators
-	//create destroyers
+		cell_handle cell_from = cell_names.find(node_from->name)->second;
+		cell_handle cell_to = cell_names.find(node_to->name)->second;
 
-	//TODO translating desc->nodes
-	// - create cells based on nodes,exits,entrances (save priority_entrance_number)
-	// - add node based cells to cell_names map
-	// - add creators for nodes (connected to cells) with max_create_rate > 0
-	// - add destroyers for nodes with max_destroy_rate > 0
+		int cells_count = ceil(conn->distance/desc->simulation->cell_size);
 
-	//TODO nodes - second pass
-	// - set priority_entrance based given priority_entrance_number
+		std::pair<int, int> ends_pair = node_from->find_connection_to(*node_to);
+
+		cell_handle last_cell = cell_from;
+		for (int i=0; i<cells_count; ++i) {
+			cell_handle c(new cell());
+			cells.insert(c);
+
+			int exit_num = (0 == i ? ends_pair.first : 0);
+			int entr_num = 0;//(cells_count-1 == i ? ends_pair.second : 0);
+
+			last_cell->next[exit_num] = c;
+			c->prev[entr_num] = last_cell;
+
+			last_cell = c;
+		}
+
+		last_cell->next[0] = cell_to;
+		cell_to->prev[ends_pair.second] = last_cell;
+
+		logger.debug()() << "created " << cells_count << " cells from " <<
+			node_from->name << " to " << node_to->name;
+
+		//check if cells are correct
+		int counted = 0;
+		last_cell = cell_from;
+		for (cell_handle curr = cell_from->next[ends_pair.first].lock();
+				curr && curr != cell_to; curr = curr->next[0].lock()) {
+			BOOST_ASSERT(last_cell == curr->prev[0].lock());
+			if (last_cell != curr->prev[0].lock()) {
+				logger.error()() << "cells are not connected correctly";
+				return false;
+			}
+			++counted;
+			last_cell = curr;
+		}
+		if (cells_count != counted) {
+			logger.error()() << "wrong number of cells created, expected: " <<
+				cells_count << " there is: " << counted;
+			return false;
+		}
+	}
+
 	return true;
+}
+
+bool simulation::translate_actuators(world::world_description_handle desc)
+{
+	return false;
 }
 
 //TODO simulation::start

@@ -61,16 +61,22 @@ protected:
 		world::world_connection_handle conn_a_b(new world::world_connection(constant::distance_a_b));
 		node_a->exits[0] = conn_a_b;
 		node_b->entrances[0] = conn_a_b;
+		conn_a_b->from = node_a;
+		conn_a_b->to = node_b;
 		desc->connections.insert(conn_a_b);
 
 		world::world_connection_handle conn_b_c(new world::world_connection(constant::distance_b_c));
 		node_b->exits[0] = conn_b_c;
 		node_c->entrances[0] = conn_b_c;
+		conn_b_c->from = node_b;
+		conn_b_c->to = node_c;
 		desc->connections.insert(conn_b_c);
 
 		world::world_connection_handle conn_b_d(new world::world_connection(constant::distance_b_d));
 		node_b->exits[1] = conn_b_d;
 		node_d->entrances[0] = conn_b_d;
+		conn_b_d->from = node_b;
+		conn_b_d->to = node_d;
 		desc->connections.insert(conn_b_d);
 
 		desc->simulation.reset(new world::world_simulation());
@@ -93,6 +99,16 @@ protected:
 	{
 		return sim.cell_names;
 	}
+
+	const std::map<cell_handle, creator_handle>& get_creators()
+	{
+		return sim.creators;
+	}
+
+	const std::map<cell_handle, destroyer_handle>& get_destroyers()
+	{
+		return sim.destroyers;
+	}
 };
 
 TEST_F(ut_simulation, translate_to_cell_representation)
@@ -105,9 +121,13 @@ TEST_F(ut_simulation, translate_to_cell_representation)
 
 	const std::set<cell_handle>& cells = get_cells();
 	const std::map<std::string, cell_handle>& cell_names = get_cell_names();
+	const std::map<cell_handle, creator_handle>& creators = get_creators();
+	const std::map<cell_handle, destroyer_handle>& destroyers = get_destroyers();
 
-	EXPECT_EQ(4, cells.size());
+	EXPECT_EQ(13, cells.size());
 	EXPECT_EQ(4, cell_names.size());
+	EXPECT_EQ(1, creators.size());
+	EXPECT_EQ(2, destroyers.size());
 }
 
 } // namespace simulation
