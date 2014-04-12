@@ -39,6 +39,7 @@ class event_dispatcher : public boost::noncopyable
 {
 public:
 	event_dispatcher();
+	event_dispatcher(std::string& prefix);
 	virtual ~event_dispatcher();
 
 	virtual connection_handle register_listener(

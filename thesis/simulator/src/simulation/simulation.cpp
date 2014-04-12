@@ -9,7 +9,6 @@
 #include <cmath>
 
 #include <boost/foreach.hpp>
-#include <boost/assert.hpp>
 
 namespace simulator {
 namespace simulation {
@@ -50,8 +49,6 @@ bool simulation::translate_to_cell_representation(world::world_description_handl
 	if (!translate_actuators(desc)) {
 		return false;
 	}
-	//TODO translating desc->actuators
-	// - add actuators, waiting for specyfic event and controlling exit of specyfic cell
 
 	//TODO translating desc->flow_sensors
 	// - add flow sensors, checking given cell occupied flag every state(second) and counting
@@ -122,14 +119,14 @@ bool simulation::translate_nodes(world::world_description_handle desc)
 			int exit_num = (0 == i ? ends_pair.first : 0);
 			int entr_num = 0;//(cells_count-1 == i ? ends_pair.second : 0);
 
-			last_cell->next[exit_num] = c;
-			c->prev[entr_num] = last_cell;
+			last_cell->add_next(exit_num, c);
+			c->add_prev(entr_num, last_cell);
 
 			last_cell = c;
 		}
 
-		last_cell->next[0] = cell_to;
-		cell_to->prev[ends_pair.second] = last_cell;
+		last_cell->add_next(0, cell_to);
+		cell_to->add_prev(ends_pair.second, last_cell);
 
 		logger.debug()() << "created " << cells_count << " cells from " <<
 			node_from->name << " to " << node_to->name;
@@ -159,6 +156,8 @@ bool simulation::translate_nodes(world::world_description_handle desc)
 
 bool simulation::translate_actuators(world::world_description_handle desc)
 {
+//TODO translating desc->actuators
+// - add actuators, waiting for specyfic event and controlling exit of specyfic cell
 	return true;
 }
 

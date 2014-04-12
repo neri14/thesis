@@ -9,6 +9,10 @@ event_dispatcher::event_dispatcher() :
 	logger("event_dispatcher")
 {}
 
+event_dispatcher::event_dispatcher(std::string& prefix) :
+	logger(prefix + "_event_dispatcher")
+{}
+
 event_dispatcher::~event_dispatcher()
 {}
 

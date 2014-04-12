@@ -21,6 +21,10 @@ struct cell
 {
 	cell();
 
+	void add_prev(int entrance, boost::weak_ptr<cell> c);
+	void add_next(int exit, boost::weak_ptr<cell> c);
+	bool is_exit_allowed(int exit);
+
 	std::map<int, boost::weak_ptr<cell> > prev;
 	std::map<int, boost::weak_ptr<cell> > next;
 
