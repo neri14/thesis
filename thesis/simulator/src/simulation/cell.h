@@ -17,18 +17,23 @@ enum EExitState {
 	EExitState_Yellow
 };
 
-struct cell
+class cell
 {
+public:
 	cell();
 
 	void add_prev(int entrance, boost::weak_ptr<cell> c);
 	void add_next(int exit, boost::weak_ptr<cell> c);
 	bool is_exit_allowed(int exit);
 
+	//TODO void set_exit_state // mutex protected
+	//TODO EExitState get_exit_state //mutex protected
+
 	std::map<int, boost::weak_ptr<cell> > prev;
 	std::map<int, boost::weak_ptr<cell> > next;
 
 	std::map<boost::weak_ptr<cell>, EExitState> exit_states;
+	//FIXME exit_state - private
 
 	int priority_entrance_number;
 

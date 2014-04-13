@@ -9,6 +9,7 @@
 #include "cell.h"
 #include "creator.h"
 #include "destroyer.h"
+#include "actuator.h"
 
 namespace simulator {
 namespace simulation {
@@ -34,6 +35,8 @@ private:
 
 	std::map<cell_handle, creator_handle> creators;
 	std::map<cell_handle, destroyer_handle> destroyers;
+
+	std::set<actuator_handle> actuators;
 
 #ifdef UNIT_TEST
 	friend class ut_simulation;

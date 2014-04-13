@@ -43,10 +43,12 @@ bool simulation::translate_to_cell_representation(world::world_description_handl
 {
 	logger.info()() << "translating nodes";
 	if (!translate_nodes(desc)) {
+		logger.error()() << "translating nodes failed";
 		return false;
 	}
 
 	if (!translate_actuators(desc)) {
+		logger.error()() << "translating actuators failed";
 		return false;
 	}
 
@@ -156,8 +158,26 @@ bool simulation::translate_nodes(world::world_description_handle desc)
 
 bool simulation::translate_actuators(world::world_description_handle desc)
 {
-//TODO translating desc->actuators
-// - add actuators, waiting for specyfic event and controlling exit of specyfic cell
+	typedef std::pair<std::string, world::world_area_handle> area_pair_t;
+
+	BOOST_FOREACH (area_pair_t ar, desc->areas) {
+		int act_count = 0;
+		BOOST_FOREACH (world::world_actuator_handle act, ar.second->actuators) {
+			if (cell_names.end() == cell_names.find(act->node->name)) {
+				logger.error()() << "cell of given name doesn't exist (" << act->node->name << ")";
+				return false;
+			}
+
+			cell_handle c = cell_names.find(act->node->name)->second;
+			actuator_handle tmp(new actuator(ar.second->name,
+				static_cast<common::dispatcher::EEventScope>(ar.second->scope),
+				act->name, c, act->exit));
+			actuators.insert(tmp);
+
+			++act_count;
+		}
+		logger.debug()() << "created " << act_count << " actuators in area " << ar.first;
+	}
 	return true;
 }
 

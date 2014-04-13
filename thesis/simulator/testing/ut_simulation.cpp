@@ -28,6 +28,12 @@ namespace constant {
 	const int distance_b_d(15);
 
 	const double cell_size(7.5);
+
+	const std::string area_name("AREA");
+	const int area_scope(common::dispatcher::EEventScope_Area101);
+
+	const std::string act_b_c_name("ACTUATOR_B_C");
+	const std::string act_b_d_name("ACTUATOR_B_D");
 }
 
 class ut_simulation : public ::testing::Test
@@ -79,6 +85,17 @@ protected:
 		conn_b_d->to = node_d;
 		desc->connections.insert(conn_b_d);
 
+		world::world_area_handle area(new world::world_area(constant::area_name, constant::area_scope));
+		desc->areas.insert(std::make_pair(constant::area_name, area));
+
+		world::world_actuator_handle act_b_c(new world::world_actuator(constant::act_b_c_name, node_b, 0));
+		desc->actuators.insert(std::make_pair(constant::act_b_c_name, act_b_c));
+		area->actuators.insert(act_b_c);
+
+		world::world_actuator_handle act_b_d(new world::world_actuator(constant::act_b_d_name, node_b, 1));
+		desc->actuators.insert(std::make_pair(constant::act_b_d_name, act_b_d));
+		area->actuators.insert(act_b_d);
+
 		desc->simulation.reset(new world::world_simulation());
 		desc->simulation->cell_size = constant::cell_size;
 
@@ -88,6 +105,11 @@ protected:
 	bool trigger_translate_nodes(world::world_description_handle desc)
 	{
 		return sim.translate_nodes(desc);
+	}
+
+	bool trigger_translate_actuators(world::world_description_handle desc)
+	{
+		return sim.translate_actuators(desc);
 	}
 
 	const std::set<cell_handle>& get_cells()
@@ -109,6 +131,11 @@ protected:
 	{
 		return sim.destroyers;
 	}
+
+	const std::set<actuator_handle>& get_actuators()
+	{
+		return sim.actuators;
+	}
 };
 
 TEST_F(ut_simulation, translate_to_cell_representation)
@@ -123,11 +150,15 @@ TEST_F(ut_simulation, translate_to_cell_representation)
 	const std::map<std::string, cell_handle>& cell_names = get_cell_names();
 	const std::map<cell_handle, creator_handle>& creators = get_creators();
 	const std::map<cell_handle, destroyer_handle>& destroyers = get_destroyers();
-
 	EXPECT_EQ(13, cells.size());
 	EXPECT_EQ(4, cell_names.size());
 	EXPECT_EQ(1, creators.size());
 	EXPECT_EQ(2, destroyers.size());
+
+	EXPECT_TRUE(trigger_translate_actuators(desc));
+
+	const std::set<actuator_handle>& actuators = get_actuators();
+	EXPECT_EQ(2, actuators.size());
 }
 
 } // namespace simulation

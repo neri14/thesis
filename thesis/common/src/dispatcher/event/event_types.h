@@ -8,7 +8,8 @@ enum EEventType
 {
 	EEventType_Any,      // observer can receive events of any type
 	EEventType_Default,
-	EEventType_BasicInt
+	EEventType_BasicInt,
+	EEventType_SetActuatorState
 };
 
 enum EEventScope
