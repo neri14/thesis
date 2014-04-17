@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "../src/world/world_description.h"
-#include "../src/simulation/simulation.h"
+#include "../../src/world/world_description.h"
+#include "../../src/simulation/simulation.h"
 
 namespace simulator {
 namespace simulation {

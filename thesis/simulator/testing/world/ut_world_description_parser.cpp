@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "../src/world/world_description_parser.h"
-#include "../src/world/world_description_validator.h"
+#include "../../src/world/world_description_parser.h"
+#include "../../src/world/world_description_validator.h"
 
 #include <config/config.h>
 
