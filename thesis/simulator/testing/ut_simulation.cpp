@@ -30,7 +30,7 @@ namespace constant {
 	const double cell_size(7.5);
 
 	const std::string area_name("AREA");
-	const int area_scope(common::dispatcher::EEventScope_Area101);
+	const int area_scope(EEventScope_Area101);
 
 	const std::string act_b_c_name("ACTUATOR_B_C");
 	const std::string act_b_d_name("ACTUATOR_B_D");

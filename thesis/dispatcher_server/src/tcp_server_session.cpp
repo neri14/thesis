@@ -106,8 +106,8 @@ void tcp_server_session::parse_message(std::string str)
 		logger.debug()() << "received register message";
 		connections.push_back(
 			common::dispatcher::get_dispatcher().register_listener(
-				static_cast<common::dispatcher::EEventType>(reg.type()),
-				static_cast<common::dispatcher::EEventScope>(reg.scope()),
+				static_cast<EEventType>(reg.type()),
+				static_cast<EEventScope>(reg.scope()),
 				boost::bind(&tcp_server_session::add_event, this, _1)
 			)
 		);

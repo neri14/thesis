@@ -12,7 +12,7 @@ namespace simulation {
 class actuator
 {
 public:
-	actuator(std::string area_name_, common::dispatcher::EEventScope area_scope_,
+	actuator(std::string area_name_, EEventScope area_scope_,
 		std::string actuator_name_, cell_handle controlled_cell_,
 		int controlled_exit_);
 
@@ -22,7 +22,7 @@ private:
 	EExitState map_state(common::dispatcher::EActuatorState state);
 
 	std::string area_name;
-	common::dispatcher::EEventScope area_scope;
+	EEventScope area_scope;
 
 	std::string actuator_name;
 

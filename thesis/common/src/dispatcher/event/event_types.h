@@ -1,9 +1,6 @@
 #ifndef EVENT_TYPES_H
 #define EVENT_TYPES_H
 
-namespace common {
-namespace dispatcher {
-
 enum EEventType
 {
 	EEventType_Any,      // observer can receive events of any type
@@ -48,8 +45,5 @@ enum EEventScope
 	EEventScope_Area129 = 129,
 	EEventScope_Area130 = 130,
 };
-
-} // namespace dispatcher
-} // namespace common
 
 #endif // EVENT_TYPES_H

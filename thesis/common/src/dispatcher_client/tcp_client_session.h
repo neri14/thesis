@@ -36,7 +36,7 @@ private:
 	void parse_message(std::string str);
 
 	void add_event(common::dispatcher::event_handle e);
-	void register_listener(common::dispatcher::EEventType type, common::dispatcher::EEventScope scope);
+	void register_listener(EEventType type, EEventScope scope);
 
 	void dispatch();
 	void dispatch_impl();
@@ -58,7 +58,7 @@ private:
 	boost::mutex mtx_listeners;
 
 	std::set<common::dispatcher::event_handle> events;
-	std::set< std::pair<common::dispatcher::EEventType, common::dispatcher::EEventScope> > listeners;
+	std::set< std::pair<EEventType, EEventScope> > listeners;
 
 	std::set<common::dispatcher::connection_handle> connections;
 

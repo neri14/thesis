@@ -31,8 +31,7 @@ void tcp_client_session::connect()
 	distributor_connection = distributor.add_session(boost::bind(&tcp_client_session::dispatch, this));
 
 	connections.insert(
-		common::dispatcher::get_dispatcher().register_listener(
-			common::dispatcher::EEventType_Any, common::dispatcher::EEventScope_Any,
+		common::dispatcher::get_dispatcher().register_listener(EEventType_Any, EEventScope_Any,
 			boost::bind(&tcp_client_session::add_event, this, _1)
 		)
 	);
@@ -131,8 +130,7 @@ void tcp_client_session::add_event(common::dispatcher::event_handle e)
 	}
 }
 
-void tcp_client_session::register_listener(
-	common::dispatcher::EEventType type, common::dispatcher::EEventScope scope)
+void tcp_client_session::register_listener(EEventType type, EEventScope scope)
 {
 	boost::mutex::scoped_lock lock(mtx_listeners);
 	listeners.insert(std::make_pair(type, scope));
@@ -176,12 +174,12 @@ void tcp_client_session::dispatch_listeners()
 		distributor.session_finished();
 		return;
 	}
-	std::pair<common::dispatcher::EEventType, common::dispatcher::EEventScope> listener =
+	std::pair<EEventType, EEventScope> listener =
 		*(listeners.begin());
 	listeners.erase(listeners.begin());
 	lock.unlock();
 
-	common::dispatcher::proto_register_handle proto = parse(listener);
+	common::dispatcher::proto_register_handle proto = common::dispatcher::parse(listener);
 	std::string str;
 	if (common::net::encode(proto, str)) {
 		memcpy(out_buffer, str.c_str(), str.length());

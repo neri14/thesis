@@ -170,7 +170,7 @@ bool simulation::translate_actuators(world::world_description_handle desc)
 
 			cell_handle c = cell_names.find(act->node->name)->second;
 			actuator_handle tmp(new actuator(ar.second->name,
-				static_cast<common::dispatcher::EEventScope>(ar.second->scope),
+				static_cast<EEventScope>(ar.second->scope),
 				act->name, c, act->exit));
 			actuators.insert(tmp);
 

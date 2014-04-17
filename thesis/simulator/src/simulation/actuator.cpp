@@ -6,7 +6,7 @@ namespace simulator {
 namespace simulation {
 
 actuator::actuator(std::string area_name_,
-		common::dispatcher::EEventScope area_scope_, std::string actuator_name_,
+		EEventScope area_scope_, std::string actuator_name_,
 		cell_handle controlled_cell_, int controlled_exit_) :
 	area_name(area_name_),
 	area_scope(area_scope_),
@@ -15,7 +15,7 @@ actuator::actuator(std::string area_name_,
 	controlled_exit(controlled_exit_)
 {
 	listener = common::dispatcher::get_dispatcher().register_listener(
-		common::dispatcher::EEventType_SetActuatorState, area_scope_,
+		EEventType_SetActuatorState, area_scope_,
 		boost::bind(&actuator::on_event, this, _1));
 	//register_listener(type, scope,
 	//	boost::bind(&ut_event_dispatcher::on_event, this, _1));
@@ -23,7 +23,7 @@ actuator::actuator(std::string area_name_,
 
 void actuator::on_event(common::dispatcher::event_handle ev)
 {
-	BOOST_ASSERT(common::dispatcher::EEventType_SetActuatorState == ev->get_type());
+	BOOST_ASSERT(EEventType_SetActuatorState == ev->get_type());
 	BOOST_ASSERT(area_scope == ev->get_scope());
 
 	common::dispatcher::EActuatorState state =

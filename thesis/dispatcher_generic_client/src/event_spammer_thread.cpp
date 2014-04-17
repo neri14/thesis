@@ -19,7 +19,7 @@ event_spammer_thread::~event_spammer_thread()
 void event_spammer_thread::prepare()
 {
 	listener = common::dispatcher::get_dispatcher().register_listener(
-		common::dispatcher::EEventType_BasicInt, common::dispatcher::EEventScope_General,
+		EEventType_BasicInt, EEventScope_General,
 		boost::bind(&event_spammer_thread::on_event, this, _1));
 }
 
@@ -28,7 +28,7 @@ void event_spammer_thread::run_impl()
 	unsigned int count = 0;
 	while (keep_alive) {
 		common::dispatcher::event_handle ev(new common::dispatcher::event(
-			common::dispatcher::EEventType_BasicInt, common::dispatcher::EEventScope_General,
+			EEventType_BasicInt, EEventScope_General,
 				boost::shared_ptr< common::dispatcher::basic_payload<int> >(
 					new common::dispatcher::basic_payload<int>(++count))));
 
@@ -44,8 +44,8 @@ void event_spammer_thread::stop_impl()
 
 void event_spammer_thread::on_event(common::dispatcher::event_handle ev)
 {
-	if (ev->get_type() == common::dispatcher::EEventType_BasicInt &&
-			ev->get_scope() == common::dispatcher::EEventScope_General) {
+	if (ev->get_type() == EEventType_BasicInt &&
+			ev->get_scope() == EEventScope_General) {
 		logger.info()() << "received event value: "
 			<< ev->get_payload< common::dispatcher::basic_payload<int> >()->value;
 	}
