@@ -3,6 +3,8 @@
 
 #include <boost/shared_ptr.hpp>
 
+#define EVENT_PAYLOAD_STRING_SIZE 64
+
 namespace common {
 namespace dispatcher {
 

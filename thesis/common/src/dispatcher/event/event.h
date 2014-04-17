@@ -49,7 +49,7 @@ public:
 
 	std::string encode() const
 	{
-		if (! payload) {
+		if (!payload || !payload->size()) {
 			return std::string();
 		}
 		return std::string(reinterpret_cast<char*>(payload.get()), payload->size());

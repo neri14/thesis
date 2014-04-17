@@ -1,5 +1,7 @@
 #include "actuator.h"
 
+#include <dispatcher/event/payload/actuator_finished_payload.h>
+
 #include <boost/bind.hpp>
 
 namespace simulator {
@@ -14,14 +16,21 @@ actuator::actuator(std::string area_name_,
 	controlled_cell(controlled_cell_),
 	controlled_exit(controlled_exit_)
 {
-	listener = common::dispatcher::get_dispatcher().register_listener(
+	set_state_listener = common::dispatcher::get_dispatcher().register_listener(
 		EEventType_SetActuatorState, area_scope_,
-		boost::bind(&actuator::on_event, this, _1));
-	//register_listener(type, scope,
-	//	boost::bind(&ut_event_dispatcher::on_event, this, _1));
+		boost::bind(&actuator::on_set_state, this, _1));
+	time_tick_listener = common::dispatcher::get_dispatcher().register_listener(
+		EEventType_TimeTick, EEventScope_General,
+		boost::bind(&actuator::on_time_tick, this, _1));
 }
 
-void actuator::on_event(common::dispatcher::event_handle ev)
+actuator::~actuator()
+{
+	common::dispatcher::get_dispatcher().unregister_listener(set_state_listener);
+	common::dispatcher::get_dispatcher().unregister_listener(time_tick_listener);
+}
+
+void actuator::on_set_state(common::dispatcher::event_handle ev)
 {
 	BOOST_ASSERT(EEventType_SetActuatorState == ev->get_type());
 	BOOST_ASSERT(area_scope == ev->get_scope());
@@ -29,8 +38,24 @@ void actuator::on_event(common::dispatcher::event_handle ev)
 	common::dispatcher::EActuatorState state =
 		ev->get_payload<common::dispatcher::set_actuator_state_payload>()->state;
 
-	//FIXME replace with mutex protected set_exit_state
-	controlled_cell->exit_states[controlled_cell] = map_state(state);
+	pending_state = map_state(state);
+}
+
+void actuator::on_time_tick(common::dispatcher::event_handle ev)
+{
+	BOOST_ASSERT(EEventType_TimeTick == ev->get_type());
+	BOOST_ASSERT(EEventScope_General == ev->get_scope());
+
+	if (pending_state) {
+		//FIXME replace with mutex protected set_exit_state
+		controlled_cell->exit_states[controlled_cell] = pending_state.get();
+	}
+
+	//send event actuator finished - scope local
+	common::dispatcher::payload_handle payload(
+		new common::dispatcher::actuator_finished_payload(actuator_name));
+	common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(
+		new common::dispatcher::event(EEventType_ActuatorFinished, EEventScope_Local, payload)));
 }
 
 EExitState actuator::map_state(common::dispatcher::EActuatorState state)

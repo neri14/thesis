@@ -6,13 +6,16 @@ enum EEventType
 	EEventType_Any,      // observer can receive events of any type
 	EEventType_Default,
 	EEventType_BasicInt,
-	EEventType_SetActuatorState
+	EEventType_TimeTick,
+	EEventType_SetActuatorState,
+	EEventType_ActuatorFinished
 };
 
 enum EEventScope
 {
 	EEventScope_Any,     // observer can receive events from any scope
-	EEventScope_General,
+	EEventScope_General, // genaral event scope
+	EEventScope_Local,   // event not to be passed over to event server
 	EEventScope_Scope_1,
 	EEventScope_Area101 = 101,
 	EEventScope_Area102 = 102,

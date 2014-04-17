@@ -125,7 +125,7 @@ void tcp_client_session::add_event(common::dispatcher::event_handle e)
 {
 	boost::mutex::scoped_lock lock(mtx_events);
 
-	if (e->get_origin() != id) {
+	if (EEventScope_Local != e->get_scope() && e->get_origin() != id) {
 		events.insert(e);
 	}
 }
