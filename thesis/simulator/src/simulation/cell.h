@@ -29,6 +29,9 @@ public:
 	//TODO void set_exit_state // mutex protected
 	//TODO EExitState get_exit_state //mutex protected
 
+	void increment_vehicle_counter();
+	int get_vehicle_counter_value();
+
 	std::map<int, boost::weak_ptr<cell> > prev;
 	std::map<int, boost::weak_ptr<cell> > next;
 
@@ -38,6 +41,9 @@ public:
 	int priority_entrance_number;
 
 	bool occupied;//FIXME replace bool with ptr to vehicle
+
+private:
+	int vehicle_counter;
 };
 typedef boost::shared_ptr<cell> cell_handle;
 

@@ -27,6 +27,8 @@ private:
 
 	EExitState map_state(common::dispatcher::EActuatorState state);
 
+	common::my_logger logger;
+
 	std::string area_name;
 	EEventScope area_scope;
 

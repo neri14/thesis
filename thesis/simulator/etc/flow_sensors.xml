@@ -3,17 +3,14 @@
 		<flow_sensor>
 			<name>FLOW_W01</name>
 			<node_name>ENTRANCE_W01</node_name>
-			<exit_number>0</exit_number>
 		</flow_sensor>
 		<flow_sensor>
 			<name>FLOW_S01</name>
 			<node_name>SIMPLE_S01</node_name>
-			<exit_number>0</exit_number>
 		</flow_sensor>
 		<flow_sensor>
 			<name>FLOW_E01</name>
 			<node_name>SIMPLE_E01</node_name>
-			<exit_number>0</exit_number>
 		</flow_sensor>
 	</flow_sensors>
 </world>

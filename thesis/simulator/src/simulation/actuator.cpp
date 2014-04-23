@@ -10,6 +10,7 @@ namespace simulation {
 actuator::actuator(std::string area_name_,
 		EEventScope area_scope_, std::string actuator_name_,
 		cell_handle controlled_cell_, int controlled_exit_) :
+	logger(std::string("actuator_")+actuator_name_),
 	area_name(area_name_),
 	area_scope(area_scope_),
 	actuator_name(actuator_name_),
@@ -34,11 +35,14 @@ void actuator::on_set_state(common::dispatcher::event_handle ev)
 {
 	BOOST_ASSERT(EEventType_SetActuatorState == ev->get_type());
 	BOOST_ASSERT(area_scope == ev->get_scope());
+	common::dispatcher::set_actuator_state_payload& payload =
+		*ev->get_payload<common::dispatcher::set_actuator_state_payload>();
 
-	common::dispatcher::EActuatorState state =
-		ev->get_payload<common::dispatcher::set_actuator_state_payload>()->state;
-
-	pending_state = map_state(state);
+	if (actuator_name == payload.get_actuator_name()) {
+		logger.info()() << "received new state " << payload.state;
+		common::dispatcher::EActuatorState state = payload.state;
+		pending_state = map_state(state);
+	}
 }
 
 void actuator::on_time_tick(common::dispatcher::event_handle ev)
@@ -47,11 +51,11 @@ void actuator::on_time_tick(common::dispatcher::event_handle ev)
 	BOOST_ASSERT(EEventScope_General == ev->get_scope());
 
 	if (pending_state) {
+		logger.info()() << "setting new state " << pending_state.get();
 		//FIXME replace with mutex protected set_exit_state
 		controlled_cell->exit_states[controlled_cell] = pending_state.get();
 	}
 
-	//send event actuator finished - scope local
 	common::dispatcher::payload_handle payload(
 		new common::dispatcher::actuator_finished_payload(actuator_name));
 	common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(

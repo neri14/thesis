@@ -46,15 +46,16 @@ bool simulation::translate_to_cell_representation(world::world_description_handl
 		logger.error()() << "translating nodes failed";
 		return false;
 	}
-
+	
 	if (!translate_actuators(desc)) {
 		logger.error()() << "translating actuators failed";
 		return false;
 	}
 
-	//TODO translating desc->flow_sensors
-	// - add flow sensors, checking given cell occupied flag every state(second) and counting
-	//  to give flow events - for received tick event
+	if (!translate_flow_sensors(desc)) {
+		logger.error()() << "translating flow sensors failed";
+		return false;
+	}
 
 	//TODO translating desc->queue_sensors
 	// - add queue sensors, checking given set of cells for number of cars in them
@@ -178,6 +179,35 @@ bool simulation::translate_actuators(world::world_description_handle desc)
 		}
 		logger.debug()() << "created " << act_count << " actuators in area " << ar.first;
 	}
+	return true;
+}
+
+bool simulation::translate_flow_sensors(world::world_description_handle desc)
+{
+	typedef std::pair<std::string, world::world_area_handle> area_pair_t;
+
+	BOOST_FOREACH (area_pair_t ar, desc->areas) {
+		int sensor_count = 0;
+		BOOST_FOREACH (world::world_flow_sensor_handle sens, ar.second->flow_sensors) {
+			if (cell_names.end() == cell_names.find(sens->node->name)) {
+				logger.error()() << "cell of given name doesn't exist (" << sens->node->name << ")";
+				return false;
+			}
+
+		 	cell_handle c = cell_names.find(sens->node->name)->second;
+		 	flow_sensor_handle tmp(new flow_sensor(ar.second->name,
+		 		static_cast<EEventScope>(ar.second->scope), sens->name, c));
+		 	flow_sensors.insert(tmp);
+
+		 	++sensor_count;
+		}
+		logger.debug()() << "created " << sensor_count << " flow sensors in area " << ar.first;
+	}
+	return true;
+}
+
+bool simulation::translate_queue_sensors(world::world_description_handle desc)
+{
 	return true;
 }
 

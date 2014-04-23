@@ -34,6 +34,8 @@ namespace constant {
 
 	const std::string act_b_c_name("ACTUATOR_B_C");
 	const std::string act_b_d_name("ACTUATOR_B_D");
+
+	const std::string sens_b_name("SENSOR_B");
 }
 
 class ut_simulation : public ::testing::Test
@@ -96,6 +98,10 @@ protected:
 		desc->actuators.insert(std::make_pair(constant::act_b_d_name, act_b_d));
 		area->actuators.insert(act_b_d);
 
+		world::world_flow_sensor_handle sens_b(new world::world_flow_sensor(constant::sens_b_name, node_b));
+		desc->flow_sensors.insert(std::make_pair(constant::sens_b_name, sens_b));
+		area->flow_sensors.insert(sens_b);
+
 		desc->simulation.reset(new world::world_simulation());
 		desc->simulation->cell_size = constant::cell_size;
 
@@ -110,6 +116,11 @@ protected:
 	bool trigger_translate_actuators(world::world_description_handle desc)
 	{
 		return sim.translate_actuators(desc);
+	}
+
+	bool trigger_translate_flow_sensors(world::world_description_handle desc)
+	{
+		return sim.translate_flow_sensors(desc);
 	}
 
 	const std::set<cell_handle>& get_cells()
@@ -136,6 +147,11 @@ protected:
 	{
 		return sim.actuators;
 	}
+
+	const std::set<flow_sensor_handle>& get_flow_sensors()
+	{
+		return sim.flow_sensors;
+	}
 };
 
 TEST_F(ut_simulation, translate_to_cell_representation)
@@ -159,6 +175,11 @@ TEST_F(ut_simulation, translate_to_cell_representation)
 
 	const std::set<actuator_handle>& actuators = get_actuators();
 	EXPECT_EQ(2, actuators.size());
+
+	EXPECT_TRUE(trigger_translate_flow_sensors(desc));
+
+	const std::set<flow_sensor_handle>& flow_sensors = get_flow_sensors();
+	EXPECT_EQ(1, flow_sensors.size());
 }
 
 } // namespace simulation

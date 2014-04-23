@@ -296,7 +296,6 @@ bool world_description_parser::parse_flow_sensors(const boost::property_tree::pt
 		if ("flow_sensor" == v.first) {
 			std::string name = v.second.get<std::string>("name");
 			std::string node = v.second.get<std::string>("node_name");
-			int exit = v.second.get<int>("exit_number");
 
 			if (desc->nodes.find(node) == desc->nodes.end()) {
 				logger.error()() << "wrong node name: " << node;
@@ -305,11 +304,6 @@ bool world_description_parser::parse_flow_sensors(const boost::property_tree::pt
 
 			world_node_handle n = desc->nodes.find(node)->second;
 
-			if (n->exits.find(exit) == n->exits.end()) {
-				logger.error()() << "wrong node exit: (" << node << "," << exit << ")";
-				return false;
-			}
-
 			if (desc->flow_sensors.find(name) != desc->flow_sensors.end() ||
 					desc->queue_sensors.find(name) != desc->queue_sensors.end()) {
 				logger.error()() << "duplicated sensor name: " << name;
@@ -317,8 +311,8 @@ bool world_description_parser::parse_flow_sensors(const boost::property_tree::pt
 			}
 
 			desc->flow_sensors.insert(std::make_pair(name,
-				world_flow_sensor_handle(new world_flow_sensor(name, n, exit))));
-			logger.debug()() << "added flow sensor: (" << node << "," << exit << ") -> (" << name << ")";
+				world_flow_sensor_handle(new world_flow_sensor(name, n))));
+			logger.debug()() << "added flow sensor: (" << node << ") -> (" << name << ")";
 		} else {
 			logger.warning()() << "unexpected xml tag: " << v.first;
 		}

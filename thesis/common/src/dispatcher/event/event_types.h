@@ -8,7 +8,8 @@ enum EEventType
 	EEventType_BasicInt,
 	EEventType_TimeTick,
 	EEventType_SetActuatorState,
-	EEventType_ActuatorFinished
+	EEventType_ActuatorFinished,
+	EEventType_FlowSensorState
 };
 
 enum EEventScope

@@ -61,11 +61,10 @@ typedef boost::shared_ptr<world_actuator> world_actuator_handle;
 
 struct world_flow_sensor
 {
-	world_flow_sensor(const std::string& name_, world_node_handle node_, int exit_);
+	world_flow_sensor(const std::string& name_, world_node_handle node_);
 
 	std::string name;
 	world_node_handle node;
-	int exit;
 };
 typedef boost::shared_ptr<world_flow_sensor> world_flow_sensor_handle;
 

@@ -3,6 +3,8 @@
 
 #include "base_payload.h"
 
+#include <string.h>
+
 namespace common {
 namespace dispatcher {
 
@@ -16,15 +18,26 @@ enum EActuatorState {
 
 struct set_actuator_state_payload : public base_payload
 {
-	set_actuator_state_payload(EActuatorState state_) :
+	set_actuator_state_payload(std::string actuator_name_, EActuatorState state_) :
+		length(std::min(EVENT_PAYLOAD_STRING_SIZE, static_cast<int>(actuator_name_.length()))),
 		state(state_)
-	{}
+	{
+		memcpy(actuator_name, actuator_name_.c_str(), length);
+	}
 
 	virtual int size()
 	{
-		return sizeof(EActuatorState);
+		int actuator_name_size = EVENT_PAYLOAD_STRING_SIZE;
+		return actuator_name_size*sizeof(char) + sizeof(EActuatorState);
 	}
 
+	std::string get_actuator_name()
+	{
+		return std::string(actuator_name, length);
+	}
+
+	int length;
+	char actuator_name[EVENT_PAYLOAD_STRING_SIZE];
 	EActuatorState state;
 };
 

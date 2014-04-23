@@ -10,6 +10,7 @@
 #include "creator.h"
 #include "destroyer.h"
 #include "actuator.h"
+#include "flow_sensor.h"
 
 namespace simulator {
 namespace simulation {
@@ -26,6 +27,8 @@ private:
 
 	bool translate_nodes(world::world_description_handle desc);
 	bool translate_actuators(world::world_description_handle desc);
+	bool translate_flow_sensors(world::world_description_handle desc);
+	bool translate_queue_sensors(world::world_description_handle desc);
 
 	common::my_logger logger;
 	std::string desc_filename;
@@ -37,6 +40,7 @@ private:
 	std::map<cell_handle, destroyer_handle> destroyers;
 
 	std::set<actuator_handle> actuators;
+	std::set<flow_sensor_handle> flow_sensors;
 
 #ifdef UNIT_TEST
 	friend class ut_simulation;

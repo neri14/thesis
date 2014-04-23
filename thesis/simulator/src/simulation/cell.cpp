@@ -10,7 +10,8 @@ std::map<EExitState, bool> exit_allowed = boost::assign::map_list_of
 
 cell::cell() :
 	priority_entrance_number(0),
-	occupied(false)
+	occupied(false),
+	vehicle_counter(0)
 {}
 
 void cell::add_prev(int entrance, boost::weak_ptr<cell> c)
@@ -34,6 +35,16 @@ bool cell::is_exit_allowed(int ex)
 
 	BOOST_ASSERT(exit_states.end() != exit_states.find(c));
 	return constant::exit_allowed.find(exit_states.find(c)->second)->second;
+}
+
+void cell::increment_vehicle_counter()
+{
+	++vehicle_counter;
+}
+
+int cell::get_vehicle_counter_value()
+{
+	return vehicle_counter;
 }
 
 } // namespace simulation
