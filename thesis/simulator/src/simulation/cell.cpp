@@ -47,5 +47,10 @@ int cell::get_vehicle_counter_value()
 	return vehicle_counter;
 }
 
+bool cell::is_occupied()
+{
+	return occupied;
+}
+
 } // namespace simulation
 } // namespace simulator

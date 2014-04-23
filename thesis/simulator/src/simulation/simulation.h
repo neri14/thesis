@@ -11,6 +11,7 @@
 #include "destroyer.h"
 #include "actuator.h"
 #include "flow_sensor.h"
+#include "queue_sensor.h"
 
 namespace simulator {
 namespace simulation {
@@ -41,6 +42,7 @@ private:
 
 	std::set<actuator_handle> actuators;
 	std::set<flow_sensor_handle> flow_sensors;
+	std::set<queue_sensor_handle> queue_sensors;
 
 #ifdef UNIT_TEST
 	friend class ut_simulation;

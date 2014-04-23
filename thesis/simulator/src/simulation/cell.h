@@ -32,6 +32,8 @@ public:
 	void increment_vehicle_counter();
 	int get_vehicle_counter_value();
 
+	bool is_occupied();
+
 	std::map<int, boost::weak_ptr<cell> > prev;
 	std::map<int, boost::weak_ptr<cell> > next;
 

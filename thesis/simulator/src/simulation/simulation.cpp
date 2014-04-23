@@ -57,13 +57,10 @@ bool simulation::translate_to_cell_representation(world::world_description_handl
 		return false;
 	}
 
-	//TODO translating desc->queue_sensors
-	// - add queue sensors, checking given set of cells for number of cars in them
-	//  to give queue events - for received tick event
-
-	//TODO translating desc->areas
-	// - add areas
-	// - give actuators and sensors information of their area - they need scope info for events
+	if (!translate_queue_sensors(desc)) {
+		logger.error()() << "translating queue sensors failed";
+		return false;
+	}
 
 	//TODO translating desc->paths
 	// - add paths with cells to visit queues
@@ -208,6 +205,35 @@ bool simulation::translate_flow_sensors(world::world_description_handle desc)
 
 bool simulation::translate_queue_sensors(world::world_description_handle desc)
 {
+	typedef std::pair<std::string, world::world_area_handle> area_pair_t;
+
+	BOOST_FOREACH (area_pair_t ar, desc->areas) {
+		int sensor_count = 0;
+		BOOST_FOREACH (world::world_queue_sensor_handle sens, ar.second->queue_sensors) {
+			if (cell_names.end() == cell_names.find(sens->node_from->name)) {
+				logger.error()() << "cell of given name doesn't exist (" << sens->node_from->name << ")";
+				return false;
+			}
+			if (cell_names.end() == cell_names.find(sens->node_to->name)) {
+				logger.error()() << "cell of given name doesn't exist (" << sens->node_to->name << ")";
+				return false;
+			}
+
+		 	cell_handle c_from = cell_names.find(sens->node_from->name)->second;
+		 	cell_handle c_to = cell_names.find(sens->node_to->name)->second;
+
+		 	int c_from_exit = sens->node_from_exit;
+		 	int c_to_entrance = sens->node_to_entrance;
+
+		 	queue_sensor_handle tmp(new queue_sensor(ar.second->name,
+		 		static_cast<EEventScope>(ar.second->scope), sens->name, c_from, c_to,
+		 		c_from_exit, c_to_entrance));
+		 	queue_sensors.insert(tmp);
+
+		 	++sensor_count;
+		}
+		logger.debug()() << "created " << sensor_count << " queue sensors in area " << ar.first;
+	}
 	return true;
 }
 
@@ -215,7 +241,7 @@ bool simulation::translate_queue_sensors(world::world_description_handle desc)
 // - start up timer - tick event (1 second) - for event to be given (second to pass) -
 //               1second timer needs to pass AND new states need to be calculated
 // - creators/destroyers should work based on tick event
-// - tick event should cause new state calculation
+// - tick event should cause new state calculation - after actuators are finished and sensors sent their events
 
 //TODO simulation::stop
 // - simulation stop is based on stopping tick event generator or stops itself if duration is exceeded

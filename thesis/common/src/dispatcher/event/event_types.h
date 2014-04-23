@@ -9,7 +9,8 @@ enum EEventType
 	EEventType_TimeTick,
 	EEventType_SetActuatorState,
 	EEventType_ActuatorFinished,
-	EEventType_FlowSensorState
+	EEventType_FlowSensorState,
+	EEventType_QueueSensorState
 };
 
 enum EEventScope
