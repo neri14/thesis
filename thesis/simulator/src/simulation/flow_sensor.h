@@ -11,7 +11,8 @@
 namespace simulator {
 namespace simulation {
 
-class flow_sensor {
+class flow_sensor
+{
 public:
 	flow_sensor(std::string area_name_, EEventScope area_scope_,
 		std::string sensor_name_, cell_handle observed_cell_);

@@ -12,6 +12,7 @@
 #include "actuator.h"
 #include "flow_sensor.h"
 #include "queue_sensor.h"
+#include "path.h"
 
 namespace simulator {
 namespace simulation {
@@ -30,6 +31,7 @@ private:
 	bool translate_actuators(world::world_description_handle desc);
 	bool translate_flow_sensors(world::world_description_handle desc);
 	bool translate_queue_sensors(world::world_description_handle desc);
+	bool translate_paths(world::world_description_handle desc);
 
 	common::my_logger logger;
 	std::string desc_filename;
@@ -43,6 +45,8 @@ private:
 	std::set<actuator_handle> actuators;
 	std::set<flow_sensor_handle> flow_sensors;
 	std::set<queue_sensor_handle> queue_sensors;
+
+	std::set<path_handle> paths;
 
 #ifdef UNIT_TEST
 	friend class ut_simulation;

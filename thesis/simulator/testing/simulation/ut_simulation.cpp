@@ -38,6 +38,9 @@ namespace constant {
 	const std::string sens_b_name("SENSOR_B");
 
 	const std::string sens_b_c_name("SENSOR_B_C");
+
+	const std::string path_a_c_name("PATH_A_C");
+	const std::string path_a_d_name("PATH_A_D");
 }
 
 class ut_simulation : public ::testing::Test
@@ -109,6 +112,18 @@ protected:
 		desc->queue_sensors.insert(std::make_pair(constant::sens_b_c_name, sens_b_c));
 		area->queue_sensors.insert(sens_b_c);
 
+		world::world_path_handle path_a_c(new world::world_path(constant::path_a_c_name));
+		path_a_c->nodes.push_back(node_a);
+		path_a_c->nodes.push_back(node_b);
+		path_a_c->nodes.push_back(node_c);
+		desc->paths.insert(std::make_pair(constant::path_a_c_name, path_a_c));
+
+		world::world_path_handle path_a_d(new world::world_path(constant::path_a_d_name));
+		path_a_d->nodes.push_back(node_a);
+		path_a_d->nodes.push_back(node_b);
+		path_a_d->nodes.push_back(node_d);
+		desc->paths.insert(std::make_pair(constant::path_a_d_name, path_a_d));
+
 		desc->simulation.reset(new world::world_simulation());
 		desc->simulation->cell_size = constant::cell_size;
 
@@ -133,6 +148,11 @@ protected:
 	bool trigger_translate_queue_sensors(world::world_description_handle desc)
 	{
 		return sim.translate_queue_sensors(desc);
+	}
+
+	bool trigger_translate_paths(world::world_description_handle desc)
+	{
+		return sim.translate_paths(desc);
 	}
 
 	const std::set<cell_handle>& get_cells()
@@ -169,6 +189,11 @@ protected:
 	{
 		return sim.queue_sensors;
 	}
+
+	const std::set<path_handle>& get_paths()
+	{
+		return sim.paths;
+	}
 };
 
 TEST_F(ut_simulation, translate_to_cell_representation)
@@ -202,6 +227,11 @@ TEST_F(ut_simulation, translate_to_cell_representation)
 
 	const std::set<queue_sensor_handle>& queue_sensors = get_queue_sensors();
 	EXPECT_EQ(1, queue_sensors.size());
+
+	EXPECT_TRUE(trigger_translate_paths(desc));
+
+	const std::set<path_handle>& paths = get_paths();
+	EXPECT_EQ(2, paths.size());
 }
 
 } // namespace simulation

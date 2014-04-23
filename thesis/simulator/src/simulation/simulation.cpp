@@ -13,6 +13,10 @@
 namespace simulator {
 namespace simulation {
 
+namespace constant {
+	int safety_cell_count_limit(10000);
+}
+
 simulation::simulation(const std::string& desc_filename_) :
 	logger("simulation"),
 	desc_filename(desc_filename_)
@@ -41,36 +45,42 @@ bool simulation::prepare()
 
 bool simulation::translate_to_cell_representation(world::world_description_handle desc)
 {
-	logger.info()() << "translating nodes";
-	if (!translate_nodes(desc)) {
-		logger.error()() << "translating nodes failed";
+	try {
+		logger.info()() << "translating nodes";
+		if (!translate_nodes(desc)) {
+			logger.error()() << "translating nodes failed";
+			return false;
+		}
+		
+		if (!translate_actuators(desc)) {
+			logger.error()() << "translating actuators failed";
+			return false;
+		}
+
+		if (!translate_flow_sensors(desc)) {
+			logger.error()() << "translating flow sensors failed";
+			return false;
+		}
+
+		if (!translate_queue_sensors(desc)) {
+			logger.error()() << "translating queue sensors failed";
+			return false;
+		}
+
+		if (!translate_paths(desc)) {
+			logger.error()() << "translating paths failed";
+			return false;
+		}
+
+		//TODO translating desc->simulation
+		// - save settings
+		// - set creators-paths rates of creation vehicles
+
+		return true;
+	} catch (std::exception& e) {
+		logger.error()() << "unexpected exception: " << e.what();
 		return false;
 	}
-	
-	if (!translate_actuators(desc)) {
-		logger.error()() << "translating actuators failed";
-		return false;
-	}
-
-	if (!translate_flow_sensors(desc)) {
-		logger.error()() << "translating flow sensors failed";
-		return false;
-	}
-
-	if (!translate_queue_sensors(desc)) {
-		logger.error()() << "translating queue sensors failed";
-		return false;
-	}
-
-	//TODO translating desc->paths
-	// - add paths with cells to visit queues
-	// - connect paths to creators
-
-	//TODO translating desc->simulation
-	// - save settings
-	// - set creators-paths rates of creation vehicles
-
-	return true;
 }
 
 bool simulation::translate_nodes(world::world_description_handle desc)
@@ -233,6 +243,57 @@ bool simulation::translate_queue_sensors(world::world_description_handle desc)
 		 	++sensor_count;
 		}
 		logger.debug()() << "created " << sensor_count << " queue sensors in area " << ar.first;
+	}
+	return true;
+}
+
+bool simulation::translate_paths(world::world_description_handle desc)
+{
+	typedef std::pair<std::string, world::world_path_handle> path_pair_t;
+
+	BOOST_FOREACH(path_pair_t pth, desc->paths){
+		if (pth.second->nodes.empty()) {
+			logger.error()() << "can't translate empty path";
+			return false;
+		}
+		if (creators.end() == creators.find(cell_names[(*pth.second->nodes.begin())->name])) {
+			logger.error()() << "creator for given cell was not created";
+			return false;
+		}
+
+		path_handle tmp(new path(pth.first,
+			creators[cell_names[(*pth.second->nodes.begin())->name]]));
+
+		world::world_node_handle prev_nde;
+		BOOST_FOREACH(world::world_node_handle nde, pth.second->nodes) {
+			if (prev_nde) {
+				cell_handle c_from = cell_names[prev_nde->name];
+				cell_handle c_to = cell_names[nde->name];
+				std::pair<int, int> ex_ent = prev_nde->find_connection_to(*nde);
+
+				tmp->add_cell(c_from, 0, ex_ent.first);
+
+				int cnt = constant::safety_cell_count_limit;
+				cell_handle c = c_from->next[ex_ent.first].lock();
+				while (cnt && c != c_to) {
+					tmp->add_cell(c, 0, 0);
+					c = c->next[0].lock();
+					--cnt;
+				}
+
+				if (!cnt) {
+					logger.error()() << "no path between cells";
+					return false;
+				}
+
+				tmp->add_cell(c_to, ex_ent.second, 0);
+			}
+			prev_nde = nde;
+		}
+
+		paths.insert(tmp);
+		logger.debug()() << "created path " << pth.second->name <<
+			" throught " << tmp->get_cells().size() << " cells";
 	}
 	return true;
 }

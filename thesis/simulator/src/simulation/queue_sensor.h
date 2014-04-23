@@ -11,7 +11,8 @@
 namespace simulator {
 namespace simulation {
 
-class queue_sensor {
+class queue_sensor
+{
 public:
 	queue_sensor(std::string area_name_, EEventScope area_scope_,
 		std::string sensor_name_, cell_handle cell_from_, cell_handle cell_to_,
