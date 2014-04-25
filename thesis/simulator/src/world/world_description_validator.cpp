@@ -82,20 +82,23 @@ bool world_description_validator::check_actuators_area_membership()
 
 	bool result = true;
 	BOOST_FOREACH(act_pair_t act, desc->actuators) {
-		bool member = false;
+		int member = 0;
 		BOOST_FOREACH(area_pair_t area, desc->areas) {
 			if (area.second->actuators.find(act.second) != area.second->actuators.end()) {
-				member = true;
+				++member;
 			}
 		}
 
 		if (!member) {
 			logger.error()() << "actuator is not a member of any area: " << act.second->name;
 			result = false;
+		} else if (member > 1) {
+			logger.error()() << "actuator is member of more than one area: " << act.second->name;
+			result = false;
 		}
 	}
 	if (result) {
-		logger.debug()() << "all actuators are members of areas";
+		logger.debug()() << "actuators area membership is correct";
 	}
 	return result;
 }
