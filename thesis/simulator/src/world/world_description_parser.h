@@ -19,7 +19,7 @@ public:
 	virtual ~world_description_parser();
 
 	bool parse();
-	world_description_handle get_world_description();
+	world_description_handle get_world_description() const;
 
 private:
 	bool parse_file(const std::string& file);

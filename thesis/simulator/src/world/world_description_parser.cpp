@@ -29,7 +29,7 @@ bool world_description_parser::parse()
 	return status;
 }
 
-world_description_handle world_description_parser::get_world_description()
+world_description_handle world_description_parser::get_world_description() const
 {
 	return desc;
 }

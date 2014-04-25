@@ -36,7 +36,7 @@ typedef boost::shared_ptr<world_connection> world_connection_handle;
 struct world_node
 {
 	world_node(const std::string& name_, ENodeType type_);
-	std::pair<int,int> find_connection_to(const world_node& node_to);
+	std::pair<int,int> find_connection_to(const world_node& node_to) const;
 
 	std::string name;
 	ENodeType type;
