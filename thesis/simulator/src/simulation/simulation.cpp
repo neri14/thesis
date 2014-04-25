@@ -19,7 +19,8 @@ namespace constant {
 
 simulation::simulation(const std::string& desc_filename_) :
 	logger("simulation"),
-	desc_filename(desc_filename_)
+	desc_filename(desc_filename_),
+	simulation_duration(0)
 {}
 
 bool simulation::prepare()
@@ -46,7 +47,7 @@ bool simulation::prepare()
 bool simulation::translate_to_cell_representation(world::world_description_handle desc)
 {
 	try {
-		logger.info()() << "translating nodes";
+		logger.info()() << "translating to cell representation";
 		if (!translate_nodes(desc)) {
 			logger.error()() << "translating nodes failed";
 			return false;
@@ -72,10 +73,12 @@ bool simulation::translate_to_cell_representation(world::world_description_handl
 			return false;
 		}
 
-		//TODO translating desc->simulation
-		// - save settings
-		// - set creators-paths rates of creation vehicles
+		if (!translate_simulation_data(desc)) {
+			logger.error()() << "translating simulation data failed";
+			return false;
+		}
 
+		logger.info()() << "translated to cell representation";
 		return true;
 	} catch (std::exception& e) {
 		logger.error()() << "unexpected exception: " << e.what();
@@ -92,7 +95,7 @@ bool simulation::translate_nodes(world::world_description_handle desc)
 		c->priority_entrance_number = node.second->priority_entrance;
 
 		if (node.second->max_create_rate) {
-			creator_handle tmp(new creator(c, node.second->max_create_rate));
+			creator_handle tmp(new creator(c, node.second->max_create_rate, desc->simulation->max_speed));
 			creators.insert(std::make_pair(c, tmp));
 		}
 		if (node.second->max_destroy_rate) {
@@ -295,6 +298,29 @@ bool simulation::translate_paths(world::world_description_handle desc)
 		logger.debug()() << "created path " << pth.second->name <<
 			" throught " << tmp->get_cells().size() << " cells";
 	}
+	return true;
+}
+
+bool simulation::translate_simulation_data(world::world_description_handle desc)
+{
+	simulation_duration = desc->simulation->duration;
+
+	typedef std::pair<int, std::pair<int, world::world_path_handle> > path_flow_type;
+	BOOST_FOREACH(path_flow_type pf, desc->simulation->path_flows) {
+		std::set<path_handle>::iterator it = std::find_if(paths.begin(), paths.end(),
+			boost::bind(&path::get_name, _1) == pf.second.second->name);
+
+		if (paths.end() == it) {
+			logger.error()() << "no path of given name " << pf.second.second->name;
+			return false;
+		}
+
+		path_handle p = *it;
+		p->set_flow(pf.first, pf.second.first);
+		logger.debug()() << "created flow of " << pf.second.first << " beginning at " <<
+			pf.first << "s for path " << p->get_name();
+	}
+
 	return true;
 }
 

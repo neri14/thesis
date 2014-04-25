@@ -28,6 +28,8 @@ namespace constant {
 	const int distance_b_d(15);
 
 	const double cell_size(7.5);
+	const int max_speed(3);
+	const int duration(300);
 
 	const std::string area_name("AREA");
 	const int area_scope(EEventScope_Area101);
@@ -41,6 +43,9 @@ namespace constant {
 
 	const std::string path_a_c_name("PATH_A_C");
 	const std::string path_a_d_name("PATH_A_D");
+
+	const int path_a_c_flow(300);
+	const int path_a_d_flow(400);
 }
 
 class ut_simulation : public ::testing::Test
@@ -126,6 +131,13 @@ protected:
 
 		desc->simulation.reset(new world::world_simulation());
 		desc->simulation->cell_size = constant::cell_size;
+		desc->simulation->max_speed = constant::max_speed;
+		desc->simulation->duration = constant::duration;
+
+		desc->simulation->path_flows.insert(
+			std::make_pair(0, std::make_pair(constant::path_a_c_flow, path_a_c)));
+		desc->simulation->path_flows.insert(
+			std::make_pair(0, std::make_pair(constant::path_a_d_flow, path_a_d)));
 
 		return desc;
 	}
@@ -153,6 +165,11 @@ protected:
 	bool trigger_translate_paths(world::world_description_handle desc)
 	{
 		return sim.translate_paths(desc);
+	}
+
+	bool trigger_translate_simulation_data(world::world_description_handle desc)
+	{
+		return sim.translate_simulation_data(desc);
 	}
 
 	const std::set<cell_handle>& get_cells()
@@ -194,6 +211,11 @@ protected:
 	{
 		return sim.paths;
 	}
+
+	int get_duration()
+	{
+		return sim.simulation_duration;
+	}
 };
 
 TEST_F(ut_simulation, translate_to_cell_representation)
@@ -232,6 +254,10 @@ TEST_F(ut_simulation, translate_to_cell_representation)
 
 	const std::set<path_handle>& paths = get_paths();
 	EXPECT_EQ(2, paths.size());
+
+	EXPECT_TRUE(trigger_translate_simulation_data(desc));
+
+	EXPECT_EQ(constant::duration, get_duration());
 }
 
 } // namespace simulation

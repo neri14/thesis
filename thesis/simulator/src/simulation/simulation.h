@@ -17,6 +17,11 @@
 namespace simulator {
 namespace simulation {
 
+struct simulation_data
+{
+	int duration;
+};
+
 class simulation
 {
 public:
@@ -32,6 +37,7 @@ private:
 	bool translate_flow_sensors(world::world_description_handle desc);
 	bool translate_queue_sensors(world::world_description_handle desc);
 	bool translate_paths(world::world_description_handle desc);
+	bool translate_simulation_data(world::world_description_handle desc);
 
 	common::my_logger logger;
 	std::string desc_filename;
@@ -47,6 +53,8 @@ private:
 	std::set<queue_sensor_handle> queue_sensors;
 
 	std::set<path_handle> paths;
+
+	int simulation_duration;
 
 #ifdef UNIT_TEST
 	friend class ut_simulation;

@@ -22,12 +22,17 @@ public:
 	path(const std::string& name_, creator_handle creator_h_);
 
 	void add_cell(cell_handle c, int entrance, int exit);
+	void set_flow(int start_time, int flow);
+
 	std::queue<path_cell> get_cells() const;
+	const std::string& get_name() const;
 
 private:
 	std::string name;
 	creator_handle creator_h;
+
 	std::queue<path_cell> cells;
+	std::map<int, int> flows;
 };
 typedef boost::shared_ptr<path> path_handle;
 

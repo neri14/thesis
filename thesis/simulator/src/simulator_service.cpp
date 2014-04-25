@@ -33,12 +33,15 @@ int simulator_service::start()
 		common::dispatcher_client::dispatcher_client_thread client_thread(distributor);
 		client_thread.start();
 
+		//TODO start simulation thread
+
 		std::string str;
 		while (str != "exit") {
 			std::cout << "write \"exit\" to stop execution" << std::endl;
 			std::cin >> str;
 		}
 
+		//TODO stop simulation thread
 		client_thread.stop();
 		distributor.stop();
 	} catch (std::exception& e) {
