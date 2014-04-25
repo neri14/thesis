@@ -52,8 +52,7 @@ void actuator::on_time_tick(common::dispatcher::event_handle ev)
 
 	if (pending_state) {
 		logger.info()() << "setting new state " << pending_state.get();
-		//FIXME replace with mutex protected set_exit_state
-		controlled_cell->exit_states[controlled_cell] = pending_state.get();
+		controlled_cell->set_exit_state(controlled_exit, pending_state.get());
 	}
 
 	common::dispatcher::payload_handle payload(

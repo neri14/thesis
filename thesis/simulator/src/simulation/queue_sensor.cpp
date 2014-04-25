@@ -51,14 +51,14 @@ int queue_sensor::count_occupied_cells()
 	int occupied = 0;
 	int cnt = constant::safety_cell_count_limit;
 
-	cell_handle c = cell_from->next[exit].lock();
+	cell_handle c = cell_from->get_next(exit).lock();
 
 	while (cnt && c != cell_to) {
 		if (c->is_occupied()) {
 			++occupied;
 		}
 
-		c = c->next[0].lock();
+		c = c->get_next(0).lock();
 		--cnt;
 	}
 

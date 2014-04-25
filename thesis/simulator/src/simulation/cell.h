@@ -2,9 +2,12 @@
 #define CELL_H
 
 #include <boost/assign.hpp>
+#include <boost/thread/mutex.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 #include <map>
+
+#include "vehicle.h"
 
 namespace simulator {
 namespace simulation {
@@ -20,32 +23,33 @@ enum EExitState {
 class cell
 {
 public:
-	cell();
+	cell(int priority_entrance = 0);
 
-	void add_prev(int entrance, boost::weak_ptr<cell> c);
-	void add_next(int exit, boost::weak_ptr<cell> c);
 	bool is_exit_allowed(int exit);
-
-	//TODO void set_exit_state // mutex protected
-	//TODO EExitState get_exit_state //mutex protected
+	bool set_exit_state(int exit, EExitState state);
+	EExitState get_exit_state(int exit);
 
 	void increment_vehicle_counter();
 	int get_vehicle_counter_value();
 
 	bool is_occupied();
 
-	std::map<int, boost::weak_ptr<cell> > prev;
-	std::map<int, boost::weak_ptr<cell> > next;
-
-	std::map<boost::weak_ptr<cell>, EExitState> exit_states;
-	//FIXME exit_state - private
-
-	int priority_entrance_number;
-
-	bool occupied;//FIXME replace bool with ptr to vehicle
+	void add_prev(int entrance, boost::weak_ptr<cell> c);
+	void add_next(int exit, boost::weak_ptr<cell> c);
+	boost::weak_ptr<cell> get_prev(int ent);
+	boost::weak_ptr<cell> get_next(int ex);
 
 private:
+	int priority_entrance_number;
 	int vehicle_counter;
+
+	vehicle_handle current_vehicle;
+
+	std::map<boost::weak_ptr<cell>, EExitState> exit_states;
+	boost::mutex mtx_exit_states;
+
+	std::map<int, boost::weak_ptr<cell> > prev;
+	std::map<int, boost::weak_ptr<cell> > next;
 };
 typedef boost::shared_ptr<cell> cell_handle;
 

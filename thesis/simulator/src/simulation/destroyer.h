@@ -11,7 +11,7 @@ class destroyer
 public:
 	destroyer(cell_handle cell_, int max_destroy_rate_);
 
-	//TODO method "destroy" - destroys vehicles according to max_destroy_rate
+	//TODO on time tick - destroys vehicles according to max_destroy_rate
 
 private:
 	cell_handle cell;

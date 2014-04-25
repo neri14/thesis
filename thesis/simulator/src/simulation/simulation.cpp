@@ -91,8 +91,7 @@ bool simulation::translate_nodes(world::world_description_handle desc)
 	typedef std::pair<std::string, world::world_node_handle> node_pair_t;
 	//create cells based on nodes (+ add them to cell_names map)
 	BOOST_FOREACH(node_pair_t node, desc->nodes) {
-		cell_handle c(new cell());
-		c->priority_entrance_number = node.second->priority_entrance;
+		cell_handle c(new cell(node.second->priority_entrance));
 
 		if (node.second->max_create_rate) {
 			creator_handle tmp(new creator(c, node.second->max_create_rate, desc->simulation->max_speed));
@@ -147,10 +146,10 @@ bool simulation::translate_nodes(world::world_description_handle desc)
 		//check if cells are correct
 		int counted = 0;
 		last_cell = cell_from;
-		for (cell_handle curr = cell_from->next[ends_pair.first].lock();
-				curr && curr != cell_to; curr = curr->next[0].lock()) {
-			BOOST_ASSERT(last_cell == curr->prev[0].lock());
-			if (last_cell != curr->prev[0].lock()) {
+		for (cell_handle curr = cell_from->get_next(ends_pair.first).lock();
+				curr && curr != cell_to; curr = curr->get_next(0).lock()) {
+			BOOST_ASSERT(last_cell == curr->get_prev(0).lock());
+			if (last_cell != curr->get_prev(0).lock()) {
 				logger.error()() << "cells are not connected correctly";
 				return false;
 			}
@@ -277,10 +276,10 @@ bool simulation::translate_paths(world::world_description_handle desc)
 				tmp->add_cell(c_from, 0, ex_ent.first);
 
 				int cnt = constant::safety_cell_count_limit;
-				cell_handle c = c_from->next[ex_ent.first].lock();
+				cell_handle c = c_from->get_next(ex_ent.first).lock();
 				while (cnt && c != c_to) {
 					tmp->add_cell(c, 0, 0);
-					c = c->next[0].lock();
+					c = c->get_next(0).lock();
 					--cnt;
 				}
 
