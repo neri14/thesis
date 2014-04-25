@@ -13,6 +13,9 @@ cell::cell(int priority_entrance) :
 	vehicle_counter(0)
 {}
 
+cell::~cell()
+{}
+
 bool cell::is_exit_allowed(int ex)
 {
 	boost::mutex::scoped_lock lock(mtx_exit_states);

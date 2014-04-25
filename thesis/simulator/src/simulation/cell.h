@@ -24,20 +24,21 @@ class cell
 {
 public:
 	cell(int priority_entrance = 0);
+	virtual ~cell();
 
-	bool is_exit_allowed(int exit);
-	bool set_exit_state(int exit, EExitState state);
-	EExitState get_exit_state(int exit);
+	virtual bool is_exit_allowed(int exit);
+	virtual bool set_exit_state(int exit, EExitState state);
+	virtual EExitState get_exit_state(int exit);
 
-	void increment_vehicle_counter();
-	int get_vehicle_counter_value();
+	virtual void increment_vehicle_counter();
+	virtual int get_vehicle_counter_value();
 
-	bool is_occupied();
+	virtual bool is_occupied();
 
-	void add_prev(int entrance, boost::weak_ptr<cell> c);
-	void add_next(int exit, boost::weak_ptr<cell> c);
-	boost::weak_ptr<cell> get_prev(int ent);
-	boost::weak_ptr<cell> get_next(int ex);
+	virtual void add_prev(int entrance, boost::weak_ptr<cell> c);
+	virtual void add_next(int exit, boost::weak_ptr<cell> c);
+	virtual boost::weak_ptr<cell> get_prev(int ent);
+	virtual boost::weak_ptr<cell> get_next(int ex);
 
 private:
 	int priority_entrance_number;
