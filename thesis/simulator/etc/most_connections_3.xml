@@ -75,7 +75,7 @@
 				<name>MOST_X_6</name>
 				<entrance>0</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -86,7 +86,7 @@
 				<name>POLAKA_JOIN_1</name>
 				<entrance>0</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -97,7 +97,7 @@
 				<name>POLAKA_JOIN_1</name>
 				<entrance>1</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -119,7 +119,7 @@
 				<name>MOST_SPLIT_2</name>
 				<entrance>0</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -130,7 +130,7 @@
 				<name>MOST_JOIN_3</name>
 				<entrance>0</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -141,7 +141,7 @@
 				<name>MOST_X_2</name>
 				<entrance>0</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -152,7 +152,7 @@
 				<name>MOST_JOIN_3</name>
 				<entrance>1</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -163,7 +163,7 @@
 				<name>MOST_X_4</name>
 				<entrance>0</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -174,7 +174,7 @@
 				<name>MOST_X_5</name>
 				<entrance>1</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -185,7 +185,7 @@
 				<name>MOST_SPLIT_3</name>
 				<entrance>0</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -196,7 +196,7 @@
 				<name>MOST_X_6</name>
 				<entrance>1</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -207,7 +207,7 @@
 				<name>MOST_JOIN_1</name>
 				<entrance>1</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -218,7 +218,7 @@
 				<name>MOST_JOIN_1</name>
 				<entrance>0</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -229,7 +229,7 @@
 				<name>MOST_JOIN_2</name>
 				<entrance>0</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -240,7 +240,7 @@
 				<name>MOST_JOIN_2</name>
 				<entrance>1</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -262,7 +262,7 @@
 				<name>MOST_X_3</name>
 				<entrance>0</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -273,7 +273,7 @@
 				<name>MOST_X_4</name>
 				<entrance>1</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -284,7 +284,7 @@
 				<name>MOST_X_2</name>
 				<entrance>1</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -295,7 +295,7 @@
 				<name>MOST_X_1</name>
 				<entrance>1</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -306,7 +306,7 @@
 				<name>MOST_X_3</name>
 				<entrance>1</entrance>
 			</node_to>
-			<distance>5</distance>
+			<distance>0</distance>
 		</connection>
 	</connections>
 </world>

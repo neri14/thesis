@@ -124,21 +124,24 @@ bool simulation::translate_nodes(world::world_description_handle desc)
 		std::pair<int, int> ends_pair = node_from->find_connection_to(*node_to);
 
 		cell_handle last_cell = cell_from;
+		int exit_num = ends_pair.first;
+		int entr_num = 0;
 		for (int i=0; i<cells_count; ++i) {
 			cell_handle c(new cell());
 			cells.insert(c);
-
-			int exit_num = (0 == i ? ends_pair.first : 0);
-			int entr_num = 0;//(cells_count-1 == i ? ends_pair.second : 0);
 
 			last_cell->add_next(exit_num, c);
 			c->add_prev(entr_num, last_cell);
 
 			last_cell = c;
+			if (exit_num) {
+				exit_num = 0;
+			}
 		}
+		entr_num = ends_pair.second;
 
-		last_cell->add_next(0, cell_to);
-		cell_to->add_prev(ends_pair.second, last_cell);
+		last_cell->add_next(exit_num, cell_to);
+		cell_to->add_prev(entr_num, last_cell);
 
 		logger.debug()() << "created " << cells_count << " cells from " <<
 			node_from->name << " to " << node_to->name;
