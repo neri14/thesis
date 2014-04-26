@@ -1,0 +1,44 @@
+<world>
+	<queue_sensors>
+		<!-- od mostu grunwaldzkiego -->
+		<queue_sensor>
+			<name>MOST_QUEUE_W_1</name>
+			<node_from>MOST_SPLIT_1</node_from>
+			<node_to>MOST_SIG_W_1</node_to>
+		</queue_sensor>
+		<queue_sensor>
+			<name>MOST_QUEUE_W_2</name>
+			<node_from>MOST_SPLIT_1</node_from>
+			<node_to>MOST_SIG_W_2</node_to>
+		</queue_sensor>
+		<queue_sensor>
+			<name>MOST_QUEUE_W_3</name>
+			<node_from>MOST_NODE_1</node_from>
+			<node_to>MOST_SIG_W_3</node_to>
+		</queue_sensor>
+
+		<!-- z wyspianskiego -->
+		<queue_sensor>
+			<name>MOST_QUEUE_S_1</name>
+			<node_from>WYSP_SPLIT_3</node_from>
+			<node_to>MOST_SIG_S_1</node_to>
+		</queue_sensor>
+		<queue_sensor>
+			<name>MOST_QUEUE_S_2</name>
+			<node_from>WYSP_SPLIT_3</node_from>
+			<node_to>MOST_SIG_S_2</node_to>
+		</queue_sensor>
+
+		<!-- od ronda -->
+		<queue_sensor>
+			<name>MOST_QUEUE_E_1</name>
+			<node_from>D1_D2_NODE_1</node_from>
+			<node_to>MOST_SIG_E_1</node_to>
+		</queue_sensor>
+		<queue_sensor>
+			<name>MOST_QUEUE_E_2</name>
+			<node_from>D1_D2_NODE_2</node_from>
+			<node_to>MOST_SIG_E_2</node_to>
+		</queue_sensor>
+	</queue_sensors>
+</world>

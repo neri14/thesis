@@ -1,15 +1,41 @@
 <world>
 	<files>
-		<file>nodes.xml</file>
-		<file>connections.xml</file>
+		<!-- NODES -->
+		<file>most_nodes.xml</file>
+
+		<!-- CONNECTIONS -->
+		<file>most_connections_1.xml</file>
+		<file>most_connections_2.xml</file>
+		<file>most_connections_3.xml</file>
+
+		<!-- CREATORS -->
 		<file>creators.xml</file>
+
+		<!-- DESTROYERS -->
 		<file>destroyers.xml</file>
-		<file>actuators.xml</file>
-		<file>flow_sensors.xml</file>
-		<file>queue_sensors.xml</file>
+
+		<!-- ACTUATORS -->
+		<file>most_actuators.xml</file>
+
+		<!-- FLOW SENSORS -->
+		<file>most_flow_sensors.xml</file>
+
+		<!-- QUEUE SENSORS -->
+		<file>most_queue_sensors.xml</file>
+
+		<!-- AREAS -->
 		<file>areas.xml</file>
-		<file>paths.xml</file>
-		<file>priorities.xml</file>
+
+		<!-- PATHS --><!-- FIXME paths end at d1_d2_node nodes -->
+		<file>most_paths.xml</file>
+		<file>wysp_paths.xml</file>
+		<file>wron_paths.xml</file>
+		<file>rondo_paths.xml</file>
+
+		<!-- PRIORITIES -->
+		<file>most_priorities.xml</file>
+
+		<!-- SIMULATION -->
 		<file>simulation.xml</file>
 	</files>
 </world>

@@ -1,0 +1,27 @@
+<world>
+	<flow_sensors>
+		<!-- zjazd z mostu grunwaldzkiego -->
+		<flow_sensor>
+			<name>MOST_FLOW_W_1</name>
+			<node_name>MOST_SPLIT_1</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>MOST_FLOW_W_2</name>
+			<node_name>MOST_NODE_1</node_name>
+		</flow_sensor>
+		<!-- od wyspianskiego -->
+		<flow_sensor>
+			<name>MOST_FLOW_S_1</name>
+			<node_name>WYSP_SPLIT_3</node_name>
+		</flow_sensor>
+		<!-- od ronda raegana -->
+		<flow_sensor>
+			<name>MOST_FLOW_E_1</name>
+			<node_name>D1_D2_NODE_1</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>MOST_FLOW_E_2</name>
+			<node_name>D1_D2_NODE_2</node_name>
+		</flow_sensor>
+	</flow_sensors>
+</world>

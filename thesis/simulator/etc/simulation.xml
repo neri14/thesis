@@ -1,37 +1,97 @@
 <world>
 	<simulation>
-		<duration>600</duration>
+		<duration>300</duration>
 		<cell_size>7.5</cell_size>
+		<!-- max speed in cells per second -->
 		<max_speed>3</max_speed>
 		<path_flows>
+			<!-- most paths -->
 			<path_flow>
-				<path_name>PATH_WE</path_name>
+				<path_name>PATH_MOST_RONDO_1</path_name>
 				<flow>120</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
-				<path_name>PATH_WS</path_name>
-				<flow>60</flow>
+				<path_name>PATH_MOST_RONDO_2</path_name>
+				<flow>120</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
-				<path_name>PATH_SW</path_name>
-				<flow>80</flow>
+				<path_name>PATH_MOST_WYSP_1</path_name>
+				<flow>120</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
-				<path_name>PATH_SE</path_name>
-				<flow>40</flow>
+				<path_name>PATH_MOST_WRON_1</path_name>
+				<flow>120</flow>
+				<start_time>0</start_time>
+			</path_flow>
+			<!-- wysp paths -->
+			<path_flow>
+				<path_name>PATH_WYSP_MOST_1</path_name>
+				<flow>120</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
-				<path_name>PATH_EW</path_name>
-				<flow>100</flow>
+				<path_name>PATH_WYSP_MOST_2</path_name>
+				<flow>120</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
-				<path_name>PATH_ES</path_name>
-				<flow>80</flow>
+				<path_name>PATH_WYSP_POLAKA_1</path_name>
+				<flow>120</flow>
+				<start_time>0</start_time>
+			</path_flow>
+			<path_flow>
+				<path_name>PATH_WYSP_RONDO_1</path_name>
+				<flow>120</flow>
+				<start_time>0</start_time>
+			</path_flow>
+			<path_flow>
+				<path_name>PATH_WYSP_WRON_1</path_name>
+				<flow>120</flow>
+				<start_time>0</start_time>
+			</path_flow>
+			<!-- wron paths -->
+			<path_flow>
+				<path_name>PATH_WRON_MOST_1</path_name>
+				<flow>120</flow>
+				<start_time>0</start_time>
+			</path_flow>
+			<path_flow>
+				<path_name>PATH_WRON_MOST_2</path_name>
+				<flow>120</flow>
+				<start_time>0</start_time>
+			</path_flow>
+			<path_flow>
+				<path_name>PATH_WRON_POLAKA_1</path_name>
+				<flow>120</flow>
+				<start_time>0</start_time>
+			</path_flow>
+			<path_flow>
+				<path_name>PATH_WRON_RONDO_1</path_name>
+				<flow>120</flow>
+				<start_time>0</start_time>
+			</path_flow>
+			<path_flow>
+				<path_name>PATH_WRON_WYSP_1</path_name>
+				<flow>120</flow>
+				<start_time>0</start_time>
+			</path_flow>
+			<!-- rondo paths -->
+			<path_flow>
+				<path_name>PATH_RONDO_MOST_1</path_name>
+				<flow>120</flow>
+				<start_time>0</start_time>
+			</path_flow>
+			<path_flow>
+				<path_name>PATH_RONDO_MOST_2</path_name>
+				<flow>120</flow>
+				<start_time>0</start_time>
+			</path_flow>
+			<path_flow>
+				<path_name>PATH_RONDO_POLAKA_1</path_name>
+				<flow>120</flow>
 				<start_time>0</start_time>
 			</path_flow>
 		</path_flows>

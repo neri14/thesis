@@ -1,25 +1,32 @@
 <world>
 	<areas>
 		<area>
-			<name>AREA_MAIN</name>
+			<name>AREA_MOST_GRUNWALDZKI</name>
 			<scope>101</scope>
 			<actuators>
-				<name>SIGNAL_W01</name>
-				<name>SIGNAL_W02</name>
-				<name>SIGNAL_S01</name>
-				<name>SIGNAL_S02</name>
-				<name>SIGNAL_E01</name>
+				<name>MOST_SIG_S_1</name>
+				<name>MOST_SIG_S_2</name>
+				<name>MOST_SIG_W_1</name>
+				<name>MOST_SIG_W_2</name>
+				<name>MOST_SIG_W_3</name>
+				<name>MOST_SIG_E_1</name>
+				<name>MOST_SIG_E_2</name>
 			</actuators>
 			<flow_sensors>
-				<name>FLOW_W01</name>
-				<name>FLOW_S01</name>
-				<name>FLOW_E01</name>
+				<name>MOST_FLOW_W_1</name>
+				<name>MOST_FLOW_W_2</name>
+				<name>MOST_FLOW_S_1</name>
+				<name>MOST_FLOW_E_1</name>
+				<name>MOST_FLOW_E_2</name>
 			</flow_sensors>
 			<queue_sensors>
-				<name>QUEUE_W01</name>
-				<name>QUEUE_W02</name>
-				<name>QUEUE_S01</name>
-				<name>QUEUE_E01</name>
+				<name>MOST_QUEUE_W_1</name>
+				<name>MOST_QUEUE_W_2</name>
+				<name>MOST_QUEUE_W_3</name>
+				<name>MOST_QUEUE_S_1</name>
+				<name>MOST_QUEUE_S_2</name>
+				<name>MOST_QUEUE_E_1</name>
+				<name>MOST_QUEUE_E_2</name>
 			</queue_sensors>
 		</area>
 	</areas>

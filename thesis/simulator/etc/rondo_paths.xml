@@ -1,0 +1,35 @@
+<world>
+	<paths>
+		<path>
+			<name>PATH_RONDO_MOST_1</name>
+			<nodes>
+				<node>D1_D2_NODE_1</node>
+				<node>MOST_SIG_E_1</node>
+				<node>MOST_SPLIT_4</node>
+				<node>MOST_X_6</node>
+				<node>MOST_JOIN_1</node>
+				<node>MOST_OUT_1</node>
+			</nodes>
+		</path>
+		<path>
+			<name>PATH_RONDO_MOST_2</name>
+			<nodes>
+				<node>D1_D2_NODE_2</node>
+				<node>MOST_SIG_E_2</node>
+				<node>MOST_X_5</node>
+				<node>MOST_JOIN_2</node>
+				<node>MOST_OUT_2</node>
+			</nodes>
+		</path>
+		<path>
+			<name>PATH_RONDO_POLAKA_1</name>
+			<nodes>
+				<node>D1_D2_NODE_1</node>
+				<node>MOST_SIG_E_1</node>
+				<node>MOST_SPLIT_4</node>
+				<node>POLAKA_JOIN_1</node>
+				<node>POLAKA_OUT_1</node>
+			</nodes>
+		</path>
+	</paths>
+</world>
