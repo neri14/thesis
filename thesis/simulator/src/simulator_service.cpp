@@ -22,16 +22,16 @@ simulator_service::~simulator_service()
 int simulator_service::start()
 {
 	try {
-		simulation::simulation sim(common::get_config().get<std::string>("world_description_file"));
-		if (!sim.prepare()) {
-			return error_codes::prepare_simulation;
-		}
-
 		common::dispatcher::distributor_thread distributor;
 		distributor.start();
 
 		common::dispatcher_client::dispatcher_client_thread client_thread(distributor);
 		client_thread.start();
+
+		simulation::simulation sim(common::get_config().get<std::string>("world_description_file"));
+		if (!sim.prepare()) {
+			return error_codes::prepare_simulation;
+		}
 
 		//TODO start simulation thread
 

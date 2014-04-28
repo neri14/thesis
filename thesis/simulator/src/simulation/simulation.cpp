@@ -266,8 +266,7 @@ bool simulation::translate_paths(world::world_description_handle desc)
 			return false;
 		}
 
-		path_handle tmp(new path(pth.first,
-			creators[cell_names[(*pth.second->nodes.begin())->name]]));
+		path_handle tmp(new path(pth.first));
 
 		world::world_node_handle prev_nde;
 		BOOST_FOREACH(world::world_node_handle nde, pth.second->nodes) {
@@ -297,6 +296,7 @@ bool simulation::translate_paths(world::world_description_handle desc)
 		}
 
 		paths.insert(tmp);
+		creators[cell_names[(*pth.second->nodes.begin())->name]]->add_path(tmp);
 		logger.debug()() << "created path " << pth.second->name <<
 			" throught " << tmp->get_cells().size() << " cells";
 	}

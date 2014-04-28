@@ -1,5 +1,7 @@
 #include "path.h"
 
+#include <boost/foreach.hpp>
+
 namespace simulator {
 namespace simulation {
 
@@ -13,9 +15,8 @@ path_cell::path_cell(cell_handle cell_h_, int entrance_, int exit_) :
 	// uses creator::create
 }
 
-path::path(const std::string& name_, creator_handle creator_h_) :
-	name(name_),
-	creator_h(creator_h_)
+path::path(const std::string& name_) :
+	name(name_)
 {}
 
 void path::add_cell(cell_handle c, int entrance, int exit)
@@ -36,6 +37,24 @@ std::queue<path_cell> path::get_cells() const
 const std::string& path::get_name() const
 {
 	return name;
+}
+
+int path::get_flow(int time_tick) const
+{
+	int last_tick = 0;
+	int flow = 0;
+
+	typedef std::pair<int, int> flow_pair_type;
+	BOOST_FOREACH(flow_pair_type p, flows) {
+		if (p.first > last_tick && p.first < time_tick) {
+			flow = p.second;
+		}
+	}
+
+	if (flow < 0) {
+		flow = 0;
+	}
+	return flow;
 }
 
 } // namespace simulation

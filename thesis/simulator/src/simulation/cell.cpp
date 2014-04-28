@@ -66,11 +66,6 @@ int cell::get_vehicle_counter_value()
 	return vehicle_counter;
 }
 
-bool cell::is_occupied()
-{
-	return current_vehicle;
-}
-
 void cell::add_prev(int entrance, boost::weak_ptr<cell> c)
 {
 	prev[entrance] = c;
@@ -98,6 +93,16 @@ boost::weak_ptr<cell> cell::get_next(int ex)
 	} else {
 		return next[ex];
 	}
+}
+
+bool cell::is_occupied()
+{
+	return occupied;
+}
+
+void cell::set_occupied(bool occupied_)
+{
+	occupied = occupied_;
 }
 
 } // namespace simulation

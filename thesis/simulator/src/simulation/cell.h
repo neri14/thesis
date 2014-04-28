@@ -7,8 +7,6 @@
 #include <boost/weak_ptr.hpp>
 #include <map>
 
-#include "vehicle.h"
-
 namespace simulator {
 namespace simulation {
 
@@ -33,18 +31,19 @@ public:
 	virtual void increment_vehicle_counter();
 	virtual int get_vehicle_counter_value();
 
-	virtual bool is_occupied();
-
 	virtual void add_prev(int entrance, boost::weak_ptr<cell> c);
 	virtual void add_next(int exit, boost::weak_ptr<cell> c);
 	virtual boost::weak_ptr<cell> get_prev(int ent);
 	virtual boost::weak_ptr<cell> get_next(int ex);
 
+	virtual bool is_occupied();
+	virtual void set_occupied(bool occupied_);
+
 private:
 	int priority_entrance_number;
 	int vehicle_counter;
 
-	vehicle_handle current_vehicle;
+	bool occupied;
 
 	std::map<boost::weak_ptr<cell>, EExitState> exit_states;
 	boost::mutex mtx_exit_states;
