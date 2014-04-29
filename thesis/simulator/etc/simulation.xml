@@ -1,6 +1,6 @@
 <world>
 	<simulation>
-		<duration>300</duration>
+		<duration>3600</duration>
 		<cell_size>7.5</cell_size>
 		<!-- max speed in cells per second -->
 		<max_speed>3</max_speed>
@@ -8,90 +8,90 @@
 			<!-- most paths -->
 			<path_flow>
 				<path_name>PATH_MOST_RONDO_1</path_name>
-				<flow>120</flow>
+				<flow>600</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_MOST_RONDO_2</path_name>
-				<flow>120</flow>
+				<flow>600</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_MOST_WYSP_1</path_name>
-				<flow>120</flow>
+				<flow>200</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_MOST_WRON_1</path_name>
-				<flow>120</flow>
+				<flow>10</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<!-- wysp paths -->
 			<path_flow>
 				<path_name>PATH_WYSP_MOST_1</path_name>
-				<flow>120</flow>
+				<flow>60</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_WYSP_MOST_2</path_name>
-				<flow>120</flow>
+				<flow>60</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_WYSP_POLAKA_1</path_name>
-				<flow>120</flow>
+				<flow>10</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_WYSP_RONDO_1</path_name>
-				<flow>120</flow>
+				<flow>10</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_WYSP_WRON_1</path_name>
-				<flow>120</flow>
+				<flow>10</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<!-- wron paths -->
 			<path_flow>
 				<path_name>PATH_WRON_MOST_1</path_name>
-				<flow>120</flow>
+				<flow>20</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_WRON_MOST_2</path_name>
-				<flow>120</flow>
+				<flow>20</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_WRON_POLAKA_1</path_name>
-				<flow>120</flow>
+				<flow>5</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_WRON_RONDO_1</path_name>
-				<flow>120</flow>
+				<flow>20</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_WRON_WYSP_1</path_name>
-				<flow>120</flow>
+				<flow>20</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<!-- rondo paths -->
 			<path_flow>
 				<path_name>PATH_RONDO_MOST_1</path_name>
-				<flow>120</flow>
+				<flow>700</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_RONDO_MOST_2</path_name>
-				<flow>120</flow>
+				<flow>700</flow>
 				<start_time>0</start_time>
 			</path_flow>
 			<path_flow>
 				<path_name>PATH_RONDO_POLAKA_1</path_name>
-				<flow>120</flow>
+				<flow>30</flow>
 				<start_time>0</start_time>
 			</path_flow>
 		</path_flows>

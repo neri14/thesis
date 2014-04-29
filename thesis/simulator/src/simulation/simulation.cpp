@@ -21,12 +21,14 @@ namespace simulation {
 
 namespace constant {
 	int safety_cell_count_limit(10000);
+	int safety_multiplier(1);
 }
 
 simulation::simulation(const std::string& desc_filename_) :
 	logger("simulation"),
 	desc_filename(desc_filename_),
 	simulation_duration(0),
+	max_speed(0),
 	pending_time_tick(-1),
 	last_calculated_tick(-1)
 {}
@@ -144,9 +146,7 @@ void simulation::check_calculate_condition()
 		run_creators(pending_time_tick);
 		run_destroyers(pending_time_tick);
 
-		logger.info()() << "calculating new vehicles states";
-		//TODO simulation::check_calculate_condition calculate new state
-		// 4. calclate new state for vehicles (remember to increment vehicle counters)
+		calculate_new_vehicles_state();
 
 		common::dispatcher::payload_handle payload(
 			new common::dispatcher::simulation_state_calculated(pending_time_tick));
@@ -162,18 +162,34 @@ void simulation::run_creators(int time_tick)
 {
 	logger.info()() << "creating vehicles";
 	int count = 0;
+	int waiting = 0;
 
 	typedef std::pair<cell_handle, creator_handle> cell_creator_pair;
 	BOOST_FOREACH(cell_creator_pair pair, creators) {
 		vehicle_handle v = pair.second->create(pending_time_tick);
 		if (v) {
 			pair.first->set_occupied(true);
-			vehicles.insert(std::make_pair(v, pair.first));
+			vehicles.insert(v);
 			++count;
 		}
+
+		if (pair.second->get_queue_size()) {
+			std::string ent_name;
+
+			typedef std::pair<std::string, cell_handle> str_cell_type;
+			BOOST_FOREACH(str_cell_type sc, cell_names) {
+				if (sc.second == pair.first) {
+					ent_name = sc.first;
+				}
+			}
+
+			logger.warning()() << pair.second->get_queue_size() << " of waiting vehicles on entrance " <<
+				ent_name;
+		}
+		waiting += pair.second->get_queue_size();
 	}
 
-	logger.info()() << "created " << count << " vehicles";
+	logger.info()() << "created " << count << " vehicles - " << waiting << " waiting";
 }
 
 void simulation::run_destroyers(int time_tick)
@@ -183,15 +199,14 @@ void simulation::run_destroyers(int time_tick)
 	int cell_count = 0;
 
 	typedef std::pair<cell_handle, destroyer_handle> cell_destroyer_pair;
-	typedef std::pair<vehicle_handle, cell_handle> vehicle_cell_pair;
 	BOOST_FOREACH(cell_destroyer_pair cell_dest, destroyers) {
 		if (cell_dest.second->should_destroy(time_tick)) {
 			cell_dest.first->set_occupied(false);
 
 			std::set<vehicle_handle> vehicles_to_destroy;
-			BOOST_FOREACH(vehicle_cell_pair veh_cell, vehicles) {
-				if (veh_cell.second == cell_dest.first) {
-					vehicles_to_destroy.insert(veh_cell.first);
+			BOOST_FOREACH(vehicle_handle veh, vehicles) {
+				if (veh->get_path().front().cell_h == cell_dest.first) {
+					vehicles_to_destroy.insert(veh);
 				}
 			}
 			BOOST_FOREACH(vehicle_handle v, vehicles_to_destroy) {
@@ -208,6 +223,98 @@ void simulation::run_destroyers(int time_tick)
 	if (veh_count != cell_count) {
 		logger.warning()() << "multiple vehicles on cell detected when destroying";
 	}
+}
+
+//model Nagela-Schreckenberga
+void simulation::calculate_new_vehicles_state()
+{
+	logger.info()() << "calculating new vehicles states";
+
+	int cells_size = cells.size();
+	double avg = 0;
+	BOOST_FOREACH(vehicle_handle veh, vehicles) {
+		int speed = veh->get_speed();
+		std::queue<path_cell>& p_cells = veh->get_path();
+
+		//SPEEDUP
+		if (speed < max_speed) {
+			++speed;
+		}
+
+		//SLOWDOWN
+		int gap = calculate_gap(veh, p_cells);
+		if (speed > gap) {
+			speed = gap;
+		}
+
+		veh->set_speed(speed);
+		avg += speed;
+
+		//MOVE
+		p_cells.front().cell_h->set_occupied(false);
+		for (int i=0; i<speed; ++i) {
+			p_cells.front().cell_h->increment_vehicle_counter();
+			p_cells.pop();
+		}
+		p_cells.front().cell_h->set_occupied(true);
+	}
+	int veh_cnt = vehicles.size();
+	avg = veh_cnt ? avg/veh_cnt : 0;
+	logger.info()() << "average speed of " << veh_cnt << " vehicles is " << avg << " (number of cells " << cells_size << ")";
+}
+
+int simulation::calculate_gap(vehicle_handle veh, std::queue<path_cell> p_cells)
+{
+	int gap = 0;
+	bool is_on_multi_entrance_cell = p_cells.front().cell_h->get_entrances_count();
+	p_cells.pop();
+
+	bool can_proceed = true;
+	while(!p_cells.empty() && can_proceed && gap < max_speed) {
+		can_proceed = can_proceed && !p_cells.front().cell_h->is_occupied();
+
+		//check if other entrance is priority
+		if (!is_on_multi_entrance_cell && can_proceed &&
+				p_cells.front().cell_h->get_priority_entrance_number() != p_cells.front().entrance) {
+			int safety_margin = max_speed*constant::safety_multiplier;
+
+			std::string name;
+			typedef std::pair<std::string, cell_handle> str_cell_type;
+			BOOST_FOREACH(str_cell_type sc, cell_names) {
+				if (sc.second == p_cells.front().cell_h) {
+					name = sc.first;
+				}
+			}
+
+			//logger.debug()() << "p_cells.front().entrance=" << p_cells.front().entrance;
+			//logger.debug()() << "name=" << name;
+
+			can_proceed = can_non_priority_enter(safety_margin, p_cells.front().cell_h);
+		}
+
+		if (can_proceed) {
+			++gap;
+			p_cells.pop();
+		} else {
+			break;
+		}
+
+		if (!p_cells.empty()) {
+			can_proceed = can_proceed && p_cells.front().cell_h->is_exit_allowed(p_cells.front().exit);
+		}
+	}
+
+	return gap;
+}
+
+bool simulation::can_non_priority_enter(int safety_margin, cell_handle cell_h)
+{
+	cell_handle prev = cell_h->get_prev(cell_h->get_priority_entrance_number()).lock();
+
+	if (prev->is_occupied()) {
+		return false;
+	}
+	return !prev->prev_vehicle_moving(safety_margin, cell_h.get());
 }
 
 bool simulation::translate_to_cell_representation(world::world_description_handle desc)
@@ -266,6 +373,7 @@ bool simulation::translate_nodes(world::world_description_handle desc)
 		if (node.second->max_destroy_rate) {
 			destroyer_handle tmp(new destroyer(c, node.second->max_destroy_rate));
 			destroyers.insert(std::make_pair(c, tmp));
+			c->enable_destroyer_hack();
 		}
 
 		cells.insert(c);
@@ -435,19 +543,26 @@ bool simulation::translate_paths(world::world_description_handle desc)
 		path_handle tmp(new path(pth.first));
 
 		world::world_node_handle prev_nde;
+		path_cell* last_added = 0;
 		BOOST_FOREACH(world::world_node_handle nde, pth.second->nodes) {
 			if (prev_nde) {
 				cell_handle c_from = cell_names[prev_nde->name];
 				cell_handle c_to = cell_names[nde->name];
 				std::pair<int, int> ex_ent = prev_nde->find_connection_to(*nde);
 
-				tmp->add_cell(c_from, 0, ex_ent.first);
+				if (last_added) {
+				 	last_added->exit = ex_ent.first;
+				} else {
+					last_added = tmp->add_cell(c_from, 0, ex_ent.first);
+				}
 
 				int cnt = constant::safety_cell_count_limit;
+				int nde_cnt = 0;
 				cell_handle c = c_from->get_next(ex_ent.first).lock();
 				while (cnt && c != c_to) {
-					tmp->add_cell(c, 0, 0);
+					last_added = tmp->add_cell(c, 0, 0);
 					c = c->get_next(0).lock();
+					++nde_cnt;
 					--cnt;
 				}
 
@@ -456,7 +571,7 @@ bool simulation::translate_paths(world::world_description_handle desc)
 					return false;
 				}
 
-				tmp->add_cell(c_to, ex_ent.second, 0);
+				last_added = tmp->add_cell(c_to, ex_ent.second, 0);
 			}
 			prev_nde = nde;
 		}
@@ -472,6 +587,7 @@ bool simulation::translate_paths(world::world_description_handle desc)
 bool simulation::translate_simulation_data(world::world_description_handle desc)
 {
 	simulation_duration = desc->simulation->duration;
+	max_speed = desc->simulation->max_speed;
 
 	typedef std::pair<int, std::pair<int, world::world_path_handle> > path_flow_type;
 	BOOST_FOREACH(path_flow_type pf, desc->simulation->path_flows) {

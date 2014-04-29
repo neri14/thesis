@@ -34,8 +34,8 @@ private:
 	std::string sensor_name;
 	cell_handle cell_from;
 	cell_handle cell_to;
-	int exit;
-	int entrance;
+	int exit_n;
+	int entrance_n;
 
 	common::dispatcher::connection_handle time_tick_listener;
 };

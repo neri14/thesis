@@ -12,7 +12,7 @@ class path
 public:
 	path(const std::string& name_);
 
-	void add_cell(cell_handle c, int entrance, int exit);
+	path_cell* add_cell(cell_handle c, int entrance, int exit);
 	void set_flow(int start_time, int flow);
 
 	std::queue<path_cell> get_cells() const;

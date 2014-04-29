@@ -4,6 +4,7 @@
 #include "cell.h"
 #include "path.h"
 #include "vehicle.h"
+#include <my_logger.h>
 
 namespace simulator {
 namespace simulation {
@@ -18,8 +19,12 @@ public:
 
 	void add_path(path_handle p);
 
+	int get_queue_size();
+
 private:
 	int get_interval(int flow) const;
+
+	common::my_logger logger;
 	cell_handle cell;
 	int max_create_rate;
 	int max_vehicle_speed;

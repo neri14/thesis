@@ -14,19 +14,20 @@ const int safety_cell_count_limit(10000);
 
 queue_sensor::queue_sensor(std::string area_name_, EEventScope area_scope_,
 		std::string sensor_name_, cell_handle cell_from_, cell_handle cell_to_,
-		int entrance_, int exit_) :
+		int exit_, int entrance_) :
 	logger(std::string("queue_sensor_")+sensor_name_),
 	area_name(area_name_),
 	area_scope(area_scope_),
 	sensor_name(sensor_name_),
 	cell_from(cell_from_),
 	cell_to(cell_to_),
-	entrance(entrance_),
-	exit(exit_)
+	entrance_n(entrance_),
+	exit_n(exit_)
 {
 	time_tick_listener = common::dispatcher::get_dispatcher().register_listener(
 		EEventType_TimeTick, EEventScope_General,
 		boost::bind(&queue_sensor::on_time_tick, this, _1));
+	logger.debug()() << "created sensor exit_n " << exit_n << " entrance_n " << entrance_n;
 }
 
 queue_sensor::~queue_sensor()
@@ -59,7 +60,7 @@ int queue_sensor::count_occupied_cells()
 	int occupied = 0;
 	int cnt = constant::safety_cell_count_limit;
 
-	cell_handle c = cell_from->get_next(exit).lock();
+	cell_handle c = cell_from->get_next(exit_n).lock();
 
 	while (cnt && c != cell_to) {
 		if (!c) {

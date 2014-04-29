@@ -359,7 +359,8 @@ bool world_description_parser::parse_queue_sensors(const boost::property_tree::p
 			desc->queue_sensors.insert(std::make_pair(name, world_queue_sensor_handle(
 				new world_queue_sensor(name, node_from, node_to, exit, entrance))));
 
-			logger.debug()() << "added queue sensor: (" << from << ") - (" << to << ") -> (" << name << ")";
+			logger.debug()() << "added queue sensor: (" << from << ", " << exit <<
+				") - (" << to << ", " << entrance << ") -> (" << name << ")";
 		} else {
 			logger.warning()() << "unexpected xml tag: " << v.first;
 		}

@@ -42,6 +42,9 @@ private:
 
 	void run_creators(int time_tick);
 	void run_destroyers(int time_tick);
+	void calculate_new_vehicles_state();
+	int calculate_gap(vehicle_handle veh, std::queue<path_cell> p_cells);
+	bool can_non_priority_enter(int safety_margin, cell_handle cell_h);
 
 	bool translate_to_cell_representation(world::world_description_handle desc);
 
@@ -68,9 +71,10 @@ private:
 	std::set<queue_sensor_handle> queue_sensors;
 
 	std::set<path_handle> paths;
-	std::map<vehicle_handle, cell_handle> vehicles;
+	std::set<vehicle_handle> vehicles;
 
 	int simulation_duration;
+	int max_speed;
 
 	std::set<std::string> identifiers;
 

@@ -2,32 +2,32 @@
 	<destroyers>
 		<destroyer>
 			<node_name>WYSP_OUT_1</node_name>
-			<destroy_rate>1000</destroy_rate>
+			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 		<destroyer>
 			<node_name>WRON_OUT_1</node_name>
-			<destroy_rate>1000</destroy_rate>
+			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 		<destroyer>
 			<node_name>MOST_OUT_1</node_name>
-			<destroy_rate>1000</destroy_rate>
+			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 		<destroyer>
 			<node_name>MOST_OUT_2</node_name>
-			<destroy_rate>1000</destroy_rate>
+			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 		<destroyer>
 			<node_name>POLAKA_OUT_1</node_name>
-			<destroy_rate>1000</destroy_rate>
+			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 		<!--FIXME TEMP-->
 		<destroyer>
 			<node_name>D1_D2_NODE_4</node_name>
-			<destroy_rate>1000</destroy_rate>
+			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 		<destroyer>
 			<node_name>D1_D2_NODE_3</node_name>
-			<destroy_rate>1000</destroy_rate>
+			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 	</destroyers>
 </world>

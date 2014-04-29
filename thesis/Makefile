@@ -41,22 +41,22 @@ visualiser: prepare_cmake
 ### SYSTEM RUN ###
 SYSTEM_RUN_ = controller_run dispatcher_generic_client_run dispatcher_server_run manager_run simulator_run visualiser_run
 
-controller_run:
+controller_run: clear_core
 	./bin/controller --config ./controller/etc/config.ini
 
-dispatcher_generic_client_run:
+dispatcher_generic_client_run: clear_core
 	./bin/dispatcher_generic_client --config ./dispatcher_generic_client/etc/config.ini
 
-dispatcher_server_run:
+dispatcher_server_run: clear_core
 	./bin/dispatcher_server --config ./dispatcher_server/etc/config.ini
 
-manager_run:
+manager_run: clear_core
 	./bin/manager --config ./manager/etc/config.ini
 
-simulator_run:
+simulator_run: clear_core
 	./bin/simulator --config ./simulator/etc/config.ini
 
-visualiser_run:
+visualiser_run: clear_core
 	./bin/visualiser --config ./visualiser/etc/config.ini
 
 .PHONY: system $(SYSTEM_)
@@ -105,25 +105,25 @@ endif
 
 test_run: $(TEST_RUN_)
 
-common_test_run:
+common_test_run: clear_core
 	./bin/common_test $(GTEST_FLAGS_)
 
-controller_test_run:
+controller_test_run: clear_core
 	./bin/controller_test $(GTEST_FLAGS_)
 
-dispatcher_generic_client_test_run:
+dispatcher_generic_client_test_run: clear_core
 	./bin/dispatcher_generic_client_test $(GTEST_FLAGS_)
 
-dispatcher_server_test_run:
+dispatcher_server_test_run: clear_core
 	./bin/dispatcher_server_test $(GTEST_FLAGS_)
 
-manager_test_run:
+manager_test_run: clear_core
 	./bin/manager_test $(GTEST_FLAGS_)
 
-simulator_test_run:
+simulator_test_run: clear_core
 	./bin/simulator_test $(GTEST_FLAGS_)
 
-visualiser_test_run:
+visualiser_test_run: clear_core
 	./bin/visualiser_test $(GTEST_FLAGS_)
 
 .PHONY: test_run $(TEST_RUN_)
@@ -138,10 +138,13 @@ prepare_3rdparty:
 	make -C ../3rdparty
 	mkdir -p ./bin/gmock
 
+clear_core:
+	rm -rf core
+
 clean_bin:
 	rm -rf ./bin/*
 
 clean_3rdparty:
 	make -C ../3rdparty clean
 
-.PHONY: prepare_cmake prepare_3rdparty clean_bin clean_3rdparty
+.PHONY: prepare_cmake prepare_3rdparty clean_bin clean_3rdparty clear_core

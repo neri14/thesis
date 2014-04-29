@@ -68,7 +68,7 @@ std::pair<int,int> world_node::find_connection_to(const world_node& node_to) con
 			}
 		}
 	}
-
+	
 	return std::make_pair(exit, entrance);
 }
 

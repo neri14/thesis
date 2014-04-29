@@ -15,9 +15,10 @@ path::path(const std::string& name_) :
 	name(name_)
 {}
 
-void path::add_cell(cell_handle c, int entrance, int exit)
+path_cell* path::add_cell(cell_handle c, int entrance, int exit)
 {
 	cells.push(path_cell(c, entrance, exit));
+	return &cells.back();
 }
 
 void path::set_flow(int start_time, int flow)
@@ -42,7 +43,7 @@ int path::get_flow(int time_tick) const
 
 	typedef std::pair<int, int> flow_pair_type;
 	BOOST_FOREACH(flow_pair_type p, flows) {
-		if (p.first > last_tick && p.first <= time_tick) {
+		if (p.first >= last_tick && p.first <= time_tick) {
 			flow = p.second;
 			last_tick = p.first;
 		}

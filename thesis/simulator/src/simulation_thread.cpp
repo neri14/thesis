@@ -31,12 +31,14 @@ void simulation_thread::prepare()
 void simulation_thread::run_impl()
 {
 	while(keep_alive && time_tick < duration) {
+		logger.info()() << "time tick " << time_tick;
 		common::dispatcher::payload_handle payload(
 			new common::dispatcher::time_tick_payload(time_tick));
 		common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(
 			new common::dispatcher::event(EEventType_TimeTick, EEventScope_General, payload)));
 
-		boost::this_thread::sleep(boost::posix_time::seconds(1));
+		//boost::this_thread::sleep(boost::posix_time::seconds(1));
+		boost::this_thread::sleep(boost::posix_time::milliseconds(10));
 
 		int delay = 0;
 		while(time_tick != last_received_tick_calculated) {

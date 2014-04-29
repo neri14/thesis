@@ -7,6 +7,8 @@
 #include <boost/weak_ptr.hpp>
 #include <map>
 
+#include <my_logger.h>
+
 namespace simulator {
 namespace simulation {
 
@@ -17,6 +19,9 @@ enum EExitState {
 	EExitState_Green,
 	EExitState_Yellow
 };
+
+class cell;
+typedef boost::shared_ptr<cell> cell_handle;
 
 class cell
 {
@@ -39,11 +44,20 @@ public:
 	virtual bool is_occupied();
 	virtual void set_occupied(bool occupied_);
 
+	virtual int get_priority_entrance_number() const;
+	virtual bool prev_vehicle_moving(int margin, const cell* next_cell);
+
+	virtual void enable_destroyer_hack();
+	virtual bool get_entrances_count() const;
+
 private:
+	common::my_logger logger;
+
 	int priority_entrance_number;
 	int vehicle_counter;
 
 	bool occupied;
+	bool destroyer_hack_enabled;
 
 	std::map<boost::weak_ptr<cell>, EExitState> exit_states;
 	boost::mutex mtx_exit_states;
@@ -51,7 +65,6 @@ private:
 	std::map<int, boost::weak_ptr<cell> > prev;
 	std::map<int, boost::weak_ptr<cell> > next;
 };
-typedef boost::shared_ptr<cell> cell_handle;
 
 } // namespace simulation
 } // namespace simulator
