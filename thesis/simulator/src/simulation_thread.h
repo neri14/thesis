@@ -1,12 +1,3 @@
-//TODO simulation_thread::stop
-// - simulation stop is based on stopping tick event generator or stops itself if duration is exceeded
-
-
-////////////////////////////////////
-
-// simulation thread
-// 1. generate time_tick event on (1pps && previous state calculated event)
-
 #include <common_thread.h>
 #include <dispatcher/event_dispatcher.h>
 

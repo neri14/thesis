@@ -9,11 +9,7 @@ path_cell::path_cell(cell_handle cell_h_, int entrance_, int exit_) :
 	cell_h(cell_h_),
 	entrance(entrance_),
 	exit(exit_)
-{
-	//TODO register for time tick
-	// on time tick create vehicle if should according to current flow
-	// uses creator::create
-}
+{}
 
 path::path(const std::string& name_) :
 	name(name_)

@@ -77,7 +77,7 @@ bool simulation::prepare()
 	return true;
 }
 
-int simulation::get_duration()
+int simulation::get_duration() const
 {
 	return simulation_duration;
 }

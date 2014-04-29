@@ -12,7 +12,8 @@ simulation_thread::simulation_thread(int duration_) :
 	common::common_thread("simulation_thread"),
 	keep_alive(true),
 	duration(duration_),
-	time_tick(0)
+	time_tick(0),
+	last_received_tick_calculated(-1)
 {}
 
 simulation_thread::~simulation_thread()
