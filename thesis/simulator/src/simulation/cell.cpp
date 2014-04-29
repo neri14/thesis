@@ -10,7 +10,8 @@ std::map<EExitState, bool> exit_allowed = boost::assign::map_list_of
 
 cell::cell(int priority_entrance) :
 	priority_entrance_number(priority_entrance),
-	vehicle_counter(0)
+	vehicle_counter(0),
+	occupied(false)
 {}
 
 cell::~cell()

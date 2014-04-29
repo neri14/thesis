@@ -2,6 +2,7 @@
 
 #include "simulation/simulation.h"
 
+#include "simulation_thread.h"
 #include <dispatcher/distributor_thread.h>
 #include <dispatcher_client/dispatcher_client_thread.h>
 #include <config/config.h>
@@ -33,7 +34,8 @@ int simulator_service::start()
 			return error_codes::prepare_simulation;
 		}
 
-		//TODO start simulation thread
+		simulation_thread sim_thread(sim.get_duration());
+		sim_thread.start();
 
 		std::string str;
 		while (str != "exit") {
@@ -41,7 +43,7 @@ int simulator_service::start()
 			std::cin >> str;
 		}
 
-		//TODO stop simulation thread
+		sim_thread.stop();
 		client_thread.stop();
 		distributor.stop();
 	} catch (std::exception& e) {

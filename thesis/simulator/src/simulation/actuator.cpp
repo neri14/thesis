@@ -62,6 +62,7 @@ void actuator::on_time_tick(common::dispatcher::event_handle ev)
 		controlled_cell->set_exit_state(controlled_exit, pending_state.get());
 	}
 
+	logger.debug()() << "actuator finished";
 	common::dispatcher::payload_handle payload(
 		new common::dispatcher::actuator_finished_payload(actuator_name, time_tick));
 	common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(

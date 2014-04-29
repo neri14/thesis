@@ -47,6 +47,7 @@ void queue_sensor::on_time_tick(common::dispatcher::event_handle ev)
 
 	int queue = count_occupied_cells();
 
+	logger.info()() << "current queue " << queue;
 	common::dispatcher::payload_handle payload(
 		new common::dispatcher::queue_sensor_state(sensor_name, queue, time_tick));
 	common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(
@@ -61,6 +62,11 @@ int queue_sensor::count_occupied_cells()
 	cell_handle c = cell_from->get_next(exit).lock();
 
 	while (cnt && c != cell_to) {
+		if (!c) {
+			logger.error()() << "queue sensor not defined correctly - non existant cell";
+			return 0;
+		}
+
 		if (c->is_occupied()) {
 			++occupied;
 		}

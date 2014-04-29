@@ -11,15 +11,23 @@ creator::creator(cell_handle cell_, int max_create_rate_, int max_vehicle_speed_
 	max_vehicle_speed(max_vehicle_speed_)
 {}
 
+creator::~creator()
+{
+	while(!vehicles.empty()) {
+		vehicles.pop();
+	}
+}
+
 vehicle_handle creator::create(int time_tick)
 {
 	BOOST_FOREACH(path_handle p, paths) {
-		if (get_interval(p->get_flow(time_tick)) % time_tick == 0) {
+		int interval = get_interval(p->get_flow(time_tick));
+		if (interval && time_tick && time_tick % interval == 0) {
 			vehicles.push(vehicle_handle(new vehicle(p)));
 		}
 	}
 
-	if (!cell->is_occupied()) {
+	if (!vehicles.empty() && !cell->is_occupied()) {
 		vehicle_handle tmp = vehicles.front();
 		vehicles.pop();
 		return tmp;
@@ -35,7 +43,10 @@ void creator::add_path(path_handle p)
 
 int creator::get_interval(int flow) const
 {
-	return ceil(3600/flow);
+	if (!flow) {
+		return 0;
+	}
+	return static_cast<int>(ceil(3600.0/flow));
 }
 
 }

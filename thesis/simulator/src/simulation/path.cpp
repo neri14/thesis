@@ -46,8 +46,9 @@ int path::get_flow(int time_tick) const
 
 	typedef std::pair<int, int> flow_pair_type;
 	BOOST_FOREACH(flow_pair_type p, flows) {
-		if (p.first > last_tick && p.first < time_tick) {
+		if (p.first > last_tick && p.first <= time_tick) {
 			flow = p.second;
+			last_tick = p.first;
 		}
 	}
 

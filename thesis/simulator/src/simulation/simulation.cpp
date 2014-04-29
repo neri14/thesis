@@ -77,6 +77,11 @@ bool simulation::prepare()
 	return true;
 }
 
+int simulation::get_duration()
+{
+	return simulation_duration;
+}
+
 void simulation::on_time_tick(common::dispatcher::event_handle ev)
 {
 	BOOST_ASSERT(EEventType_TimeTick == ev->get_type());
@@ -94,7 +99,7 @@ void simulation::on_actuator_finished(common::dispatcher::event_handle ev)
 	BOOST_ASSERT(EEventType_ActuatorFinished == ev->get_type());
 	common::dispatcher::actuator_finished_payload& act =
 		*ev->get_payload<common::dispatcher::actuator_finished_payload>();
-	clear_pending(act.time_tick, act.actuator_name);
+	clear_pending(act.time_tick, act.get_actuator_name());
 
 	check_calculate_condition();
 }
@@ -104,7 +109,7 @@ void simulation::on_queue_sensor_state(common::dispatcher::event_handle ev)
 	BOOST_ASSERT(EEventType_QueueSensorState == ev->get_type());
 	common::dispatcher::queue_sensor_state& sensor =
 		*ev->get_payload<common::dispatcher::queue_sensor_state>();
-	clear_pending(sensor.time_tick, sensor.sensor_name);
+	clear_pending(sensor.time_tick, sensor.get_sensor_name());
 
 	check_calculate_condition();
 }
@@ -114,7 +119,7 @@ void simulation::on_flow_sensor_state(common::dispatcher::event_handle ev)
 	BOOST_ASSERT(EEventType_FlowSensorState == ev->get_type());
 	common::dispatcher::flow_sensor_state& sensor =
 		*ev->get_payload<common::dispatcher::flow_sensor_state>();
-	clear_pending(sensor.time_tick, sensor.sensor_name);
+	clear_pending(sensor.time_tick, sensor.get_sensor_name());
 
 	check_calculate_condition();
 }
@@ -122,7 +127,14 @@ void simulation::on_flow_sensor_state(common::dispatcher::event_handle ev)
 void simulation::clear_pending(int time_tick, std::string identifier)
 {
 	if (pending_time_tick == time_tick) {
-		pending_set.erase(identifier);
+		if (pending_set.find(identifier) != pending_set.end()) {
+			pending_set.erase(identifier);
+		} else {
+			logger.warning()() << "received unknown component finished: " << identifier;
+		}
+	} else {
+		logger.warning()() << "component (" << identifier << ") finished in wrong tick: current=" <<
+			pending_time_tick << " received=" << time_tick;
 	}
 }
 

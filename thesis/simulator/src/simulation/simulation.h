@@ -29,6 +29,7 @@ public:
 	virtual ~simulation();
 
 	bool prepare();
+	int get_duration();
 
 private:
 	void on_time_tick(common::dispatcher::event_handle ev);
