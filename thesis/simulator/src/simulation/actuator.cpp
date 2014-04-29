@@ -1,6 +1,7 @@
 #include "actuator.h"
 
 #include <dispatcher/event/payload/actuator_finished_payload.h>
+#include <dispatcher/event/payload/time_tick_payload.h>
 
 #include <boost/bind.hpp>
 
@@ -31,6 +32,11 @@ actuator::~actuator()
 	common::dispatcher::get_dispatcher().unregister_listener(time_tick_listener);
 }
 
+const std::string& actuator::get_name() const
+{
+	return actuator_name;
+}
+
 void actuator::on_set_state(common::dispatcher::event_handle ev)
 {
 	BOOST_ASSERT(EEventType_SetActuatorState == ev->get_type());
@@ -49,6 +55,7 @@ void actuator::on_time_tick(common::dispatcher::event_handle ev)
 {
 	BOOST_ASSERT(EEventType_TimeTick == ev->get_type());
 	BOOST_ASSERT(EEventScope_General == ev->get_scope());
+	int time_tick = ev->get_payload<common::dispatcher::time_tick_payload>()->tick;
 
 	if (pending_state) {
 		logger.info()() << "setting new state " << pending_state.get();
@@ -56,7 +63,7 @@ void actuator::on_time_tick(common::dispatcher::event_handle ev)
 	}
 
 	common::dispatcher::payload_handle payload(
-		new common::dispatcher::actuator_finished_payload(actuator_name));
+		new common::dispatcher::actuator_finished_payload(actuator_name, time_tick));
 	common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(
 		new common::dispatcher::event(EEventType_ActuatorFinished, EEventScope_Local, payload)));
 }

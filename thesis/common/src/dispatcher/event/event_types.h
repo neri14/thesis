@@ -10,7 +10,8 @@ enum EEventType
 	EEventType_SetActuatorState,
 	EEventType_ActuatorFinished,
 	EEventType_FlowSensorState,
-	EEventType_QueueSensorState
+	EEventType_QueueSensorState,
+	EEventType_SimulationStateCalculated
 };
 
 enum EEventScope

@@ -2,6 +2,7 @@
 
 #include <config/config.h>
 #include <dispatcher/event/payload/flow_sensor_state.h>
+#include <dispatcher/event/payload/time_tick_payload.h>
 
 #include <boost/bind.hpp>
 
@@ -25,10 +26,16 @@ flow_sensor::~flow_sensor()
 	common::dispatcher::get_dispatcher().unregister_listener(time_tick_listener);
 }
 
+const std::string& flow_sensor::get_name() const
+{
+	return sensor_name;
+}
+
 void flow_sensor::on_time_tick(common::dispatcher::event_handle ev)
 {
 	BOOST_ASSERT(EEventType_TimeTick == ev->get_type());
 	BOOST_ASSERT(EEventScope_General == ev->get_scope());
+	int time_tick = ev->get_payload<common::dispatcher::time_tick_payload>()->tick;
 
 	int new_counter = observed_cell->get_vehicle_counter_value();
 	counter_history.push(new_counter);
@@ -43,7 +50,7 @@ void flow_sensor::on_time_tick(common::dispatcher::event_handle ev)
 	logger.info()() << "current flow: " << flow << " vehicles per hour";
 
 	common::dispatcher::payload_handle payload(
-		new common::dispatcher::flow_sensor_state(sensor_name, flow));
+		new common::dispatcher::flow_sensor_state(sensor_name, flow, time_tick));
 	common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(
 		new common::dispatcher::event(EEventType_FlowSensorState, area_scope, payload)));
 }

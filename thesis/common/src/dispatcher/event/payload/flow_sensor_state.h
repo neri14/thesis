@@ -10,9 +10,10 @@ namespace dispatcher {
 
 struct flow_sensor_state : public base_payload
 {
-	flow_sensor_state(std::string sensor_name_, int flow_) :
+	flow_sensor_state(std::string sensor_name_, int flow_, int time_tick_) :
 		length(std::min(EVENT_PAYLOAD_STRING_SIZE, static_cast<int>(sensor_name_.length()))),
-		flow(flow_)
+		flow(flow_),
+		time_tick(time_tick_)
 	{
 		memcpy(sensor_name, sensor_name_.c_str(), length);
 	}
@@ -20,10 +21,10 @@ struct flow_sensor_state : public base_payload
 	virtual int size()
 	{
 		int sensor_name_size = EVENT_PAYLOAD_STRING_SIZE;
-		return sensor_name_size*sizeof(char) + sizeof(int);
+		return sensor_name_size*sizeof(char) + sizeof(int) * 3;
 	}
 
-	std::string get_actuator_name()
+	std::string get_sensor_name()
 	{
 		return std::string(sensor_name, length);
 	}
@@ -31,6 +32,7 @@ struct flow_sensor_state : public base_payload
 	int length;
 	char sensor_name[EVENT_PAYLOAD_STRING_SIZE];
 	int flow;
+	int time_tick;
 };
 
 }

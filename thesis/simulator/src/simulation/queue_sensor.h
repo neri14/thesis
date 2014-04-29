@@ -20,6 +20,8 @@ public:
 
 	virtual ~queue_sensor();
 
+	const std::string& get_name() const;
+
 private:
 	void on_time_tick(common::dispatcher::event_handle ev);
 

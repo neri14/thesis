@@ -12,8 +12,9 @@ namespace dispatcher {
 
 struct actuator_finished_payload : public base_payload
 {
-	actuator_finished_payload(std::string actuator_name_) :
-		length(std::min(EVENT_PAYLOAD_STRING_SIZE, static_cast<int>(actuator_name_.length())))
+	actuator_finished_payload(std::string actuator_name_, int time_tick_) :
+		length(std::min(EVENT_PAYLOAD_STRING_SIZE, static_cast<int>(actuator_name_.length()))),
+		time_tick(time_tick_)
 	{
 		memcpy(actuator_name, actuator_name_.c_str(), length);
 	}
@@ -21,7 +22,7 @@ struct actuator_finished_payload : public base_payload
 	virtual int size()
 	{
 		int actuator_name_size = EVENT_PAYLOAD_STRING_SIZE;
-		return actuator_name_size*sizeof(char);
+		return actuator_name_size*sizeof(char) + sizeof(int) * 2;
 	}
 
 	std::string get_actuator_name()
@@ -31,6 +32,8 @@ struct actuator_finished_payload : public base_payload
 
 	int length;
 	char actuator_name[EVENT_PAYLOAD_STRING_SIZE];
+
+	int time_tick;
 };
 
 }

@@ -28,7 +28,7 @@ struct set_actuator_state_payload : public base_payload
 	virtual int size()
 	{
 		int actuator_name_size = EVENT_PAYLOAD_STRING_SIZE;
-		return actuator_name_size*sizeof(char) + sizeof(EActuatorState);
+		return actuator_name_size*sizeof(char) + sizeof(EActuatorState) + sizeof(int);
 	}
 
 	std::string get_actuator_name()

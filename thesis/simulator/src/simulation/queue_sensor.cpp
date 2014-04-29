@@ -1,6 +1,7 @@
 #include "queue_sensor.h"
 
 #include <dispatcher/event/payload/queue_sensor_state.h>
+#include <dispatcher/event/payload/time_tick_payload.h>
 
 #include <boost/bind.hpp>
 
@@ -33,15 +34,21 @@ queue_sensor::~queue_sensor()
 	common::dispatcher::get_dispatcher().unregister_listener(time_tick_listener);
 }
 
+const std::string& queue_sensor::get_name() const
+{
+	return sensor_name;
+}
+
 void queue_sensor::on_time_tick(common::dispatcher::event_handle ev)
 {
 	BOOST_ASSERT(EEventType_TimeTick == ev->get_type());
 	BOOST_ASSERT(EEventScope_General == ev->get_scope());
+	int time_tick = ev->get_payload<common::dispatcher::time_tick_payload>()->tick;
 
 	int queue = count_occupied_cells();
 
 	common::dispatcher::payload_handle payload(
-		new common::dispatcher::queue_sensor_state(sensor_name, queue));
+		new common::dispatcher::queue_sensor_state(sensor_name, queue, time_tick));
 	common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(
 		new common::dispatcher::event(EEventType_QueueSensorState, area_scope, payload)));
 }

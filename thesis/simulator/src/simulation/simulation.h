@@ -26,10 +26,22 @@ class simulation
 {
 public:
 	simulation(const std::string& desc_filename_);
+	virtual ~simulation();
 
 	bool prepare();
 
 private:
+	void on_time_tick(common::dispatcher::event_handle ev);
+	void on_actuator_finished(common::dispatcher::event_handle ev);
+	void on_queue_sensor_state(common::dispatcher::event_handle ev);
+	void on_flow_sensor_state(common::dispatcher::event_handle ev);
+
+	void clear_pending(int time_tick, std::string identifier);
+	void check_calculate_condition();
+
+	void run_creators(int time_tick);
+	void run_destroyers(int time_tick);
+
 	bool translate_to_cell_representation(world::world_description_handle desc);
 
 	bool translate_nodes(world::world_description_handle desc);
@@ -38,6 +50,8 @@ private:
 	bool translate_queue_sensors(world::world_description_handle desc);
 	bool translate_paths(world::world_description_handle desc);
 	bool translate_simulation_data(world::world_description_handle desc);
+
+	void prepare_identifiers();
 
 	common::my_logger logger;
 	std::string desc_filename;
@@ -53,8 +67,16 @@ private:
 	std::set<queue_sensor_handle> queue_sensors;
 
 	std::set<path_handle> paths;
+	std::map<vehicle_handle, cell_handle> vehicles;
 
 	int simulation_duration;
+
+	std::set<std::string> identifiers;
+
+	int pending_time_tick;
+	int last_calculated_tick;
+	std::set<std::string> pending_set;
+	std::set<common::dispatcher::connection_handle> listeners;
 
 #ifdef UNIT_TEST
 	friend class ut_simulation;

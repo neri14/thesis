@@ -5,10 +5,16 @@
 #include "../world/world_description_validator.h"
 
 #include <config/config.h>
+#include <dispatcher/event/payload/simulation_state_calculated.h>
+#include <dispatcher/event/payload/time_tick_payload.h>
+#include <dispatcher/event/payload/actuator_finished_payload.h>
+#include <dispatcher/event/payload/queue_sensor_state.h>
+#include <dispatcher/event/payload/flow_sensor_state.h>
 
 #include <cmath>
 
 #include <boost/foreach.hpp>
+#include <boost/bind.hpp>
 
 namespace simulator {
 namespace simulation {
@@ -20,8 +26,17 @@ namespace constant {
 simulation::simulation(const std::string& desc_filename_) :
 	logger("simulation"),
 	desc_filename(desc_filename_),
-	simulation_duration(0)
+	simulation_duration(0),
+	pending_time_tick(-1),
+	last_calculated_tick(-1)
 {}
+
+simulation::~simulation()
+{
+	BOOST_FOREACH(common::dispatcher::connection_handle listener, listeners) {
+		common::dispatcher::get_dispatcher().unregister_listener(listener);
+	}
+}
 
 bool simulation::prepare()
 {
@@ -41,7 +56,146 @@ bool simulation::prepare()
 	if (!translate_to_cell_representation(parser.get_world_description())) {
 		return false;
 	}
+
+	logger.debug()() << "preparing identifiers set";
+	prepare_identifiers();
+
+	logger.info()() << "registering for events";
+	listeners.insert(common::dispatcher::get_dispatcher().register_listener(
+		EEventType_TimeTick, EEventScope_General,
+		boost::bind(&simulation::on_time_tick, this, _1)));
+	listeners.insert(common::dispatcher::get_dispatcher().register_listener(
+		EEventType_ActuatorFinished, EEventScope_Local,
+		boost::bind(&simulation::on_actuator_finished, this, _1)));
+	listeners.insert(common::dispatcher::get_dispatcher().register_listener(
+		EEventType_QueueSensorState, EEventScope_Any,
+		boost::bind(&simulation::on_queue_sensor_state, this, _1)));
+	listeners.insert(common::dispatcher::get_dispatcher().register_listener(
+		EEventType_FlowSensorState, EEventScope_Any,
+		boost::bind(&simulation::on_flow_sensor_state, this, _1)));
+
 	return true;
+}
+
+void simulation::on_time_tick(common::dispatcher::event_handle ev)
+{
+	BOOST_ASSERT(EEventType_TimeTick == ev->get_type());
+	BOOST_ASSERT(EEventScope_General == ev->get_scope());
+
+	pending_time_tick = ev->get_payload<common::dispatcher::time_tick_payload>()->tick;
+	pending_set.clear();
+	pending_set.insert(identifiers.begin(), identifiers.end());
+
+	check_calculate_condition();
+}
+
+void simulation::on_actuator_finished(common::dispatcher::event_handle ev)
+{
+	BOOST_ASSERT(EEventType_ActuatorFinished == ev->get_type());
+	common::dispatcher::actuator_finished_payload& act =
+		*ev->get_payload<common::dispatcher::actuator_finished_payload>();
+	clear_pending(act.time_tick, act.actuator_name);
+
+	check_calculate_condition();
+}
+
+void simulation::on_queue_sensor_state(common::dispatcher::event_handle ev)
+{
+	BOOST_ASSERT(EEventType_QueueSensorState == ev->get_type());
+	common::dispatcher::queue_sensor_state& sensor =
+		*ev->get_payload<common::dispatcher::queue_sensor_state>();
+	clear_pending(sensor.time_tick, sensor.sensor_name);
+
+	check_calculate_condition();
+}
+
+void simulation::on_flow_sensor_state(common::dispatcher::event_handle ev)
+{
+	BOOST_ASSERT(EEventType_FlowSensorState == ev->get_type());
+	common::dispatcher::flow_sensor_state& sensor =
+		*ev->get_payload<common::dispatcher::flow_sensor_state>();
+	clear_pending(sensor.time_tick, sensor.sensor_name);
+
+	check_calculate_condition();
+}
+
+void simulation::clear_pending(int time_tick, std::string identifier)
+{
+	if (pending_time_tick == time_tick) {
+		pending_set.erase(identifier);
+	}
+}
+
+void simulation::check_calculate_condition()
+{
+	if (last_calculated_tick != pending_time_tick && pending_set.empty()) {
+		run_creators(pending_time_tick);
+		run_destroyers(pending_time_tick);
+
+		logger.info()() << "calculating new vehicles states";
+		//TODO simulation::check_calculate_condition calculate new state
+		// 4. calclate new state for vehicles (remember to increment vehicle counters)
+
+		common::dispatcher::payload_handle payload(
+			new common::dispatcher::simulation_state_calculated(pending_time_tick));
+		common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(
+			new common::dispatcher::event(EEventType_SimulationStateCalculated,
+				EEventScope_Local, payload)));
+
+		last_calculated_tick = pending_time_tick;
+	}
+}
+
+void simulation::run_creators(int time_tick)
+{
+	logger.info()() << "creating vehicles";
+	int count = 0;
+
+	typedef std::pair<cell_handle, creator_handle> cell_creator_pair;
+	BOOST_FOREACH(cell_creator_pair pair, creators) {
+		vehicle_handle v = pair.second->create(pending_time_tick);
+		if (v) {
+			pair.first->set_occupied(true);
+			vehicles.insert(std::make_pair(v, pair.first));
+			++count;
+		}
+	}
+
+	logger.info()() << "created " << count << " vehicles";
+}
+
+void simulation::run_destroyers(int time_tick)
+{
+	logger.info()() << "destroying vehicles";
+	int veh_count = 0;
+	int cell_count = 0;
+
+	typedef std::pair<cell_handle, destroyer_handle> cell_destroyer_pair;
+	typedef std::pair<vehicle_handle, cell_handle> vehicle_cell_pair;
+	BOOST_FOREACH(cell_destroyer_pair cell_dest, destroyers) {
+		if (cell_dest.second->should_destroy(time_tick)) {
+			cell_dest.first->set_occupied(false);
+
+			std::set<vehicle_handle> vehicles_to_destroy;
+			BOOST_FOREACH(vehicle_cell_pair veh_cell, vehicles) {
+				if (veh_cell.second == cell_dest.first) {
+					vehicles_to_destroy.insert(veh_cell.first);
+				}
+			}
+			BOOST_FOREACH(vehicle_handle v, vehicles_to_destroy) {
+				vehicles.erase(v);
+				++veh_count;
+			}
+			++cell_count;
+		}
+	}
+
+	logger.info()() << "destroyed " << veh_count << " vehicles in " <<
+		cell_count << " cells";
+
+	if (veh_count != cell_count) {
+		logger.warning()() << "multiple vehicles on cell detected when destroying";
+	}
 }
 
 bool simulation::translate_to_cell_representation(world::world_description_handle desc)
@@ -324,6 +478,19 @@ bool simulation::translate_simulation_data(world::world_description_handle desc)
 	}
 
 	return true;
+}
+
+void simulation::prepare_identifiers()
+{
+	BOOST_FOREACH(actuator_handle ac, actuators) {
+		identifiers.insert(ac->get_name());
+	}
+	BOOST_FOREACH(flow_sensor_handle fs, flow_sensors) {
+		identifiers.insert(fs->get_name());
+	}
+	BOOST_FOREACH(queue_sensor_handle qs, queue_sensors) {
+		identifiers.insert(qs->get_name());
+	}
 }
 
 } // namespace simulation
