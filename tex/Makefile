@@ -1,21 +1,13 @@
-all: print archive debug stats
+all: generate stats
 
-print:
-	sh ./build/print.sh
+generate:
+	sh ./build/generate.sh
 
-archive:
-	sh ./build/archive.sh
-
-debug:
-	sh ./build/debug.sh
-
-stats: print archive debug
+stats: generate
 	sh ./build/stats.sh
 
 clean:
-	rm -rf ./bin/printmode/*
-	rm -rf ./bin/archivemode/*
-	rm -rf ./bin/debugmode/*
+	rm -rf ./bin/tmp/*
 	rm -rf ./bin/out/*
 
-.PHONY: all print archive stats clean
+.PHONY: all generate stats clean
