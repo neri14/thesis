@@ -37,8 +37,8 @@ void simulation_thread::run_impl()
 		common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(
 			new common::dispatcher::event(EEventType_TimeTick, EEventScope_General, payload)));
 
-		//boost::this_thread::sleep(boost::posix_time::seconds(1));
-		boost::this_thread::sleep(boost::posix_time::milliseconds(10));
+		boost::this_thread::sleep(boost::posix_time::seconds(1));
+		//boost::this_thread::sleep(boost::posix_time::milliseconds(10));
 
 		int delay = 0;
 		while(time_tick != last_received_tick_calculated) {
