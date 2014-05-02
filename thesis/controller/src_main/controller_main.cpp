@@ -1,6 +1,8 @@
-#include <iostream>
+#include <common_main.h>
+#include "../src/controller_service.h"
 
-int main()
+int main(int argc, char** argv)
 {
-	std::cout << "controller not yet implemented" << std::endl;
+	return common::common_main<controller::controller_service>(
+		argc, argv, "controller_main");
 }
