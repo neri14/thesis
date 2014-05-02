@@ -45,9 +45,10 @@ void flow_sensor::on_time_tick(common::dispatcher::event_handle ev)
 	}
 
 	int passed = new_counter>=old_counter ? new_counter-old_counter : 0;
-	int flow = counter_history_limit>0 ? (3600*passed)/counter_history_limit : 0;
+	double flow = counter_history_limit>0 ? (3600.0*passed)/counter_history_limit : 0;
 
-	logger.info()() << "current flow: " << flow << " vehicles per hour";
+	logger.info()() << passed << " vehicles passed in last " << counter_history_limit <<
+		"s - current flow: " << flow << " vehicles per hour";
 
 	common::dispatcher::payload_handle payload(
 		new common::dispatcher::flow_sensor_state(sensor_name, flow, time_tick));

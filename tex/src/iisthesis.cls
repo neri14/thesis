@@ -71,6 +71,7 @@
 \usepackage{colortbl}
 \usepackage{multirow}
 \usepackage{theorem}
+\usepackage{caption}
 %\usepackage{times}
 
 \selectlanguage{polish}
