@@ -1,6 +1,7 @@
 #include "controller_service.h"
 
 #include "controller_handler.h"
+#include "controlled_area.h"
 
 #include <dispatcher/distributor_thread.h>
 #include <dispatcher_client/dispatcher_client_thread.h>
@@ -9,6 +10,7 @@
 namespace controller {
 namespace error_codes {
 	const int exception(1);
+	const int parsing_error(2);
 }
 
 controller_service::controller_service() :
@@ -26,6 +28,13 @@ int controller_service::start()
 
 		common::dispatcher_client::dispatcher_client_thread client_thread(distributor);
 		client_thread.start();
+
+		controlled_area area(common::get_config().get<std::string>("controlled_area_file"));
+		if (!area.parse()) {
+			client_thread.stop();
+			distributor.stop();
+			return error_codes::parsing_error;
+		}
 
 		controller_handler ctrl;
 		ctrl.start();
