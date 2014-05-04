@@ -9,7 +9,7 @@
 				<name>D1_D2_NODE_4</name>
 				<entrance>0</entrance>
 			</node_to>
-			<distance>185</distance>
+			<distance>90</distance>
 		</connection>
 		<connection>
 			<node_from>
@@ -20,7 +20,7 @@
 				<name>D1_D2_NODE_3</name>
 				<entrance>0</entrance>
 			</node_to>
-			<distance>190</distance>
+			<distance>95</distance>
 		</connection>
 		<connection>
 			<node_from>
