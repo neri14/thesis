@@ -1,6 +1,7 @@
 #ifndef CELL_MOCK_H
 #define CELL_MOCK_H
 
+#include <test.h>
 #include <gmock/gmock.h>
 #include "../../src/simulation/cell.h"
 

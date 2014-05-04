@@ -1,3 +1,4 @@
+#include <test.h>
 #include <gtest/gtest.h>
 
 #include <config/config.h>

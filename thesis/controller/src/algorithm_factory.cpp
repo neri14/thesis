@@ -4,10 +4,11 @@
 
 namespace controller {
 
-algorithm_handle algorithm_factory::create(const std::string &name, set_actuator_cb_type cb)
+algorithm_handle algorithm_factory::create(const std::string &name,
+	set_actuator_cb_type cb, controlled_area_data area)
 {
 	if (name == "simple") {
-		return algorithm_handle(new simple_algorithm(cb));
+		return algorithm_handle(new simple_algorithm(cb, area));
 	}
 	return algorithm_handle();
 }

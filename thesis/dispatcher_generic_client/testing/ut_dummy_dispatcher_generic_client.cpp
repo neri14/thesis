@@ -1,3 +1,4 @@
+#include <test.h>
 #include <gtest/gtest.h>
 
 class ut_dummy_dispatcher_generic_client : public ::testing::Test

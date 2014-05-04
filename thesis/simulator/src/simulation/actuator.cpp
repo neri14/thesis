@@ -60,6 +60,7 @@ void actuator::on_time_tick(common::dispatcher::event_handle ev)
 	if (pending_state) {
 		logger.info()() << "setting new state " << pending_state.get();
 		controlled_cell->set_exit_state(controlled_exit, pending_state.get());
+		pending_state = boost::none;
 	}
 
 	logger.debug()() << "actuator finished";

@@ -1,3 +1,4 @@
+#include <test.h>
 #include <gtest/gtest.h>
 
 class ut_dummy_visualiser : public ::testing::Test

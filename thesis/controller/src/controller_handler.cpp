@@ -19,7 +19,7 @@ controller_handler::controller_handler(controlled_area_data area_) :
 	area(area_)
 {
 	alg = algorithm_factory::create(common::get_config().get<std::string>("algorithm"),
-		boost::bind(&controller_handler::set_actuator_state, this, _1, _2));
+		boost::bind(&controller_handler::set_actuator_state, this, _1, _2), area);
 }
 
 controller_handler::~controller_handler()

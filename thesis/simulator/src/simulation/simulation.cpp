@@ -265,6 +265,11 @@ void simulation::calculate_new_vehicles_state()
 
 int simulation::calculate_gap(vehicle_handle veh, std::queue<path_cell> p_cells)
 {
+	if (!p_cells.empty() && !p_cells.front().cell_h->is_exit_allowed(p_cells.front().exit)) {
+//		logger.debug()() << "vehicle at signal";
+		return 0;
+	}
+
 	int gap = 0;
 	bool is_on_multi_entrance_cell = p_cells.front().cell_h->get_entrances_count();
 	p_cells.pop();
@@ -294,13 +299,10 @@ int simulation::calculate_gap(vehicle_handle veh, std::queue<path_cell> p_cells)
 
 		if (can_proceed) {
 			++gap;
+			can_proceed = can_proceed && p_cells.front().cell_h->is_exit_allowed(p_cells.front().exit);
 			p_cells.pop();
 		} else {
 			break;
-		}
-
-		if (!p_cells.empty()) {
-			can_proceed = can_proceed && p_cells.front().cell_h->is_exit_allowed(p_cells.front().exit);
 		}
 	}
 

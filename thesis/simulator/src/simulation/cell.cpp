@@ -30,7 +30,14 @@ bool cell::is_exit_allowed(int ex)
 	boost::weak_ptr<cell> c = it->second;
 
 	BOOST_ASSERT(exit_states.end() != exit_states.find(c));
-	return constant::exit_allowed.find(exit_states.find(c)->second)->second;
+
+	if (constant::exit_allowed.find(exit_states.find(c)->second)->second) {
+		//logger.debug()() << "exit not allowed";
+		return true;
+	} else {
+		//logger.debug()() << "exit allowed";
+		return false;
+	}
 }
 
 bool cell::set_exit_state(int ex, EExitState state)

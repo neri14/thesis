@@ -3,24 +3,21 @@
 
 #include <boost/shared_ptr.hpp>
 #include <boost/function.hpp>
+#include <map>
 
 #include <my_logger.h>
 
-namespace controller {
+#include "controlled_area.h"
+#include "controller_def.h"
+#include "algorithm_object.h"
 
-enum EActuatorState {
-	EActuatorState_Off,
-	EActuatorState_Red,
-	EActuatorState_RedYellow,
-	EActuatorState_Green,
-	EActuatorState_Yellow
-};
+namespace controller {
 
 typedef boost::function<void(const std::string&, EActuatorState)> set_actuator_cb_type;
 class algorithm
 {
 public:
-	algorithm(const std::string& name, set_actuator_cb_type cb);
+	algorithm(const std::string& name, set_actuator_cb_type cb, controlled_area_data area_);
 	virtual ~algorithm();
 
 	virtual void on_queue_sensor_update(const std::string& name, int time_tick, int queue, int max_queue) = 0;
@@ -30,6 +27,9 @@ public:
 protected:
 	common::my_logger logger;
 	set_actuator_cb_type set_actuator_cb;
+	controlled_area_data area;
+
+	std::map<std::string, algorithm_object_handle> objects;
 };
 typedef boost::shared_ptr<algorithm> algorithm_handle;
 

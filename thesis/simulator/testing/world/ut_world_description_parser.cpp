@@ -1,3 +1,4 @@
+#include <test.h>
 #include <gtest/gtest.h>
 
 #include "../../src/world/world_description_parser.h"
