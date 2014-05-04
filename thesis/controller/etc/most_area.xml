@@ -6,7 +6,9 @@
 			<exits>1</exits>
 			<before>
 				<flow_sensor>MOST_FLOW_W_1</flow_sensor>
-				<queue_sensor>MOST_QUEUE_W_1</queue_sensor>
+				<queue_sensors>
+					<queue_sensor>MOST_QUEUE_W_1</queue_sensor>
+				</queue_sensors>
 			</before>
 		</actuator>
 		<actuator>
@@ -14,7 +16,9 @@
 			<exits>1</exits>
 			<before>
 				<flow_sensor>MOST_FLOW_W_1</flow_sensor>
-				<queue_sensor>MOST_QUEUE_W_2</queue_sensor>
+				<queue_sensors>
+					<queue_sensor>MOST_QUEUE_W_2</queue_sensor>
+				</queue_sensors>
 			</before>
 			<after>
 				<area>106</area>
@@ -25,7 +29,9 @@
 			<exits>1</exits>
 			<before>
 				<flow_sensor>MOST_FLOW_W_2</flow_sensor>
-				<queue_sensor>MOST_QUEUE_W_3</queue_sensor>
+				<queue_sensors>
+					<queue_sensor>MOST_QUEUE_W_3</queue_sensor>
+				</queue_sensors>
 			</before>
 			<after>
 				<area>106</area>
@@ -36,7 +42,9 @@
 			<exits>3</exits>
 			<before>
 				<flow_sensor>MOST_FLOW_S_1</flow_sensor>
-				<queue_sensor>MOST_QUEUE_S_1</queue_sensor>
+				<queue_sensors>
+					<queue_sensor>MOST_QUEUE_S_1</queue_sensor>
+				</queue_sensors>
 			</before>
 			<after>
 				<area>106</area>
@@ -47,7 +55,9 @@
 			<exits>1</exits>
 			<before>
 				<flow_sensor>MOST_FLOW_S_1</flow_sensor>
-				<queue_sensor>MOST_QUEUE_S_2</queue_sensor>
+				<queue_sensors>
+					<queue_sensor>MOST_QUEUE_S_2</queue_sensor>
+				</queue_sensors>
 			</before>
 		</actuator>
 		<actuator>
@@ -56,7 +66,9 @@
 			<before>
 				<area>106</area>
 				<flow_sensor>MOST_FLOW_E_1</flow_sensor>
-				<queue_sensor>MOST_QUEUE_E_1</queue_sensor>
+				<queue_sensors>
+					<queue_sensor>MOST_QUEUE_E_1</queue_sensor>
+				</queue_sensors>
 			</before>
 		</actuator>
 		<actuator>
@@ -65,7 +77,9 @@
 			<before>
 				<area>106</area>
 				<flow_sensor>MOST_FLOW_E_2</flow_sensor>
-				<queue_sensor>MOST_QUEUE_E_2</queue_sensor>
+				<queue_sensors>
+					<queue_sensor>MOST_QUEUE_E_2</queue_sensor>
+				</queue_sensors>
 			</before>
 		</actuator>
 <!--
@@ -74,12 +88,16 @@
 			<before>
 				<area></area>
 				<flow_sensor></flow_sensor>
-				<queue_sensor></queue_sensor>
+				<queue_sensors>
+					<queue_sensor></queue_sensor>
+				</queue_sensors>
 			</before>
 			<after>
 				<area></area>
 				<flow_sensor></flow_sensor>
-				<queue_sensor></queue_sensor>
+				<queue_sensors>
+					<queue_sensor></queue_sensor>
+				</queue_sensors>
 			</after>
 		</actuator>
 -->

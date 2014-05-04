@@ -14,7 +14,7 @@ struct time_tick_payload : public base_payload
 
 	virtual int size()
 	{
-		return sizeof(int);
+		return sizeof(time_tick_payload);
 	}
 
 	int tick;

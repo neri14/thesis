@@ -10,9 +10,10 @@ namespace dispatcher {
 
 struct queue_sensor_state : public base_payload
 {
-	queue_sensor_state(std::string sensor_name_, int queue_, int time_tick_) :
+	queue_sensor_state(std::string sensor_name_, int queue_, int max_queue_, int time_tick_) :
 		length(std::min(EVENT_PAYLOAD_STRING_SIZE, static_cast<int>(sensor_name_.length()))),
 		queue(queue_),
+		max_queue(max_queue_),
 		time_tick(time_tick_)
 	{
 		memcpy(sensor_name, sensor_name_.c_str(), length);
@@ -20,8 +21,9 @@ struct queue_sensor_state : public base_payload
 
 	virtual int size()
 	{
-		int sensor_name_size = EVENT_PAYLOAD_STRING_SIZE;
-		return sensor_name_size*sizeof(char) + sizeof(int) * 3;
+//		int sensor_name_size = EVENT_PAYLOAD_STRING_SIZE;
+//		return sensor_name_size*sizeof(char) + sizeof(int) * 4;
+		return sizeof(queue_sensor_state);
 	}
 
 	std::string get_sensor_name()
@@ -29,10 +31,11 @@ struct queue_sensor_state : public base_payload
 		return std::string(sensor_name, length);
 	}
 
+	int queue;
+	int max_queue;
+	int time_tick;
 	int length;
 	char sensor_name[EVENT_PAYLOAD_STRING_SIZE];
-	int queue;
-	int time_tick;
 };
 
 }

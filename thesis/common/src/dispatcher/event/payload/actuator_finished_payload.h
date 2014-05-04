@@ -21,8 +21,9 @@ struct actuator_finished_payload : public base_payload
 
 	virtual int size()
 	{
-		int actuator_name_size = EVENT_PAYLOAD_STRING_SIZE;
-		return actuator_name_size*sizeof(char) + sizeof(int) * 2;
+//		int actuator_name_size = EVENT_PAYLOAD_STRING_SIZE;
+//		return actuator_name_size*sizeof(char) + sizeof(int) * 2;
+		return sizeof(actuator_finished_payload);
 	}
 
 	std::string get_actuator_name()
@@ -30,10 +31,9 @@ struct actuator_finished_payload : public base_payload
 		return std::string(actuator_name, length);
 	}
 
+	int time_tick;
 	int length;
 	char actuator_name[EVENT_PAYLOAD_STRING_SIZE];
-
-	int time_tick;
 };
 
 }

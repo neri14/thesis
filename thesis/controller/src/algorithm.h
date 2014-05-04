@@ -23,7 +23,7 @@ public:
 	algorithm(const std::string& name, set_actuator_cb_type cb);
 	virtual ~algorithm();
 
-	virtual void on_queue_sensor_update(const std::string& name, int time_tick, int queue) = 0;
+	virtual void on_queue_sensor_update(const std::string& name, int time_tick, int queue, int max_queue) = 0;
 	virtual void on_flow_sensor_update(const std::string& name, int timt_tick, int flow) = 0;
 	virtual void on_time_tick(int time_tick) = 0;
 

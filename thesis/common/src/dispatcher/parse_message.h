@@ -4,7 +4,6 @@
 #include <proto/messages.pb.h>
 
 #include "event/event.h"
-#include "event/payload/basic_payload.h"
 
 namespace common {
 namespace dispatcher {

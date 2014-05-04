@@ -26,6 +26,7 @@ private:
 	void on_time_tick(common::dispatcher::event_handle ev);
 
 	int count_occupied_cells();
+	int calculate_max_queue();
 
 	common::my_logger logger;
 
@@ -36,6 +37,8 @@ private:
 	cell_handle cell_to;
 	int exit_n;
 	int entrance_n;
+
+	int max_queue;
 
 	common::dispatcher::connection_handle time_tick_listener;
 };

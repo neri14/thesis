@@ -27,8 +27,9 @@ struct set_actuator_state_payload : public base_payload
 
 	virtual int size()
 	{
-		int actuator_name_size = EVENT_PAYLOAD_STRING_SIZE;
-		return actuator_name_size*sizeof(char) + sizeof(EActuatorState) + sizeof(int);
+//		int actuator_name_size = EVENT_PAYLOAD_STRING_SIZE;
+//		return actuator_name_size*sizeof(char) + sizeof(EActuatorState) + sizeof(int);
+		return sizeof(set_actuator_state_payload);
 	}
 
 	std::string get_actuator_name()
@@ -36,9 +37,9 @@ struct set_actuator_state_payload : public base_payload
 		return std::string(actuator_name, length);
 	}
 
+	EActuatorState state;
 	int length;
 	char actuator_name[EVENT_PAYLOAD_STRING_SIZE];
-	EActuatorState state;
 };
 
 }

@@ -14,7 +14,7 @@ struct simulation_state_calculated : public base_payload
 
 	virtual int size()
 	{
-		return sizeof(int);
+		return sizeof(simulation_state_calculated);
 	}
 
 	int time_tick;

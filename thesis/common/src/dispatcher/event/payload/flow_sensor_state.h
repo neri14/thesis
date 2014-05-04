@@ -20,8 +20,9 @@ struct flow_sensor_state : public base_payload
 
 	virtual int size()
 	{
-		int sensor_name_size = EVENT_PAYLOAD_STRING_SIZE;
-		return sensor_name_size*sizeof(char) + sizeof(int) * 3;
+//		int sensor_name_size = EVENT_PAYLOAD_STRING_SIZE;
+//		return sensor_name_size*sizeof(char) + sizeof(int) * 3;
+		return sizeof(flow_sensor_state);
 	}
 
 	std::string get_sensor_name()
@@ -29,10 +30,10 @@ struct flow_sensor_state : public base_payload
 		return std::string(sensor_name, length);
 	}
 
-	int length;
-	char sensor_name[EVENT_PAYLOAD_STRING_SIZE];
 	int flow;
 	int time_tick;
+	int length;
+	char sensor_name[EVENT_PAYLOAD_STRING_SIZE];
 };
 
 }

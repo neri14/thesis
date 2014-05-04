@@ -36,7 +36,7 @@ int controller_service::start()
 			return error_codes::parsing_error;
 		}
 
-		controller_handler ctrl;
+		controller_handler ctrl(area.get_data());
 		ctrl.start();
 
 		std::string str;

@@ -13,7 +13,7 @@ namespace controller {
 
 struct detailed_data {
 	boost::optional<std::string> flow_sensor;
-	boost::optional<std::string> queue_sensor;
+	std::set<std::string> queue_sensors;
 	boost::optional<int> area;
 };
 
@@ -42,6 +42,7 @@ public:
 	virtual ~controlled_area();
 
 	bool parse();
+	controlled_area_data get_data();
 
 private:
 	bool parse_area(const std::string& key, const boost::property_tree::ptree& pt);

@@ -1,5 +1,13 @@
 #include "parse_message.h"
 
+#include "event/payload/basic_payload.h"
+#include "event/payload/time_tick_payload.h"
+#include "event/payload/set_actuator_state_payload.h"
+#include "event/payload/actuator_finished_payload.h"
+#include "event/payload/flow_sensor_state.h"
+#include "event/payload/queue_sensor_state.h"
+#include "event/payload/simulation_state_calculated.h"
+
 namespace common {
 namespace dispatcher {
 
@@ -16,6 +24,24 @@ event_handle parse(proto_event_handle p_ev, int origin)
 			break;
 		case EEventType_BasicInt:
 			ev->decode< basic_payload<int> >(p_ev->payload());
+			break;
+		case EEventType_TimeTick:
+			ev->decode<time_tick_payload>(p_ev->payload());
+			break;
+		case EEventType_SetActuatorState:
+			ev->decode<set_actuator_state_payload>(p_ev->payload());
+			break;
+		case EEventType_ActuatorFinished:
+			ev->decode<actuator_finished_payload>(p_ev->payload());
+			break;
+		case EEventType_FlowSensorState:
+			ev->decode<flow_sensor_state>(p_ev->payload());
+			break;
+		case EEventType_QueueSensorState:
+			ev->decode<queue_sensor_state>(p_ev->payload());
+			break;
+		case EEventType_SimulationStateCalculated:
+			ev->decode<simulation_state_calculated>(p_ev->payload());
 			break;
 	}
 
