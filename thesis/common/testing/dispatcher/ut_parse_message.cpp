@@ -2,6 +2,7 @@
 #include <gtest/gtest.h>
 
 #include <dispatcher/parse_message.h>
+#include <dispatcher/event/payload/basic_payload.h>
 
 namespace common {
 namespace dispatcher {
