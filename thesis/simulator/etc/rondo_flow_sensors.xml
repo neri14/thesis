@@ -1,0 +1,28 @@
+<world>
+	<flow_sensors>
+		<flow_sensor>
+			<name>RONDO_FLOW_W_1</name>
+			<node_name>D1_D2_NODE_4</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>RONDO_FLOW_W_2</name>
+			<node_name>D1_D2_NODE_3</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>RONDO_FLOW_N_1</name>
+			<node_name>RONDO_SPLIT_9</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>RONDO_FLOW_E_1</name>
+			<node_name>RONDO_NODE_E_7</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>RONDO_FLOW_E_2</name>
+			<node_name>RONDO_NODE_E_6</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>RONDO_FLOW_E_3</name>
+			<node_name>RONDO_SPLIT_7</node_name>
+		</flow_sensor>
+	</flow_sensors>
+</world>

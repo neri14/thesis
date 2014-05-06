@@ -22,11 +22,31 @@
 		</destroyer>
 		<!--FIXME TEMP-->
 		<destroyer>
-			<node_name>D1_D2_NODE_4</node_name>
+			<node_name>RONDO_NODE_N_2</node_name>
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 		<destroyer>
-			<node_name>D1_D2_NODE_3</node_name>
+			<node_name>RONDO_NODE_E_1</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>RONDO_NODE_E_2</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>RONDO_NODE_E_3</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>RONDO_NODE_E_4</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>RONDO_NODE_S_1</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>RONDO_NODE_S_2</node_name>
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 	</destroyers>

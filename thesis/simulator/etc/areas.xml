@@ -29,5 +29,42 @@
 				<name>MOST_QUEUE_E_2</name>
 			</queue_sensors>
 		</area>
+		<area>
+			<name>AREA_RONDO_WEST</name>
+			<scope>106</scope>
+			<actuators>
+				<name>RONDO_SIG_W_1</name>
+				<name>RONDO_SIG_W_2</name>
+				<name>RONDO_SIG_W_3</name>
+				<name>RONDO_SIG_W_4</name>
+				<name>RONDO_SIG_N_1</name>
+				<name>RONDO_SIG_N_2</name>
+				<name>RONDO_SIG_E_1</name>
+				<name>RONDO_SIG_E_2</name>
+				<name>RONDO_SIG_E_3</name>
+				<name>RONDO_SIG_E_4</name>
+			</actuators>
+			<flow_sensors>
+				<name>RONDO_FLOW_W_1</name>
+				<name>RONDO_FLOW_W_2</name>
+				<name>RONDO_FLOW_N_1</name>
+				<name>RONDO_FLOW_E_1</name>
+				<name>RONDO_FLOW_E_2</name>
+				<name>RONDO_FLOW_E_3</name>
+			</flow_sensors>
+			<queue_sensors>
+				<name>RONDO_QUEUE_W_1</name>
+				<name>RONDO_QUEUE_W_2A</name>
+				<name>RONDO_QUEUE_W_2B</name>
+				<name>RONDO_QUEUE_W_3</name>
+				<name>RONDO_QUEUE_W_4</name>
+				<name>RONDO_QUEUE_N_1</name>
+				<name>RONDO_QUEUE_N_2</name>
+				<name>RONDO_QUEUE_E_1</name>
+				<name>RONDO_QUEUE_E_2</name>
+				<name>RONDO_QUEUE_E_3</name>
+				<name>RONDO_QUEUE_E_4</name>
+			</queue_sensors>
+		</area>
 	</areas>
 </world>

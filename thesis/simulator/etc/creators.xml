@@ -2,28 +2,36 @@
 	<creators>
 		<creator>
 			<node_name>MOST_IN_1</node_name>
-			<create_rate>1000</create_rate>
+			<create_rate>3600</create_rate>
 		</creator>
 		<creator>
 			<node_name>MOST_IN_2</node_name>
-			<create_rate>1000</create_rate>
+			<create_rate>3600</create_rate>
 		</creator>
 		<creator>
 			<node_name>WYSP_IN_1</node_name>
-			<create_rate>1000</create_rate>
+			<create_rate>3600</create_rate>
 		</creator>
 		<creator>
 			<node_name>WRON_IN_1</node_name>
-			<create_rate>1000</create_rate>
+			<create_rate>3600</create_rate>
 		</creator>
 		<!--FIXME TEMP-->
 		<creator>
-			<node_name>D1_D2_NODE_1</node_name>
-			<create_rate>1000</create_rate>
+			<node_name>RONDO_NODE_N_1</node_name>
+			<create_rate>3600</create_rate>
 		</creator>
 		<creator>
-			<node_name>D1_D2_NODE_2</node_name>
-			<create_rate>1000</create_rate>
+			<node_name>RONDO_NODE_E_5</node_name>
+			<create_rate>3600</create_rate>
+		</creator>
+		<creator>
+			<node_name>RONDO_NODE_E_6</node_name>
+			<create_rate>3600</create_rate>
+		</creator>
+		<creator>
+			<node_name>RONDO_NODE_E_7</node_name>
+			<create_rate>3600</create_rate>
 		</creator>
 	</creators>
 </world>
