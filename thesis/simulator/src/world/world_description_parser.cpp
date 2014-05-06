@@ -1,5 +1,8 @@
 #include "world_description_parser.h"
 
+#include <cmath>
+#include <stack>
+
 #include <boost/assign.hpp>
 #include <boost/foreach.hpp>
 #include <boost/property_tree/xml_parser.hpp>
@@ -26,6 +29,8 @@ bool world_description_parser::parse()
 		status = parse_file(file);
 		files.pop();
 	}
+
+	status = status && create_paths();
 	return status;
 }
 
@@ -77,8 +82,8 @@ bool world_description_parser::parse_world(const std::string& key, const boost::
 		res = parse_queue_sensors(pt);
 	} else if ("areas" == key) {
 		res = parse_areas(pt);
-	} else if ("paths" == key) {
-		res = parse_paths(pt);
+	} else if ("directions_connections" == key) {
+		res = parse_directions_connections(pt);
 	} else if ("priorities" == key) {
 		res = parse_priorities(pt);
 	} else if ("simulation" == key) {
@@ -218,6 +223,10 @@ bool world_description_parser::parse_creators(const boost::property_tree::ptree&
 				logger.error()() << "wrong node name: " << node;
 				return false;
 			}
+
+			wd_direction dir;
+			dir.entrance_name = node;
+			directions.insert(std::make_pair(node, dir));
 
 			desc->nodes.find(node)->second->max_create_rate = rate;
 			logger.debug()() << "set node " << node << " max create rate to " << rate;
@@ -427,34 +436,29 @@ bool world_description_parser::parse_areas(const boost::property_tree::ptree& pt
 	return true;
 }
 
-bool world_description_parser::parse_paths(const boost::property_tree::ptree& pt)
+bool world_description_parser::parse_directions_connections(const boost::property_tree::ptree& pt)
 {
 	using boost::property_tree::ptree;
 	BOOST_FOREACH(const ptree::value_type& v, pt) {
-		if ("path" == v.first) {
-			std::string path_name = v.second.get<std::string>("name");
+		if ("connection" == v.first) {
+			std::string dir_name = v.second.get<std::string>("from");
 
-			if (desc->paths.find(path_name) != desc->paths.end()) {
-				logger.error()() << "duplicated path name: " << path_name;
+			if (directions.find(dir_name) == directions.end()) {
+				logger.error()() << "wrong direction name: " << dir_name;
 				return false;
 			}
-			world_path_handle path(new world_path(path_name));
+			wd_direction& dir = directions.find(dir_name)->second;
 
-			BOOST_FOREACH(const ptree::value_type& tree, v.second.get_child("nodes")) {
-				if ("node" == tree.first) {
-					if (desc->nodes.end() == desc->nodes.find(tree.second.data())) {
-						logger.error()() << "wrong node name: " << tree.second.data();
-						return false;
-					}
-					path->nodes.push_back(desc->nodes.find(tree.second.data())->second);
+			BOOST_FOREACH(const ptree::value_type& tree, v.second.get_child("to_list")) {
+				if ("to" == tree.first) {
+					logger.debug()() << dir.entrance_name << " -> " << tree.second.get<std::string>("name") <<
+						" (" << tree.second.get<int>("part") << "/100 of traffic)";
+					dir.connection.insert(std::make_pair(
+						tree.second.get<std::string>("name"), tree.second.get<int>("part")));
 				} else {
 					logger.warning()() << "unexpected xml tag: " << tree.first;
 				}
 			}
-
-			desc->paths.insert(std::make_pair(path_name, path));
-			logger.debug()() << "added path: " << path_name << ", nodes: " << path->nodes.size() <<
-				" length: " << path->get_length();
 		} else {
 			logger.warning()() << "unexpected xml tag: " << v.first;
 		}
@@ -499,27 +503,28 @@ bool world_description_parser::parse_simulation(const boost::property_tree::ptre
 	BOOST_FOREACH(const ptree::value_type& v, pt) {
 		if ("duration" == v.first) {
 			desc->simulation->duration = v.second.get_value<int>();
+			logger.debug()() << "simulation duration: " << desc->simulation->duration << "s";
 		} else if ("cell_size" == v.first) {
 			desc->simulation->cell_size = v.second.get_value<double>();
+			logger.debug()() << "cell size: " << desc->simulation->cell_size << "m";
 		} else if ("max_speed" == v.first) {
 			desc->simulation->max_speed = v.second.get_value<int>();
-		} else if ("path_flows" == v.first) {
+			logger.debug()() << "max speed: " << desc->simulation->max_speed << "cell/s";
+		} else if ("flows" == v.first) {
 			BOOST_FOREACH(const ptree::value_type& tree, v.second) {
-				if ("path_flow" == tree.first) {
-					std::string path_name = tree.second.get<std::string>("path_name");
-					if (desc->paths.end() == desc->paths.find(path_name)) {
-						logger.error()() << "wrong path name: " << tree.second.data();
+				if ("flow" == tree.first) {
+					std::string dir_name = tree.second.get<std::string>("direction");
+					if (directions.end() == directions.find(dir_name)) {
+						logger.error()() << "wrong direction name: " << dir_name;
 						return false;
 					}
 
-					world_path_handle path = desc->paths.find(path_name)->second;
-					int start_time = tree.second.get<int>("start_time");
-					int flow = tree.second.get<int>("flow");
+					wd_direction& dir = directions.find(dir_name)->second;
+					dir.flows[tree.second.get<int>("start_time")] = tree.second.get<int>("outflow");
 
-					desc->simulation->path_flows.insert(
-						std::make_pair(start_time, std::make_pair(flow, path)));
-					logger.debug()() << "added path flow, start_time: " << start_time <<
-						", flow: " << flow << ", path: " << path_name;
+					logger.debug()() << "direction " <<  dir.entrance_name << ", start time " <<
+						tree.second.get<int>("start_time") <<
+						", outflow: " << tree.second.get<int>("outflow");
 				} else {
 					logger.warning()() << "unexpected xml tag: " << tree.first;
 				}
@@ -529,9 +534,83 @@ bool world_description_parser::parse_simulation(const boost::property_tree::ptre
 		}
 	}
 
-	logger.debug()() << "simulation duration: " << desc->simulation->duration <<
-		"s, path flows number: " << desc->simulation->path_flows.size();
 	return true;
+}
+
+bool world_description_parser::create_paths()
+{
+	//foreach wd_direction from directions
+	typedef std::pair<std::string, wd_direction> str_direction_pair;
+	typedef std::pair<std::string, int> str_int_pair;
+	typedef std::pair<int, int> int_int_pair;
+
+	BOOST_FOREACH(str_direction_pair dir, directions) {
+		const std::string& from = dir.first;
+
+		BOOST_FOREACH(str_int_pair conn, dir.second.connection) {
+			const std::string& to = conn.first;
+			std::vector<std::string> nodes = find_path(from, to);
+			logger.debug()() << "found path from " << from << " to " << to << " - " <<
+				nodes.size() << " nodes";
+
+			double flow_part = conn.second/100.0;
+
+			std::string path_name = add_path(from, to, nodes);
+			BOOST_FOREACH(int_int_pair flow, dir.second.flows) {
+				add_path_flow(path_name, flow.first,
+					static_cast<int>(std::ceil(flow.second*flow_part)));
+			}
+		}
+	}
+	return true;
+}
+
+std::vector<std::string> world_description_parser::find_path(
+		const std::string& from, const std::string& to, std::vector<std::string> visited)
+{
+	BOOST_FOREACH(std::string v, visited) {
+		if (v == from) {
+			return std::vector<std::string>();
+		}
+	}
+
+	visited.push_back(from);
+	if (from == to) {
+		return visited;
+	}
+
+	world_node_handle node_from = desc->nodes.find(from)->second;
+	for (int i=0; i<node_from->exits.size(); ++i) {
+		std::vector<std::string> vec = find_path(node_from->exits[i]->to.lock()->name, to, visited);
+		if (vec.size()) {
+			return vec;
+		}
+	}
+
+	return std::vector<std::string>();
+}
+
+std::string world_description_parser::add_path(
+	const std::string& from, const std::string& to, const std::vector<std::string>& nodes)
+{
+	std::string path_name = from + "__" + to;
+
+	world_path_handle path(new world_path(path_name));
+	BOOST_FOREACH(std::string node_name, nodes) {
+		world_node_handle node = desc->nodes.find(node_name)->second;
+		path->nodes.push_back(node);
+	}
+	desc->paths.insert(std::make_pair(path_name, path));
+
+	return path_name;
+}
+
+void world_description_parser::add_path_flow(const std::string& path_name, int time, int flow)
+{
+	world_path_handle path = desc->paths.find(path_name)->second;
+
+	desc->simulation->path_flows.insert(
+		std::make_pair(time, std::make_pair(flow, path)));
 }
 
 } // namespace world

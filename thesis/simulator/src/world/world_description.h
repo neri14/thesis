@@ -87,7 +87,7 @@ struct world_area
 
 	std::string name;
 	int scope;
-	
+
 	std::set<world_actuator_handle> actuators;
 	std::set<world_flow_sensor_handle> flow_sensors;
 	std::set<world_queue_sensor_handle> queue_sensors;

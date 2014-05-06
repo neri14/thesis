@@ -26,11 +26,8 @@
 		<!-- AREAS -->
 		<file>areas.xml</file>
 
-		<!-- PATHS --><!-- FIXME paths end at d1_d2_node nodes -->
-		<file>most_paths.xml</file>
-		<file>wysp_paths.xml</file>
-		<file>wron_paths.xml</file>
-		<file>rondo_paths.xml</file>
+		<!-- DIRECTIONS CONNECTIONS -->
+		<file>directions_connections.xml</file>
 
 		<!-- PRIORITIES -->
 		<file>most_priorities.xml</file>
