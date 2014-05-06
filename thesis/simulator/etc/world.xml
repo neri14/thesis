@@ -33,11 +33,8 @@
 		<!-- AREAS -->
 		<file>areas.xml</file>
 
-		<!-- PATHS --><!-- FIXME paths end at exits from rondo area nodes -->
-<!--		<file>most_paths.xml</file>
-		<file>wysp_paths.xml</file>
-		<file>wron_paths.xml</file>
-		<file>rondo_paths.xml</file>-->
+		<!-- DIRECTIONS CONNECTIONS -->
+		<file>directions_connections.xml</file>
 
 		<!-- PRIORITIES -->
 		<file>most_priorities.xml</file>

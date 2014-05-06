@@ -1,6 +1,6 @@
 <world>
 	<nodes>
-		<!-- ENTRANCES --> <!-- temporary change to simple -->
+		<!-- ENTRANCES --> <!-- temporary - change to simple -->
 		<node>
 			<type>ENTRANCE</type>
 			<name>RONDO_NODE_N_1</name>
@@ -17,7 +17,7 @@
 			<type>ENTRANCE</type>
 			<name>RONDO_NODE_E_7</name>
 		</node>
-		<!-- EXITS --> <!-- temporary change to simple -->
+		<!-- EXITS --> <!-- temporary - change to simple -->
 		<node>
 			<type>EXIT</type>
 			<name>RONDO_NODE_N_2</name>

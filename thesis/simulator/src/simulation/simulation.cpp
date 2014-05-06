@@ -220,9 +220,9 @@ void simulation::run_destroyers(int time_tick)
 	logger.info()() << "destroyed " << veh_count << " vehicles in " <<
 		cell_count << " cells";
 
-	if (veh_count != cell_count) {
+	/*if (veh_count != cell_count) {
 		logger.warning()() << "multiple vehicles on cell detected when destroying";
-	}
+	}*/
 }
 
 //model Nagela-Schreckenberga

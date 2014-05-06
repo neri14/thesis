@@ -34,7 +34,7 @@ protected:
 	}
 };
 
-TEST_F(ut_world_description_parser, parse_file)
+TEST_F(ut_world_description_parser, DISABLE_parse_file)
 {
 	ASSERT_TRUE(parser->parse());
 	world_description_handle desc = parser->get_world_description();
