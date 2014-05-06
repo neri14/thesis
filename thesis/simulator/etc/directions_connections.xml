@@ -20,8 +20,16 @@
 					<part>5</part>
 				</to>
 				<to>
-					<name>D1_D2_NODE_4</name>
-					<part>20</part>
+					<name>RONDO_NODE_E_1</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_S_1</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_S_2</name>
+					<part>5</part>
 				</to>
 			</to_list>
 		</connection>
@@ -45,8 +53,16 @@
 					<part>5</part>
 				</to>
 				<to>
-					<name>D1_D2_NODE_4</name>
-					<part>40</part>
+					<name>RONDO_NODE_E_1</name>
+					<part>20</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_S_1</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_S_2</name>
+					<part>10</part>
 				</to>
 			</to_list>
 		</connection>
@@ -62,8 +78,16 @@
 					<part>5</part>
 				</to>
 				<to>
-					<name>D1_D2_NODE_4</name>
-					<part>80</part>
+					<name>RONDO_NODE_E_1</name>
+					<part>55</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_S_1</name>
+					<part>15</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_S_2</name>
+					<part>10</part>
 				</to>
 			</to_list>
 		</connection>
@@ -71,17 +95,67 @@
 			<from>MOST_IN_2</from>
 			<to_list>
 				<to>
-					<name>D1_D2_NODE_3</name>
-					<part>100</part>
+					<name>RONDO_NODE_E_2</name>
+					<part>55</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_E_3</name>
+					<part>20</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_E_4</name>
+					<part>25</part>
+				</to>
+			</to_list>
+		</connection>
+
+		<connection>
+			<from>RONDO_NODE_N_1</from>
+			<to_list>
+				<to>
+					<name>MOST_OUT_1</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>POLAKA_OUT_1</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_E_1</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_E_2</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_E_3</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_E_4</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_S_1</name>
+					<part>40</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_S_2</name>
+					<part>20</part>
 				</to>
 			</to_list>
 		</connection>
 		<connection>
-			<from>D1_D2_NODE_1</from>
+			<from>RONDO_NODE_E_7</from>
 			<to_list>
 				<to>
+					<name>RONDO_NODE_N_2</name>
+					<part>30</part>
+				</to>
+				<to>
 					<name>MOST_OUT_1</name>
-					<part>95</part>
+					<part>65</part>
 				</to>
 				<to>
 					<name>POLAKA_OUT_1</name>
@@ -90,11 +164,28 @@
 			</to_list>
 		</connection>
 		<connection>
-			<from>D1_D2_NODE_2</from>
+			<from>RONDO_NODE_E_6</from>
 			<to_list>
 				<to>
 					<name>MOST_OUT_2</name>
 					<part>100</part>
+				</to>
+			</to_list>
+		</connection>
+		<connection>
+			<from>RONDO_NODE_E_5</from>
+			<to_list>
+				<to>
+					<name>MOST_OUT_2</name>
+					<part>60</part>
+				</to>
+				<to>
+					<name>RONDO_NODE_S_2</name>
+					<part>20</part>
+				</to>
+				<to>
+					<name>MOST_OUT_2</name>
+					<part>20</part>
 				</to>
 			</to_list>
 		</connection>

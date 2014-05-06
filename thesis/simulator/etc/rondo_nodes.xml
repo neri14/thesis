@@ -1,191 +1,215 @@
 <world>
 	<nodes>
-		<!-- ENTRANCES -->
+		<!-- ENTRANCES --> <!-- temporary - change to simple -->
 		<node>
 			<type>ENTRANCE</type>
-			<name>MOST_IN_1</name>
-		</node>
-		<node>
-			<type>ENTRANCE</type>
-			<name>MOST_IN_2</name>
+			<name>RONDO_NODE_N_1</name>
 		</node>
 		<node>
 			<type>ENTRANCE</type>
-			<name>WYSP_IN_1</name>
+			<name>RONDO_NODE_E_5</name>
 		</node>
 		<node>
 			<type>ENTRANCE</type>
-			<name>WRON_IN_1</name>
-		</node>
-		<!-- EXITS -->
-		<node>
-			<type>EXIT</type>
-			<name>MOST_OUT_1</name>
+			<name>RONDO_NODE_E_6</name>
 		</node>
 		<node>
-			<type>EXIT</type>
-			<name>MOST_OUT_2</name>
+			<type>ENTRANCE</type>
+			<name>RONDO_NODE_E_7</name>
 		</node>
+		<!-- EXITS --> <!-- temporary - change to simple -->
 		<node>
 			<type>EXIT</type>
-			<name>WYSP_OUT_1</name>
+			<name>RONDO_NODE_N_2</name>
 		</node>
 		<node>
 			<type>EXIT</type>
-			<name>WRON_OUT_1</name>
+			<name>RONDO_NODE_E_1</name>
 		</node>
 		<node>
 			<type>EXIT</type>
-			<name>POLAKA_OUT_1</name>
+			<name>RONDO_NODE_E_2</name>
+		</node>
+		<node>
+			<type>EXIT</type>
+			<name>RONDO_NODE_E_3</name>
+		</node>
+		<node>
+			<type>EXIT</type>
+			<name>RONDO_NODE_E_4</name>
+		</node>
+		<node>
+			<type>EXIT</type>
+			<name>RONDO_NODE_S_1</name>
+		</node>
+		<node>
+			<type>EXIT</type>
+			<name>RONDO_NODE_S_2</name>
 		</node>
 		<!-- SIMPLES -->
-		<node>
-			<type>SIMPLE</type>
-			<name>MOST_NODE_1</name>
-		</node>
-		<node>
-			<type>SIMPLE</type>
-			<name>D1_D2_NODE_1</name>
-		</node>
-		<node>
-			<type>SIMPLE</type>
-			<name>D1_D2_NODE_2</name>
-		</node>
-		<node>
-			<type>SIMPLE</type>
-			<name>D1_D2_NODE_4</name>
-		</node>
 		<!-- SIMPLES - SIGS -->
 		<node>
 			<type>SIMPLE</type>
-			<name>MOST_SIG_W_1</name>
+			<name>RONDO_SIG_N_1</name>
 		</node>
 		<node>
 			<type>SIMPLE</type>
-			<name>MOST_SIG_W_2</name>
+			<name>RONDO_SIG_N_2</name>
 		</node>
 		<node>
 			<type>SIMPLE</type>
-			<name>MOST_SIG_W_3</name>
+			<name>RONDO_SIG_E_1</name>
 		</node>
 		<node>
 			<type>SIMPLE</type>
-			<name>MOST_SIG_S_1</name>
+			<name>RONDO_SIG_E_2</name>
 		</node>
 		<node>
 			<type>SIMPLE</type>
-			<name>MOST_SIG_S_2</name>
+			<name>RONDO_SIG_E_3</name>
 		</node>
 		<node>
 			<type>SIMPLE</type>
-			<name>MOST_SIG_E_1</name>
+			<name>RONDO_SIG_E_4</name>
 		</node>
 		<node>
 			<type>SIMPLE</type>
-			<name>MOST_SIG_E_2</name>
+			<name>RONDO_SIG_W_1</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>RONDO_SIG_W_2</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>RONDO_SIG_W_3</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>RONDO_SIG_W_4</name>
 		</node>
 		<!-- SPLITS -->
 		<node>
 			<type>SPLIT</type>
-			<name>WYSP_SPLIT_1</name>
+			<name>RONDO_SPLIT_1</name>
 		</node>
 		<node>
 			<type>SPLIT</type>
-			<name>WYSP_SPLIT_2</name>
+			<name>RONDO_SPLIT_2</name>
 		</node>
 		<node>
 			<type>SPLIT</type>
-			<name>WYSP_SPLIT_3</name>
+			<name>RONDO_SPLIT_3</name>
 		</node>
 		<node>
 			<type>SPLIT</type>
-			<name>WRON_SPLIT_1</name>
+			<name>RONDO_SPLIT_4</name>
 		</node>
 		<node>
 			<type>SPLIT</type>
-			<name>MOST_SPLIT_1</name>
+			<name>RONDO_SPLIT_5</name>
 		</node>
 		<node>
 			<type>SPLIT</type>
-			<name>MOST_SPLIT_2</name>
+			<name>RONDO_SPLIT_6</name>
 		</node>
 		<node>
 			<type>SPLIT</type>
-			<name>MOST_SPLIT_3</name>
+			<name>RONDO_SPLIT_7</name>
 		</node>
 		<node>
 			<type>SPLIT</type>
-			<name>MOST_SPLIT_4</name>
+			<name>RONDO_SPLIT_8</name>
 		</node>
 		<node>
 			<type>SPLIT</type>
-			<name>D1_D2_NODE_3</name>
+			<name>RONDO_SPLIT_9</name>
+		</node>
+		<node>
+			<type>SPLIT</type>
+			<name>RONDO_SPLIT_10</name>
 		</node>
 		<!-- JOINS -->
 		<node>
 			<type>JOIN</type>
-			<name>WYSP_JOIN_1</name>
+			<name>RONDO_JOIN_1</name>
 		</node>
 		<node>
 			<type>JOIN</type>
-			<name>WYSP_JOIN_2</name>
+			<name>RONDO_JOIN_2</name>
 		</node>
 		<node>
 			<type>JOIN</type>
-			<name>WRON_JOIN_1</name>
+			<name>RONDO_JOIN_3</name>
 		</node>
 		<node>
 			<type>JOIN</type>
-			<name>MOST_JOIN_1</name>
+			<name>RONDO_JOIN_4</name>
 		</node>
 		<node>
 			<type>JOIN</type>
-			<name>MOST_JOIN_2</name>
+			<name>RONDO_JOIN_5</name>
 		</node>
 		<node>
 			<type>JOIN</type>
-			<name>MOST_JOIN_3</name>
+			<name>RONDO_JOIN_6</name>
 		</node>
 		<node>
 			<type>JOIN</type>
-			<name>POLAKA_JOIN_1</name>
+			<name>RONDO_JOIN_7</name>
+		</node>
+		<node>
+			<type>JOIN</type>
+			<name>RONDO_JOIN_8</name>
 		</node>
 		<!-- INTERSECTS -->
 		<node>
 			<type>INTERSECT</type>
-			<name>WYSP_X_1</name>
+			<name>RONDO_X_1</name>
 		</node>
 		<node>
 			<type>INTERSECT</type>
-			<name>WYSP_X_2</name>
+			<name>RONDO_X_2</name>
 		</node>
 		<node>
 			<type>INTERSECT</type>
-			<name>WYSP_X_3</name>
+			<name>RONDO_X_3</name>
 		</node>
 		<node>
 			<type>INTERSECT</type>
-			<name>MOST_X_1</name>
+			<name>RONDO_X_4</name>
 		</node>
 		<node>
 			<type>INTERSECT</type>
-			<name>MOST_X_2</name>
+			<name>RONDO_X_5</name>
 		</node>
 		<node>
 			<type>INTERSECT</type>
-			<name>MOST_X_3</name>
+			<name>RONDO_X_6</name>
 		</node>
 		<node>
 			<type>INTERSECT</type>
-			<name>MOST_X_4</name>
+			<name>RONDO_X_7</name>
 		</node>
 		<node>
 			<type>INTERSECT</type>
-			<name>MOST_X_5</name>
+			<name>RONDO_X_8</name>
 		</node>
 		<node>
 			<type>INTERSECT</type>
-			<name>MOST_X_6</name>
+			<name>RONDO_X_9</name>
+		</node>
+		<node>
+			<type>INTERSECT</type>
+			<name>RONDO_X_10</name>
+		</node>
+		<node>
+			<type>INTERSECT</type>
+			<name>RONDO_X_11</name>
+		</node>
+		<node>
+			<type>INTERSECT</type>
+			<name>RONDO_X_12</name>
 		</node>
 	</nodes>
 </world>

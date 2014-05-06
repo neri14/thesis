@@ -26,13 +26,23 @@
 				<start_time>0</start_time>
 			</flow>
 			<flow>
-				<direction>D1_D2_NODE_1</direction>
-				<outflow>720</outflow>
+				<direction>RONDO_NODE_E_7</direction>
+				<outflow>500</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
-				<direction>D1_D2_NODE_2</direction>
-				<outflow>720</outflow>
+				<direction>RONDO_NODE_E_6</direction>
+				<outflow>500</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>RONDO_NODE_E_5</direction>
+				<outflow>500</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>RONDO_NODE_N_1</direction>
+				<outflow>180</outflow>
 				<start_time>0</start_time>
 			</flow>
 		</flows>
