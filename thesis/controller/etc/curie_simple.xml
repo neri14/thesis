@@ -1,0 +1,10 @@
+<!-- calculate times proporionally to number of lanes -->
+<simple_algorithm>
+	<state>
+		<actuators>
+			<name>CURIE_SIG_1</name>
+			<name>CURIE_SIG_2</name>
+		</actuators>
+		<time>90</time><!--sums to 100-->
+	</state>
+</simple_algorithm>

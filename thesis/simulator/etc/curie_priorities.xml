@@ -1,0 +1,8 @@
+<world>
+	<priorities>
+		<priority>
+			<node_name>CURIE_JOIN_1</node_name>
+			<entrance>0</entrance>
+		</priority>
+	</priorities>
+</world>

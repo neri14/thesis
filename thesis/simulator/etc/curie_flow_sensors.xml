@@ -1,0 +1,12 @@
+<world>
+	<flow_sensors>
+		<flow_sensor>
+			<name>CURIE_FLOW_1</name>
+			<node_name>RONDO_NODE_S_1</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>CURIE_FLOW_2</name>
+			<node_name>RONDO_NODE_S_2</node_name>
+		</flow_sensor>
+	</flow_sensors>
+</world>

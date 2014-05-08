@@ -1,0 +1,35 @@
+<world>
+	<nodes>
+		<!-- ENTRANCES -->
+		<!-- EXITS --> <!-- temporary - change to simple -->
+		<node>
+			<type>EXIT</type>
+			<name>CURIE_NODE_1</name>
+		</node>
+		<node>
+			<type>EXIT</type>
+			<name>CURIE_NODE_2</name>
+		</node>
+		<!-- SIMPLES -->
+		<!-- SIMPLES - SIGS -->
+		<node>
+			<type>SIMPLE</type>
+			<name>CURIE_SIG_1</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>CURIE_SIG_2</name>
+		</node>
+		<!-- SPLITS -->
+		<node>
+			<type>SPLIT</type>
+			<name>CURIE_SPLIT_1</name>
+		</node>
+		<!-- JOINS -->
+		<node>
+			<type>JOIN</type>
+			<name>CURIE_JOIN_1</name>
+		</node>
+		<!-- INTERSECTS -->
+	</nodes>
+</world>

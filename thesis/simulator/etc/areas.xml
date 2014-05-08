@@ -66,5 +66,21 @@
 				<name>RONDO_QUEUE_E_4</name>
 			</queue_sensors>
 		</area>
+		<area>
+			<name>AREA_CURIE</name>
+			<scope>108</scope>
+			<actuators>
+				<name>CURIE_SIG_1</name>
+				<name>CURIE_SIG_2</name>
+			</actuators>
+			<flow_sensors>
+				<name>CURIE_FLOW_1</name>
+				<name>CURIE_FLOW_2</name>
+			</flow_sensors>
+			<queue_sensors>
+				<name>CURIE_QUEUE_1</name>
+				<name>CURIE_QUEUE_2</name>
+			</queue_sensors>
+		</area>
 	</areas>
 </world>

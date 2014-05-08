@@ -38,15 +38,15 @@
 			<type>EXIT</type>
 			<name>RONDO_NODE_E_4</name>
 		</node>
+		<!-- SIMPLES -->
 		<node>
-			<type>EXIT</type>
+			<type>SIMPLE</type>
 			<name>RONDO_NODE_S_1</name>
 		</node>
 		<node>
-			<type>EXIT</type>
+			<type>SIMPLE</type>
 			<name>RONDO_NODE_S_2</name>
 		</node>
-		<!-- SIMPLES -->
 		<!-- SIMPLES - SIGS -->
 		<node>
 			<type>SIMPLE</type>

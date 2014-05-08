@@ -1,0 +1,14 @@
+<world>
+	<queue_sensors>
+		<queue_sensor>
+			<name>CURIE_QUEUE_1</name>
+			<node_from>RONDO_NODE_S_1</node_from>
+			<node_to>CURIE_SIG_1</node_to>
+		</queue_sensor>
+		<queue_sensor>
+			<name>CURIE_QUEUE_2</name>
+			<node_from>RONDO_NODE_S_2</node_from>
+			<node_to>CURIE_SIG_2</node_to>
+		</queue_sensor>
+	</queue_sensors>
+</world>

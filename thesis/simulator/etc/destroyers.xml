@@ -42,11 +42,11 @@
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 		<destroyer>
-			<node_name>RONDO_NODE_S_1</node_name>
+			<node_name>CURIE_NODE_1</node_name>
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 		<destroyer>
-			<node_name>RONDO_NODE_S_2</node_name>
+			<node_name>CURIE_NODE_2</node_name>
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 	</destroyers>

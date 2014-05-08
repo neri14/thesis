@@ -1,0 +1,14 @@
+<world>
+	<actuators>
+		<actuator>
+			<name>CURIE_SIG_1</name>
+			<node_name>CURIE_SIG_1</node_name>
+			<exit_number>0</exit_number>
+		</actuator>
+		<actuator>
+			<name>CURIE_SIG_2</name>
+			<node_name>CURIE_SIG_2</node_name>
+			<exit_number>0</exit_number>
+		</actuator>
+	</actuators>
+</world>

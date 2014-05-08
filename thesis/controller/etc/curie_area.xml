@@ -1,0 +1,75 @@
+<area>
+	<scope>108</scope>
+	<actuators>
+		<actuator>
+			<name>CURIE_SIG_1</name>
+			<exits>1</exits>
+			<before>
+				<area>106</area>
+				<flow_sensor>CURIE_FLOW_1</flow_sensor>
+				<queue_sensors>
+					<queue_sensor>CURIE_QUEUE_1</queue_sensor>
+				</queue_sensors>
+			</before>
+			<after>
+				<area>102</area>
+			</after>
+		</actuator>
+		<actuator>
+			<name>CURIE_SIG_2</name>
+			<exits>1</exits>
+			<before>
+				<area>101</area>
+				<flow_sensor>CURIE_FLOW_2</flow_sensor>
+				<queue_sensors>
+					<queue_sensor>CURIE_QUEUE_2</queue_sensor>
+				</queue_sensors>
+			</before>
+			<after>
+				<area>102</area>
+			</after>
+		</actuator>
+<!--
+		<actuator>
+			<name></name>
+			<before>
+				<area></area>
+				<flow_sensor></flow_sensor>
+				<queue_sensors>
+					<queue_sensor></queue_sensor>
+				</queue_sensors>
+			</before>
+			<after>
+				<area></area>
+				<flow_sensor></flow_sensor>
+				<queue_sensors>
+					<queue_sensor></queue_sensor>
+				</queue_sensors>
+			</after>
+		</actuator>
+-->
+	</actuators>
+
+	<dependencies>
+		<actuator>
+			<name>CURIE_SIG_1</name>
+			<depends_on>
+				<name>CURIE_SIG_2</name>
+			</depends_on>
+		</actuator>
+		<actuator>
+			<name>CURIE_SIG_2</name>
+			<depends_on>
+				<name>CURIE_SIG_1</name>
+			</depends_on>
+		</actuator>
+<!--
+		<actuator>
+			<name></name>
+			<depends_on>
+				<name></name>
+			</depends_on>
+		</actuator>
+-->
+	</dependencies>
+</area>

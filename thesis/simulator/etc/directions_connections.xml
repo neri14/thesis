@@ -24,11 +24,11 @@
 					<part>10</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_S_1</name>
+					<name>CURIE_NODE_1</name>
 					<part>5</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_S_2</name>
+					<name>CURIE_NODE_2</name>
 					<part>5</part>
 				</to>
 			</to_list>
@@ -57,11 +57,11 @@
 					<part>20</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_S_1</name>
+					<name>CURIE_NODE_1</name>
 					<part>10</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_S_2</name>
+					<name>CURIE_NODE_2</name>
 					<part>10</part>
 				</to>
 			</to_list>
@@ -82,11 +82,11 @@
 					<part>55</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_S_1</name>
+					<name>CURIE_NODE_1</name>
 					<part>15</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_S_2</name>
+					<name>CURIE_NODE_2</name>
 					<part>10</part>
 				</to>
 			</to_list>
@@ -137,11 +137,11 @@
 					<part>5</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_S_1</name>
+					<name>CURIE_NODE_1</name>
 					<part>40</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_S_2</name>
+					<name>CURIE_NODE_2</name>
 					<part>20</part>
 				</to>
 			</to_list>
@@ -180,8 +180,12 @@
 					<part>60</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_S_2</name>
-					<part>20</part>
+					<name>CURIE_NODE_1</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>CURIE_NODE_2</name>
+					<part>10</part>
 				</to>
 				<to>
 					<name>MOST_OUT_2</name>
