@@ -1,0 +1,91 @@
+<world>
+	<nodes>
+		<!-- ENTRANCES -->
+		<node>
+			<type>ENTRANCE</type>
+			<name>SCZTN_NODE_N_1</name>
+		</node>
+		<node>
+			<type>ENTRANCE</type>
+			<name>SCZTN_NODE_W_1</name>
+		</node>
+		<node>
+			<type>ENTRANCE</type>
+			<name>SCZTN_NODE_W_2</name>
+		</node>
+		<node>
+			<type>ENTRANCE</type>
+			<name>SCZTN_NODE_S_1</name>
+		</node>
+		<!-- EXITS -->
+		<node>
+			<type>EXIT</type>
+			<name>SCZTN_NODE_N_2</name>
+		</node>
+		<node>
+			<type>EXIT</type>
+			<name>SCZTN_NODE_W_4</name>
+		</node>
+		<node>
+			<type>EXIT</type>
+			<name>SCZTN_NODE_W_3</name>
+		</node>
+		<!-- SIMPLES -->
+		<!-- SIMPLES - SIGS -->
+		<node>
+			<type>SIMPLE</type>
+			<name>SCZTN_SIG_N_1</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>SCZTN_SIG_W_1</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>SCZTN_SIG_W_2</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>SCZTN_SIG_S_1</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>SCZTN_SIG_E_1</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>SCZTN_SIG_E_2</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>SCZTN_SIG_E_3</name>
+		</node>
+		<!-- SPLITS -->
+		<node>
+			<type>SPLIT</type>
+			<name>SCZTN_SPLIT_1</name>
+		</node>
+		<!-- JOINS -->
+		<node>
+			<type>JOIN</type>
+			<name>SCZTN_JOIN_1</name>
+		</node>
+		<node>
+			<type>JOIN</type>
+			<name>SCZTN_JOIN_2</name>
+		</node>
+		<node>
+			<type>JOIN</type>
+			<name>SCZTN_JOIN_3</name>
+		</node>
+		<!-- INTERSECTS -->
+		<node>
+			<type>INTERSECT</type>
+			<name>SCZTN_X_1</name>
+		</node>
+		<node>
+			<type>INTERSECT</type>
+			<name>SCZTN_X_2</name>
+		</node>
+	</nodes>
+</world>

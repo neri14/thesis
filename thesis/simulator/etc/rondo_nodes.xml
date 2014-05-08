@@ -3,10 +3,6 @@
 		<!-- ENTRANCES --> <!-- temporary - change to simple -->
 		<node>
 			<type>ENTRANCE</type>
-			<name>RONDO_NODE_N_1</name>
-		</node>
-		<node>
-			<type>ENTRANCE</type>
 			<name>RONDO_NODE_E_5</name>
 		</node>
 		<node>
@@ -18,10 +14,6 @@
 			<name>RONDO_NODE_E_7</name>
 		</node>
 		<!-- EXITS --> <!-- temporary - change to simple -->
-		<node>
-			<type>EXIT</type>
-			<name>RONDO_NODE_N_2</name>
-		</node>
 		<node>
 			<type>EXIT</type>
 			<name>RONDO_NODE_E_1</name>
@@ -39,6 +31,10 @@
 			<name>RONDO_NODE_E_4</name>
 		</node>
 		<!-- SIMPLES -->
+		<node>
+			<type>SIMPLE</type>
+			<name>RONDO_NODE_N_1</name>
+		</node>
 		<node>
 			<type>SIMPLE</type>
 			<name>RONDO_NODE_S_1</name>
@@ -89,6 +85,10 @@
 			<name>RONDO_SIG_W_4</name>
 		</node>
 		<!-- SPLITS -->
+		<node>
+			<type>SPLIT</type>
+			<name>RONDO_NODE_N_2</name>
+		</node>
 		<node>
 			<type>SPLIT</type>
 			<name>RONDO_SPLIT_1</name>

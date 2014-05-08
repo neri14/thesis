@@ -1,0 +1,24 @@
+<world>
+	<priorities>
+		<priority>
+			<node_name>SCZTN_X_1</node_name>
+			<entrance>0</entrance>
+		</priority>
+		<priority>
+			<node_name>SCZTN_X_2</node_name>
+			<entrance>0</entrance>
+		</priority>
+		<priority>
+			<node_name>SCZTN_JOIN_1</node_name>
+			<entrance>0</entrance>
+		</priority>
+		<priority>
+			<node_name>SCZTN_JOIN_2</node_name>
+			<entrance>1</entrance>
+		</priority>
+		<priority>
+			<node_name>SCZTN_JOIN_3</node_name>
+			<entrance>1</entrance>
+		</priority>
+	</priorities>
+</world>

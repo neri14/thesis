@@ -41,7 +41,22 @@
 				<start_time>0</start_time>
 			</flow>
 			<flow>
-				<direction>RONDO_NODE_N_1</direction>
+				<direction>SCZTN_NODE_N_1</direction>
+				<outflow>90</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>SCZTN_NODE_W_1</direction>
+				<outflow>320</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>SCZTN_NODE_W_2</direction>
+				<outflow>90</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>SCZTN_NODE_S_1</direction>
 				<outflow>180</outflow>
 				<start_time>0</start_time>
 			</flow>

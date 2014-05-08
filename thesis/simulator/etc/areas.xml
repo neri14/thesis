@@ -30,6 +30,35 @@
 			</queue_sensors>
 		</area>
 		<area>
+			<name>AREA_SZCZYTNICKA</name>
+			<scope>105</scope>
+			<actuators>
+				<name>SCZTN_SIG_N_1</name>
+				<name>SCZTN_SIG_W_1</name>
+				<name>SCZTN_SIG_W_2</name>
+				<name>SCZTN_SIG_S_1</name>
+				<name>SCZTN_SIG_E_1</name>
+				<name>SCZTN_SIG_E_2</name>
+				<name>SCZTN_SIG_E_3</name>
+			</actuators>
+			<flow_sensors>
+				<name>SCZTN_FLOW_N_1</name>
+				<name>SCZTN_FLOW_W_1</name>
+				<name>SCZTN_FLOW_W_2</name>
+				<name>SCZTN_FLOW_S_1</name>
+				<name>SCZTN_FLOW_E_1</name>
+			</flow_sensors>
+			<queue_sensors>
+				<name>SCZTN_QUEUE_N_1</name>
+				<name>SCZTN_QUEUE_W_1</name>
+				<name>SCZTN_QUEUE_W_2</name>
+				<name>SCZTN_QUEUE_S_1</name>
+				<name>SCZTN_QUEUE_E_1</name>
+				<name>SCZTN_QUEUE_E_2</name>
+				<name>SCZTN_QUEUE_E_3</name>
+			</queue_sensors>
+		</area>
+		<area>
 			<name>AREA_RONDO_WEST</name>
 			<scope>106</scope>
 			<actuators>

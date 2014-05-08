@@ -16,11 +16,23 @@
 			<node_name>WRON_IN_1</node_name>
 			<create_rate>3600</create_rate>
 		</creator>
-		<!--FIXME TEMP-->
 		<creator>
-			<node_name>RONDO_NODE_N_1</node_name>
+			<node_name>SCZTN_NODE_N_1</node_name>
 			<create_rate>3600</create_rate>
 		</creator>
+		<creator>
+			<node_name>SCZTN_NODE_W_1</node_name>
+			<create_rate>3600</create_rate>
+		</creator>
+		<creator>
+			<node_name>SCZTN_NODE_W_2</node_name>
+			<create_rate>3600</create_rate>
+		</creator>
+		<creator>
+			<node_name>SCZTN_NODE_S_1</node_name>
+			<create_rate>3600</create_rate>
+		</creator>
+		<!--FIXME TEMP-->
 		<creator>
 			<node_name>RONDO_NODE_E_5</node_name>
 			<create_rate>3600</create_rate>

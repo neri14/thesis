@@ -1,0 +1,24 @@
+<world>
+	<flow_sensors>
+		<flow_sensor>
+			<name>SCZTN_FLOW_N_1</name>
+			<node_name>SCZTN_NODE_N_1</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>SCZTN_FLOW_W_1</name>
+			<node_name>SCZTN_NODE_W_1</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>SCZTN_FLOW_W_2</name>
+			<node_name>SCZTN_NODE_W_2</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>SCZTN_FLOW_S_1</name>
+			<node_name>SCZTN_NODE_S_1</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>SCZTN_FLOW_E_1</name>
+			<node_name>RONDO_NODE_N_2</node_name>
+		</flow_sensor>
+	</flow_sensors>
+</world>

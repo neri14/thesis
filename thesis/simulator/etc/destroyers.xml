@@ -20,11 +20,19 @@
 			<node_name>POLAKA_OUT_1</node_name>
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
-		<!--FIXME TEMP-->
 		<destroyer>
-			<node_name>RONDO_NODE_N_2</node_name>
+			<node_name>SCZTN_NODE_N_2</node_name>
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
+		<destroyer>
+			<node_name>SCZTN_NODE_W_3</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>SCZTN_NODE_W_4</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<!--FIXME TEMP-->
 		<destroyer>
 			<node_name>RONDO_NODE_E_1</node_name>
 			<destroy_rate>3600</destroy_rate>
