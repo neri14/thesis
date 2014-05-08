@@ -265,11 +265,11 @@
 			<collides_with>
 				<collision>
 					<name>RONDO_SIG_N_1</name>
-					<cooldown>6</cooldown>
+					<cooldown>8</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_E_4</name>
-					<cooldown>6</cooldown>
+					<cooldown>9</cooldown>
 				</collision>
 			</collides_with>
 		</actuator>
@@ -278,15 +278,15 @@
 			<collides_with>
 				<collision>
 					<name>RONDO_SIG_N_1</name>
-					<cooldown>6</cooldown>
+					<cooldown>8</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_N_2</name>
-					<cooldown>6</cooldown>
+					<cooldown>8</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_E_4</name>
-					<cooldown>6</cooldown>
+					<cooldown>8</cooldown>
 				</collision>
 			</collides_with>
 		</actuator>
@@ -295,15 +295,15 @@
 			<collides_with>
 				<collision>
 					<name>RONDO_SIG_N_1</name>
-					<cooldown>4</cooldown>
+					<cooldown>7</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_N_2</name>
-					<cooldown>5</cooldown>
+					<cooldown>7</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_E_4</name>
-					<cooldown>5</cooldown>
+					<cooldown>7</cooldown>
 				</collision>
 			</collides_with>
 		</actuator>
@@ -312,15 +312,15 @@
 			<collides_with>
 				<collision>
 					<name>RONDO_SIG_N_1</name>
-					<cooldown>4</cooldown>
+					<cooldown>7</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_N_2</name>
-					<cooldown>4</cooldown>
+					<cooldown>6</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_E_4</name>
-					<cooldown>4</cooldown>
+					<cooldown>6</cooldown>
 				</collision>
 			</collides_with>
 		</actuator>
@@ -329,15 +329,15 @@
 			<collides_with>
 				<collision>
 					<name>RONDO_SIG_E_1</name>
-					<cooldown>4</cooldown>
+					<cooldown>6</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_E_2</name>
-					<cooldown>4</cooldown>
+					<cooldown>5</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_E_3</name>
-					<cooldown>4</cooldown>
+					<cooldown>5</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_E_4</name>
@@ -345,19 +345,19 @@
 				</collision>
 				<collision>
 					<name>RONDO_SIG_W_1</name>
-					<cooldown>6</cooldown>
+					<cooldown>4</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_W_2</name>
-					<cooldown>6</cooldown>
+					<cooldown>3</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_W_3</name>
-					<cooldown>5</cooldown>
+					<cooldown>3</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_W_4</name>
-					<cooldown>5</cooldown>
+					<cooldown>3</cooldown>
 				</collision>
 			</collides_with>
 		</actuator>
@@ -366,15 +366,15 @@
 			<collides_with>
 				<collision>
 					<name>RONDO_SIG_E_1</name>
-					<cooldown>4</cooldown>
+					<cooldown>5</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_E_2</name>
-					<cooldown>4</cooldown>
+					<cooldown>5</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_E_3</name>
-					<cooldown>4</cooldown>
+					<cooldown>5</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_E_4</name>
@@ -382,19 +382,19 @@
 				</collision>
 				<collision>
 					<name>RONDO_SIG_W_1</name>
-					<cooldown>5</cooldown>
+					<cooldown>3</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_W_2</name>
-					<cooldown>5</cooldown>
+					<cooldown>3</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_W_3</name>
-					<cooldown>5</cooldown>
+					<cooldown>3</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_W_4</name>
-					<cooldown>4</cooldown>
+					<cooldown>3</cooldown>
 				</collision>
 			</collides_with>
 		</actuator>
@@ -403,11 +403,11 @@
 			<collides_with>
 				<collision>
 					<name>RONDO_SIG_N_1</name>
-					<cooldown>4</cooldown>
+					<cooldown>2</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_N_2</name>
-					<cooldown>3</cooldown>
+					<cooldown>2</cooldown>
 				</collision>
 			</collides_with>
 		</actuator>
@@ -416,11 +416,11 @@
 			<collides_with>
 				<collision>
 					<name>RONDO_SIG_N_1</name>
-					<cooldown>4</cooldown>
+					<cooldown>3</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_N_2</name>
-					<cooldown>4</cooldown>
+					<cooldown>3</cooldown>
 				</collision>
 			</collides_with>
 		</actuator>
@@ -429,11 +429,11 @@
 			<collides_with>
 				<collision>
 					<name>RONDO_SIG_N_1</name>
-					<cooldown>4</cooldown>
+					<cooldown>3</cooldown>
 				</collision>
 				<collision>
 					<name>RONDO_SIG_N_2</name>
-					<cooldown>4</cooldown>
+					<cooldown>3</cooldown>
 				</collision>
 			</collides_with>
 		</actuator>
@@ -446,7 +446,7 @@
 				</collision>
 				<collision>
 					<name>RONDO_SIG_N_2</name>
-					<cooldown>4</cooldown>
+					<cooldown>5</cooldown>
 				</collision>
 			</collides_with>
 		</actuator>
