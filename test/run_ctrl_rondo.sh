@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./bin/controller --config ./controller/ctrl_config.ini
+./bin/controller --config ./controller/rondo_config.ini
