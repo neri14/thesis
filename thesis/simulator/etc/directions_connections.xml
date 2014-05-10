@@ -9,11 +9,11 @@
 				</to>
 				<to>
 					<name>MOST_OUT_1</name>
-					<part>35</part>
+					<part>30</part>
 				</to>
 				<to>
 					<name>MOST_OUT_2</name>
-					<part>35</part>
+					<part>30</part>
 				</to>
 				<to>
 					<name>POLAKA_OUT_1</name>
@@ -24,12 +24,16 @@
 					<part>10</part>
 				</to>
 				<to>
-					<name>CURIE_NODE_1</name>
+					<name>KLINIKI_NODE_E_4</name>
 					<part>5</part>
 				</to>
 				<to>
-					<name>CURIE_NODE_2</name>
+					<name>KLINIKI_NODE_S_2</name>
 					<part>5</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_E_3</name>
+					<part>10</part>
 				</to>
 			</to_list>
 		</connection>
@@ -57,11 +61,15 @@
 					<part>20</part>
 				</to>
 				<to>
-					<name>CURIE_NODE_1</name>
-					<part>10</part>
+					<name>KLINIKI_NODE_E_4</name>
+					<part>5</part>
 				</to>
 				<to>
-					<name>CURIE_NODE_2</name>
+					<name>KLINIKI_NODE_S_2</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_E_3</name>
 					<part>10</part>
 				</to>
 			</to_list>
@@ -82,11 +90,15 @@
 					<part>55</part>
 				</to>
 				<to>
-					<name>CURIE_NODE_1</name>
-					<part>15</part>
+					<name>KLINIKI_NODE_E_4</name>
+					<part>10</part>
 				</to>
 				<to>
-					<name>CURIE_NODE_2</name>
+					<name>KLINIKI_NODE_S_2</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_E_3</name>
 					<part>10</part>
 				</to>
 			</to_list>
@@ -136,11 +148,15 @@
 					<part>5</part>
 				</to>
 				<to>
-					<name>CURIE_NODE_1</name>
-					<part>40</part>
+					<name>KLINIKI_NODE_E_4</name>
+					<part>30</part>
 				</to>
 				<to>
-					<name>CURIE_NODE_2</name>
+					<name>KLINIKI_NODE_S_2</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_E_3</name>
 					<part>20</part>
 				</to>
 			</to_list>
@@ -173,11 +189,15 @@
 					<part>5</part>
 				</to>
 				<to>
-					<name>CURIE_NODE_1</name>
-					<part>40</part>
+					<name>KLINIKI_NODE_E_4</name>
+					<part>30</part>
 				</to>
 				<to>
-					<name>CURIE_NODE_2</name>
+					<name>KLINIKI_NODE_S_2</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_E_3</name>
 					<part>20</part>
 				</to>
 			</to_list>
@@ -242,16 +262,84 @@
 					<part>60</part>
 				</to>
 				<to>
-					<name>CURIE_NODE_1</name>
-					<part>10</part>
+					<name>KLINIKI_NODE_E_4</name>
+					<part>5</part>
 				</to>
 				<to>
-					<name>CURIE_NODE_2</name>
+					<name>KLINIKI_NODE_S_2</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_E_3</name>
 					<part>10</part>
 				</to>
 				<to>
 					<name>MOST_OUT_2</name>
 					<part>20</part>
+				</to>
+			</to_list>
+		</connection>
+		<connection>
+			<from>KLINIKI_NODE_S_1</from>
+			<to_list>
+				<to>
+					<name>KLINIKI_NODE_N_2</name>
+					<part>35</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_W_2</name>
+					<part>25</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_W_3</name>
+					<part>25</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_E_4</name>
+					<part>15</part>
+				</to>
+			</to_list>
+		</connection>
+		<connection>
+			<from>KLINIKI_NODE_N_1</from>
+			<to_list>
+				<to>
+					<name>KLINIKI_NODE_S_2</name>
+					<part>30</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_W_3</name>
+					<part>40</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_E_4</name>
+					<part>30</part>
+				</to>
+			</to_list>
+		</connection>
+		<connection>
+			<from>KLINIKI_NODE_E_1</from>
+			<to_list>
+				<to>
+					<name>KLINIKI_NODE_N_2</name>
+					<part>15</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_W_2</name>
+					<part>40</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_W_3</name>
+					<part>45</part>
+				</to>
+			</to_list>
+		</connection>
+		<connection>
+			<from>KLINIKI_NODE_E_2</from>
+			<to_list>
+				<to>
+					<name>KLINIKI_NODE_W_1</name>
+					<part>100</part>
 				</to>
 			</to_list>
 		</connection>

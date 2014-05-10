@@ -32,6 +32,18 @@
 			<node_name>SCZTN_NODE_W_4</node_name>
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
+		<destroyer>
+			<node_name>KLINIKI_NODE_E_3</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>KLINIKI_NODE_E_4</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>KLINIKI_NODE_S_2</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
 		<!--FIXME TEMP-->
 		<destroyer>
 			<node_name>RONDO_NODE_E_1</node_name>
@@ -50,11 +62,19 @@
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 		<destroyer>
-			<node_name>CURIE_NODE_1</node_name>
+			<node_name>KLINIKI_NODE_N_2</node_name>
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 		<destroyer>
-			<node_name>CURIE_NODE_2</node_name>
+			<node_name>KLINIKI_NODE_W_1</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>KLINIKI_NODE_W_2</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>KLINIKI_NODE_W_3</node_name>
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 	</destroyers>

@@ -60,6 +60,26 @@
 				<outflow>180</outflow>
 				<start_time>0</start_time>
 			</flow>
+			<flow>
+				<direction>KLINIKI_NODE_N_1</direction>
+				<outflow>180</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>KLINIKI_NODE_S_1</direction>
+				<outflow>600</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>KLINIKI_NODE_E_1</direction>
+				<outflow>1000</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>KLINIKI_NODE_E_2</direction>
+				<outflow>1000</outflow>
+				<start_time>0</start_time>
+			</flow>
 		</flows>
 	</simulation>
 </world>

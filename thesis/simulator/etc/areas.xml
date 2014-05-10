@@ -30,6 +30,38 @@
 			</queue_sensors>
 		</area>
 		<area>
+			<name>AREA_KLINIKI</name>
+			<scope>102</scope>
+			<actuators>
+				<name>KLINIKI_SIG_N_1</name>
+				<name>KLINIKI_SIG_N_2</name>
+				<name>KLINIKI_SIG_W_1</name>
+				<name>KLINIKI_SIG_W_2</name>
+				<name>KLINIKI_SIG_S_1</name>
+				<name>KLINIKI_SIG_S_2</name>
+				<name>KLINIKI_SIG_E_1</name>
+				<name>KLINIKI_SIG_E_2</name>
+			</actuators>
+			<flow_sensors>
+				<name>KLINIKI_FLOW_N_1</name>
+				<name>KLINIKI_FLOW_W_1</name>
+				<name>KLINIKI_FLOW_W_2</name>
+				<name>KLINIKI_FLOW_S_1</name>
+				<name>KLINIKI_FLOW_E_1</name>
+				<name>KLINIKI_FLOW_E_2</name>
+			</flow_sensors>
+			<queue_sensors>
+				<name>KLINIKI_QUEUE_N_1</name>
+				<name>KLINIKI_QUEUE_N_2</name>
+				<name>KLINIKI_QUEUE_W_1</name>
+				<name>KLINIKI_QUEUE_W_2</name>
+				<name>KLINIKI_QUEUE_S_1</name>
+				<name>KLINIKI_QUEUE_S_2</name>
+				<name>KLINIKI_QUEUE_E_1</name>
+				<name>KLINIKI_QUEUE_E_2</name>
+			</queue_sensors>
+		</area>
+		<area>
 			<name>AREA_SZCZYTNICKA</name>
 			<scope>105</scope>
 			<actuators>

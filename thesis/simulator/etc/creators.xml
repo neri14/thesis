@@ -32,6 +32,18 @@
 			<node_name>SCZTN_NODE_S_1</node_name>
 			<create_rate>3600</create_rate>
 		</creator>
+		<creator>
+			<node_name>KLINIKI_NODE_S_1</node_name>
+			<create_rate>3600</create_rate>
+		</creator>
+		<creator>
+			<node_name>KLINIKI_NODE_E_1</node_name>
+			<create_rate>3600</create_rate>
+		</creator>
+		<creator>
+			<node_name>KLINIKI_NODE_E_2</node_name>
+			<create_rate>3600</create_rate>
+		</creator>
 		<!--FIXME TEMP-->
 		<creator>
 			<node_name>RONDO_NODE_E_5</node_name>
@@ -43,6 +55,10 @@
 		</creator>
 		<creator>
 			<node_name>RONDO_NODE_E_7</node_name>
+			<create_rate>3600</create_rate>
+		</creator>
+		<creator>
+			<node_name>KLINIKI_NODE_N_1</node_name>
 			<create_rate>3600</create_rate>
 		</creator>
 	</creators>

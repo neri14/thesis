@@ -5,6 +5,7 @@
 		<file>rondo_nodes.xml</file>
 		<file>curie_nodes.xml</file>
 		<file>scztn_nodes.xml</file>
+		<file>kliniki_nodes.xml</file>
 
 		<!-- CONNECTIONS -->
 		<file>most_connections_1.xml</file>
@@ -15,6 +16,8 @@
 		<file>rondo_connections_3.xml</file>
 		<file>curie_connections.xml</file>
 		<file>scztn_connections.xml</file>
+		<file>kliniki_connections_1.xml</file>
+		<file>kliniki_connections_2.xml</file>
 
 		<!-- CREATORS -->
 		<file>creators.xml</file>
@@ -27,18 +30,21 @@
 		<file>rondo_actuators.xml</file>
 		<file>curie_actuators.xml</file>
 		<file>scztn_actuators.xml</file>
+		<file>kliniki_actuators.xml</file>
 
 		<!-- FLOW SENSORS -->
 		<file>most_flow_sensors.xml</file>
 		<file>rondo_flow_sensors.xml</file>
 		<file>curie_flow_sensors.xml</file>
 		<file>scztn_flow_sensors.xml</file>
+		<file>kliniki_flow_sensors.xml</file>
 
 		<!-- QUEUE SENSORS -->
 		<file>most_queue_sensors.xml</file>
 		<file>rondo_queue_sensors.xml</file>
 		<file>curie_queue_sensors.xml</file>
 		<file>scztn_queue_sensors.xml</file>
+		<file>kliniki_queue_sensors.xml</file>
 
 		<!-- AREAS -->
 		<file>areas.xml</file>
@@ -51,6 +57,7 @@
 		<file>rondo_priorities.xml</file>
 		<file>curie_priorities.xml</file>
 		<file>scztn_priorities.xml</file>
+		<file>kliniki_priorities.xml</file>
 
 		<!-- SIMULATION -->
 		<file>simulation.xml</file>

@@ -1,16 +1,16 @@
 <world>
 	<nodes>
 		<!-- ENTRANCES -->
-		<!-- EXITS --> <!-- temporary - change to simple -->
+		<!-- EXITS -->
+		<!-- SIMPLES -->
 		<node>
-			<type>EXIT</type>
+			<type>SIMPLE</type>
 			<name>CURIE_NODE_1</name>
 		</node>
 		<node>
-			<type>EXIT</type>
+			<type>SIMPLE</type>
 			<name>CURIE_NODE_2</name>
 		</node>
-		<!-- SIMPLES -->
 		<!-- SIMPLES - SIGS -->
 		<node>
 			<type>SIMPLE</type>

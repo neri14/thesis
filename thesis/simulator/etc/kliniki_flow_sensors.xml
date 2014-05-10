@@ -1,0 +1,28 @@
+<world>
+	<flow_sensors>
+		<flow_sensor>
+			<name>KLINIKI_FLOW_N_1</name>
+			<node_name>KLINIKI_SPLIT_7</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>KLINIKI_FLOW_W_1</name>
+			<node_name>CURIE_NODE_1</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>KLINIKI_FLOW_W_2</name>
+			<node_name>CURIE_NODE_2</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>KLINIKI_FLOW_S_1</name>
+			<node_name>KLINIKI_SPLIT_6</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>KLINIKI_FLOW_E_1</name>
+			<node_name>KLINIKI_NODE_E_1</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>KLINIKI_FLOW_E_2</name>
+			<node_name>KLINIKI_NODE_E_2</node_name>
+		</flow_sensor>
+	</flow_sensors>
+</world>
