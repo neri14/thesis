@@ -1,8 +1,6 @@
 #!/bin/bash
 
-rm -rf bin/*
-rm -f ./simulator/*.xml
-rm -f ./controller/*.xml
+./clean.sh
 
 cp ../thesis/simulator/etc/*.xml ./simulator/
 cp ../thesis/controller/etc/*.xml ./controller/
