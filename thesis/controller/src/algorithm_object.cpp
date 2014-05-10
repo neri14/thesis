@@ -10,6 +10,10 @@ namespace constant {
 
 	const std::vector<EActuatorState> transition_red_to_green = boost::assign::list_of
 		(EActuatorState_RedYellow)
+		(EActuatorState_Green)
+		(EActuatorState_Green)
+		(EActuatorState_Green)
+		(EActuatorState_Green)
 		(EActuatorState_Green);
 	const std::vector<EActuatorState> transition_green_to_red = boost::assign::list_of
 		(EActuatorState_Yellow)
@@ -17,10 +21,28 @@ namespace constant {
 		(EActuatorState_Yellow)
 		(EActuatorState_Red);
 	const std::vector<EActuatorState> transition_off_to_green = boost::assign::list_of
+		(EActuatorState_Yellow)
+		(EActuatorState_Yellow)
+		(EActuatorState_Yellow)
+		(EActuatorState_Yellow)
+		(EActuatorState_Yellow)
+		(EActuatorState_Red)
+		(EActuatorState_Red)
+		(EActuatorState_Red)
+		(EActuatorState_Red)
 		(EActuatorState_Red)
 		(EActuatorState_RedYellow)
+		(EActuatorState_Green)
+		(EActuatorState_Green)
+		(EActuatorState_Green)
+		(EActuatorState_Green)
 		(EActuatorState_Green);
 	const std::vector<EActuatorState> transition_off_to_red = boost::assign::list_of
+		(EActuatorState_Yellow)
+		(EActuatorState_Yellow)
+		(EActuatorState_Yellow)
+		(EActuatorState_Yellow)
+		(EActuatorState_Yellow)
 		(EActuatorState_Red);
 }
 
