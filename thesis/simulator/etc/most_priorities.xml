@@ -38,7 +38,7 @@
 		</priority>
 		<priority>
 			<node_name>WYSP_X_3</node_name>
-			<entrance>1</entrance>
+			<entrance>0</entrance>
 		</priority>
 		<priority>
 			<node_name>MOST_X_1</node_name>
@@ -62,7 +62,7 @@
 		</priority>
 		<priority>
 			<node_name>MOST_X_6</node_name>
-			<entrance>0</entrance>
+			<entrance>1</entrance>
 		</priority>
 	</priorities>
 </world>

@@ -543,57 +543,71 @@ bool world_description_parser::create_paths()
 	typedef std::pair<std::string, wd_direction> str_direction_pair;
 	typedef std::pair<std::string, int> str_int_pair;
 	typedef std::pair<int, int> int_int_pair;
+	typedef std::vector<std::string> string_vector;
 
 	BOOST_FOREACH(str_direction_pair dir, directions) {
 		const std::string& from = dir.first;
 
 		BOOST_FOREACH(str_int_pair conn, dir.second.connection) {
 			const std::string& to = conn.first;
-			std::vector<std::string> nodes = find_path(from, to);
-			logger.debug()() << "found path from " << from << " to " << to << " - " <<
-				nodes.size() << " nodes";
+			find_path(from, to);
 
-			double flow_part = conn.second/100.0;
+			logger.debug()() << "found " << created_paths.size() << " paths from " <<
+				from << " to " << to;
 
-			std::string path_name = add_path(from, to, nodes);
-			BOOST_FOREACH(int_int_pair flow, dir.second.flows) {
-				add_path_flow(path_name, flow.first,
-					static_cast<int>(std::ceil(flow.second*flow_part)));
+			double flow_part = (conn.second/100.0)/created_paths.size();
+
+			int i = 0;
+			BOOST_FOREACH (string_vector path, created_paths) {
+				std::string path_name = add_path(from, to, i, path);
+				BOOST_FOREACH(int_int_pair flow, dir.second.flows) {
+					add_path_flow(path_name, flow.first,
+						static_cast<int>(std::ceil(flow.second*flow_part)));
+				}
+				++i;
 			}
+			created_paths.clear();
 		}
 	}
 	return true;
 }
 
-std::vector<std::string> world_description_parser::find_path(
-		const std::string& from, const std::string& to, std::vector<std::string> visited)
+void world_description_parser::find_path(
+		const std::string& from, const std::string& to,
+		std::vector<std::string> visited, std::string prev)
 {
+	//logger.debug()() << "check " << prev << "->" << from << "->" << to;
 	BOOST_FOREACH(std::string v, visited) {
 		if (v == from) {
-			return std::vector<std::string>();
+			return;
 		}
 	}
 
 	visited.push_back(from);
 	if (from == to) {
-		return visited;
+		created_paths.push_back(visited);
+		return;
 	}
 
 	world_node_handle node_from = desc->nodes.find(from)->second;
-	for (int i=0; i<node_from->exits.size(); ++i) {
-		std::vector<std::string> vec = find_path(node_from->exits[i]->to.lock()->name, to, visited);
-		if (vec.size()) {
-			return vec;
+
+	if (node_from->type == ENodeType_Intersect) {
+		world_node_handle node_prev = desc->nodes.find(prev)->second;
+		int ent = node_prev->find_connection_to(*node_from).second;
+		find_path(node_from->exits[ent]->to.lock()->name, to, visited, from);
+	} else {
+		for (int i=0; i<node_from->exits.size(); ++i) {
+			find_path(node_from->exits[i]->to.lock()->name, to, visited, from);
 		}
 	}
-
-	return std::vector<std::string>();
 }
 
-std::string world_description_parser::add_path(
-	const std::string& from, const std::string& to, const std::vector<std::string>& nodes)
+std::string world_description_parser::add_path(const std::string& from, const std::string& to,
+	int number, const std::vector<std::string>& nodes)
 {
-	std::string path_name = from + "__" + to;
+	std::ostringstream ss;
+	ss << from << "__" << to << "__" << number;
+	std::string path_name = ss.str();
 
 	world_path_handle path(new world_path(path_name));
 	BOOST_FOREACH(std::string node_name, nodes) {

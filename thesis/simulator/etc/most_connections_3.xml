@@ -73,7 +73,7 @@
 			</node_from>
 			<node_to>
 				<name>MOST_X_6</name>
-				<entrance>0</entrance>
+				<entrance>1</entrance>
 			</node_to>
 			<distance>0</distance>
 		</connection>
@@ -179,7 +179,7 @@
 		<connection>
 			<node_from>
 				<name>MOST_X_5</name>
-				<exit>0</exit>
+				<exit>1</exit>
 			</node_from>
 			<node_to>
 				<name>MOST_SPLIT_3</name>
@@ -194,7 +194,7 @@
 			</node_from>
 			<node_to>
 				<name>MOST_X_6</name>
-				<entrance>1</entrance>
+				<entrance>0</entrance>
 			</node_to>
 			<distance>0</distance>
 		</connection>
@@ -223,7 +223,7 @@
 		<connection>
 			<node_from>
 				<name>MOST_X_5</name>
-				<exit>1</exit>
+				<exit>0</exit>
 			</node_from>
 			<node_to>
 				<name>MOST_JOIN_2</name>

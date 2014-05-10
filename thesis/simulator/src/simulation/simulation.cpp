@@ -194,6 +194,8 @@ void simulation::run_creators(int time_tick)
 
 void simulation::run_destroyers(int time_tick)
 {
+	static int rolling = 0;
+
 	logger.info()() << "destroying vehicles";
 	int veh_count = 0;
 	int cell_count = 0;
@@ -217,8 +219,9 @@ void simulation::run_destroyers(int time_tick)
 		}
 	}
 
+	rolling += veh_count;
 	logger.info()() << "destroyed " << veh_count << " vehicles in " <<
-		cell_count << " cells";
+		cell_count << " cells (rolling sum: " << rolling << ")";
 
 	/*if (veh_count != cell_count) {
 		logger.warning()() << "multiple vehicles on cell detected when destroying";

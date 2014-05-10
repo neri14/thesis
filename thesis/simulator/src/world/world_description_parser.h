@@ -48,10 +48,11 @@ private:
 	bool parse_simulation(const boost::property_tree::ptree& pt);
 
 	bool create_paths();
-	std::vector<std::string> find_path(const std::string& from, const std::string& to,
-		std::vector<std::string> visited = std::vector<std::string>());
-	std::string add_path(
-		const std::string& from, const std::string& to, const std::vector<std::string>& nodes);
+	void find_path(const std::string& from, const std::string& to,
+		std::vector<std::string> visited = std::vector<std::string>(),
+		std::string prev = std::string());
+	std::string add_path(const std::string& from, const std::string& to,
+		int number, const std::vector<std::string>& nodes);
 	void add_path_flow(const std::string& path, int time, int flow);
 
 	common::my_logger logger;
@@ -59,6 +60,8 @@ private:
 
 	world_description_handle desc;
 	std::map<std::string, wd_direction> directions;
+
+	std::vector<std::vector<std::string> > created_paths;
 };
 
 } // namespace world

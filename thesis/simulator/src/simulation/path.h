@@ -18,12 +18,17 @@ public:
 	std::queue<path_cell> get_cells() const;
 	const std::string& get_name() const;
 	int get_flow(int time_tick) const;
+	int get_offset() const;
 
 private:
+	mutable common::my_logger logger;
 	std::string name;
 
 	std::queue<path_cell> cells;
 	std::map<int, int> flows;
+
+	int offset;
+	int max_flow;
 };
 typedef boost::shared_ptr<path> path_handle;
 

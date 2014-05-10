@@ -22,6 +22,7 @@ simulator_service::~simulator_service()
 
 int simulator_service::start()
 {
+	srand (time(NULL));
 	try {
 		common::dispatcher::distributor_thread distributor;
 		distributor.start();

@@ -23,7 +23,8 @@ vehicle_handle creator::create(int time_tick)
 {
 	BOOST_FOREACH(path_handle p, paths) {
 		int interval = get_interval(p->get_flow(time_tick));
-		if (interval && time_tick && time_tick % interval == 0) {
+		int offset = p->get_offset();
+		if (interval && time_tick && time_tick % interval == offset) {
 			vehicles.push(vehicle_handle(new vehicle(p->get_cells(), max_vehicle_speed)));
 		}
 	}
