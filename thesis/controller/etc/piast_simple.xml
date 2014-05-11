@@ -1,0 +1,36 @@
+<!-- calculate times proporionally to number of lanes -->
+<simple_algorithm>
+	<state>
+		<actuators>
+			<name>PIAST_SIG_S_1</name>
+			<name>PIAST_SIG_S_2</name>
+			<name>PIAST_SIG_S_3</name>
+			<name>PIAST_SIG_S_4</name>
+		</actuators>
+		<time>40</time><!--sums to 100-->
+	</state>
+	<state>
+		<actuators>
+			<name>PIAST_SIG_N_1</name>
+			<name>PIAST_SIG_N_2</name>
+		</actuators>
+		<time>10</time><!--sums to 100-->
+	</state>
+	<state>
+		<actuators>
+			<name>PIAST_SIG_W_1</name>
+			<name>PIAST_SIG_W_2</name>
+			<name>PIAST_SIG_W_3</name>
+			<name>PIAST_SIG_E_1</name>
+			<name>PIAST_SIG_E_2</name>
+			<name>PIAST_SIG_E_3</name>
+		</actuators>
+		<time>40</time><!--sums to 100-->
+	</state>
+	<state>
+		<actuators>
+			<name>PIAST_SIG_W_4</name>
+		</actuators>
+		<time>10</time><!--sums to 100-->
+	</state>
+</simple_algorithm>

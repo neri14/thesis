@@ -1,36 +1,36 @@
 <world>
 	<nodes>
-		<!-- ENTRANCES --> <!-- temporary - change to simple -->
+		<!-- ENTRANCES -->
+		<!-- EXITS -->
+		<!-- SIMPLES -->
 		<node>
-			<type>ENTRANCE</type>
-			<name>RONDO_NODE_E_5</name>
-		</node>
-		<node>
-			<type>ENTRANCE</type>
-			<name>RONDO_NODE_E_6</name>
-		</node>
-		<node>
-			<type>ENTRANCE</type>
-			<name>RONDO_NODE_E_7</name>
-		</node>
-		<!-- EXITS --> <!-- temporary - change to simple -->
-		<node>
-			<type>EXIT</type>
+			<type>SIMPLE</type>
 			<name>RONDO_NODE_E_1</name>
 		</node>
 		<node>
-			<type>EXIT</type>
+			<type>SIMPLE</type>
 			<name>RONDO_NODE_E_2</name>
 		</node>
 		<node>
-			<type>EXIT</type>
+			<type>SIMPLE</type>
 			<name>RONDO_NODE_E_3</name>
 		</node>
 		<node>
-			<type>EXIT</type>
+			<type>SIMPLE</type>
 			<name>RONDO_NODE_E_4</name>
 		</node>
-		<!-- SIMPLES -->
+		<node>
+			<type>SIMPLE</type>
+			<name>RONDO_NODE_E_5</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>RONDO_NODE_E_6</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>RONDO_NODE_E_7</name>
+		</node>
 		<node>
 			<type>SIMPLE</type>
 			<name>RONDO_NODE_N_1</name>

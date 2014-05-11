@@ -576,7 +576,7 @@ void world_description_parser::find_path(
 		const std::string& from, const std::string& to,
 		std::vector<std::string> visited, std::string prev)
 {
-	//logger.debug()() << "check " << prev << "->" << from << "->" << to;
+	logger.debug()() << "check " << prev << "->" << from << "->" << to;
 	BOOST_FOREACH(std::string v, visited) {
 		if (v == from) {
 			return;

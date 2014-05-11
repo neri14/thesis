@@ -26,19 +26,19 @@
 			<type>EXIT</type>
 			<name>KLINIKI_NODE_E_4</name>
 		</node>
+		<!-- SIMPLES -->
 		<node>
-			<type>EXIT</type>
+			<type>SIMPLE</type>
 			<name>KLINIKI_NODE_W_1</name>
 		</node>
 		<node>
-			<type>EXIT</type>
+			<type>SIMPLE</type>
 			<name>KLINIKI_NODE_W_2</name>
 		</node>
 		<node>
-			<type>EXIT</type>
+			<type>SIMPLE</type>
 			<name>KLINIKI_NODE_W_3</name>
 		</node>
-		<!-- SIMPLES -->
 		<node>
 			<type>SIMPLE</type>
 			<name>KLINIKI_NODE_N_1</name>

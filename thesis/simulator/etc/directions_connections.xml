@@ -20,7 +20,7 @@
 					<part>5</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_E_1</name>
+					<name>NORWIDA_NODE_E_4</name>
 					<part>10</part>
 				</to>
 				<to>
@@ -42,23 +42,23 @@
 			<to_list>
 				<to>
 					<name>WYSP_OUT_1</name>
-					<part>15</part>
+					<part>5</part>
 				</to>
 				<to>
 					<name>MOST_OUT_1</name>
-					<part>20</part>
+					<part>30</part>
 				</to>
 				<to>
 					<name>MOST_OUT_2</name>
-					<part>20</part>
+					<part>30</part>
 				</to>
 				<to>
 					<name>POLAKA_OUT_1</name>
 					<part>5</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_E_1</name>
-					<part>20</part>
+					<name>NORWIDA_NODE_E_4</name>
+					<part>10</part>
 				</to>
 				<to>
 					<name>KLINIKI_NODE_E_4</name>
@@ -79,27 +79,27 @@
 			<to_list>
 				<to>
 					<name>WYSP_OUT_1</name>
-					<part>15</part>
+					<part>20</part>
 				</to>
 				<to>
 					<name>WRON_OUT_1</name>
 					<part>5</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_E_1</name>
-					<part>55</part>
+					<name>NORWIDA_NODE_E_4</name>
+					<part>50</part>
 				</to>
 				<to>
 					<name>KLINIKI_NODE_E_4</name>
 					<part>10</part>
 				</to>
 				<to>
-					<name>KLINIKI_NODE_S_2</name>
-					<part>5</part>
-				</to>
-				<to>
 					<name>KLINIKI_NODE_E_3</name>
 					<part>10</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_S_2</name>
+					<part>5</part>
 				</to>
 			</to_list>
 		</connection>
@@ -107,57 +107,187 @@
 			<from>MOST_IN_2</from>
 			<to_list>
 				<to>
-					<name>RONDO_NODE_E_2</name>
-					<part>55</part>
+					<name>POLAKA_OUT_1</name>
+					<part>5</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_E_3</name>
+					<name>NORWIDA_NODE_E_3</name>
+					<part>60</part>
+				</to>
+				<to>
+					<name>PIAST_NODE_N_3</name>
 					<part>20</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_E_4</name>
-					<part>25</part>
+					<name>SCZTN_NODE_N_2</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>SCZTN_NODE_W_3</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>SCZTN_NODE_W_4</name>
+					<part>5</part>
 				</to>
 			</to_list>
 		</connection>
 		<connection>
-			<from>SCZTN_NODE_S_1</from>
+			<from>KLINIKI_NODE_S_1</from>
 			<to_list>
 				<to>
-					<name>MOST_OUT_1</name>
+					<name>KLINIKI_NODE_E_4</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>NORWIDA_NODE_E_4</name>
 					<part>10</part>
+				</to>
+				<to>
+					<name>PIAST_NODE_N_3</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>SCZTN_NODE_N_2</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>SCZTN_NODE_W_3</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>SCZTN_NODE_W_4</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>MOST_OUT_1</name>
+					<part>25</part>
+				</to>
+				<to>
+					<name>MOST_OUT_2</name>
+					<part>25</part>
 				</to>
 				<to>
 					<name>POLAKA_OUT_1</name>
 					<part>5</part>
 				</to>
+			</to_list>
+		</connection>
+		<connection>
+			<from>KLINIKI_NODE_E_1</from>
+			<to_list>
 				<to>
-					<name>RONDO_NODE_E_1</name>
+					<name>NORWIDA_NODE_E_4</name>
 					<part>10</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_E_2</name>
+					<name>PIAST_NODE_N_3</name>
 					<part>5</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_E_3</name>
+					<name>SCZTN_NODE_N_2</name>
 					<part>5</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_E_4</name>
-					<part>5</part>
+					<name>SCZTN_NODE_W_3</name>
+					<part>10</part>
 				</to>
 				<to>
-					<name>KLINIKI_NODE_E_4</name>
+					<name>SCZTN_NODE_W_4</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>MOST_OUT_1</name>
+					<part>25</part>
+				</to>
+				<to>
+					<name>MOST_OUT_2</name>
 					<part>30</part>
 				</to>
+				<to>
+					<name>POLAKA_OUT_1</name>
+					<part>5</part>
+				</to>
+			</to_list>
+		</connection>
+		<connection>
+			<from>KLINIKI_NODE_E_2</from>
+			<to_list>
+				<to>
+					<name>MOST_OUT_2</name>
+					<part>100</part>
+				</to>
+			</to_list>
+		</connection>
+		<connection>
+			<from>NORWIDA_NODE_E_1</from>
+			<to_list>
+				<to>
+					<name>PIAST_NODE_N_3</name>
+					<part>15</part>
+				</to>
+				<to>
+					<name>SCZTN_NODE_N_2</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>SCZTN_NODE_W_3</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>SCZTN_NODE_W_4</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>MOST_OUT_1</name>
+					<part>65</part>
+				</to>
+				<to>
+					<name>POLAKA_OUT_1</name>
+					<part>5</part>
+				</to>
+			</to_list>
+		</connection>
+		<connection>
+			<from>NORWIDA_NODE_E_2</from>
+			<to_list>
 				<to>
 					<name>KLINIKI_NODE_S_2</name>
 					<part>10</part>
 				</to>
 				<to>
 					<name>KLINIKI_NODE_E_3</name>
-					<part>20</part>
+					<part>10</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_E_4</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>PIAST_NODE_N_3</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>MOST_OUT_2</name>
+					<part>65</part>
+				</to>
+			</to_list>
+		</connection>
+		<connection>
+			<from>SCZTN_NODE_N_1</from>
+			<to_list>
+				<to>
+					<name>SCZTN_NODE_W_4</name>
+					<part>100</part>
+				</to>
+			</to_list>
+		</connection>
+		<connection>
+			<from>SCZTN_NODE_W_2</from>
+			<to_list>
+				<to>
+					<name>SCZTN_NODE_N_2</name>
+					<part>100</part>
 				</to>
 			</to_list>
 		</connection>
@@ -173,24 +303,41 @@
 					<part>5</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_E_1</name>
+					<name>KLINIKI_NODE_S_2</name>
 					<part>10</part>
 				</to>
 				<to>
-					<name>RONDO_NODE_E_2</name>
-					<part>5</part>
-				</to>
-				<to>
-					<name>RONDO_NODE_E_3</name>
-					<part>5</part>
-				</to>
-				<to>
-					<name>RONDO_NODE_E_4</name>
-					<part>5</part>
+					<name>KLINIKI_NODE_E_3</name>
+					<part>25</part>
 				</to>
 				<to>
 					<name>KLINIKI_NODE_E_4</name>
-					<part>30</part>
+					<part>25</part>
+				</to>
+				<to>
+					<name>PIAST_NODE_N_3</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>NORWIDA_NODE_E_3</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>NORWIDA_NODE_E_4</name>
+					<part>10</part>
+				</to>
+			</to_list>
+		</connection>
+		<connection>
+			<from>SCZTN_NODE_S_1</from>
+			<to_list>
+				<to>
+					<name>MOST_OUT_1</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>POLAKA_OUT_1</name>
+					<part>5</part>
 				</to>
 				<to>
 					<name>KLINIKI_NODE_S_2</name>
@@ -198,30 +345,28 @@
 				</to>
 				<to>
 					<name>KLINIKI_NODE_E_3</name>
-					<part>20</part>
+					<part>25</part>
 				</to>
-			</to_list>
-		</connection>
-		<connection>
-			<from>SCZTN_NODE_W_2</from>
-			<to_list>
 				<to>
-					<name>SCZTN_NODE_N_2</name>
-					<part>100</part>
+					<name>KLINIKI_NODE_E_4</name>
+					<part>25</part>
 				</to>
-			</to_list>
-		</connection>
-		<connection>
-			<from>SCZTN_NODE_N_1</from>
-			<to_list>
 				<to>
-					<name>SCZTN_NODE_W_4</name>
-					<part>100</part>
+					<name>PIAST_NODE_N_3</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>NORWIDA_NODE_E_3</name>
+					<part>10</part>
+				</to>
+				<to>
+					<name>NORWIDA_NODE_E_4</name>
+					<part>10</part>
 				</to>
 			</to_list>
 		</connection>
 		<connection>
-			<from>RONDO_NODE_E_7</from>
+			<from>PIAST_NODE_N_1</from>
 			<to_list>
 				<to>
 					<name>SCZTN_NODE_N_2</name>
@@ -229,7 +374,7 @@
 				</to>
 				<to>
 					<name>SCZTN_NODE_W_3</name>
-					<part>15</part>
+					<part>10</part>
 				</to>
 				<to>
 					<name>SCZTN_NODE_W_4</name>
@@ -237,7 +382,7 @@
 				</to>
 				<to>
 					<name>MOST_OUT_1</name>
-					<part>65</part>
+					<part>70</part>
 				</to>
 				<to>
 					<name>POLAKA_OUT_1</name>
@@ -246,143 +391,31 @@
 			</to_list>
 		</connection>
 		<connection>
-			<from>RONDO_NODE_E_6</from>
+			<from>PIAST_NODE_N_2</from>
 			<to_list>
-				<to>
-					<name>MOST_OUT_2</name>
-					<part>100</part>
-				</to>
-			</to_list>
-		</connection>
-		<connection>
-			<from>RONDO_NODE_E_5</from>
-			<to_list>
-				<to>
-					<name>MOST_OUT_2</name>
-					<part>60</part>
-				</to>
-				<to>
-					<name>KLINIKI_NODE_E_4</name>
-					<part>5</part>
-				</to>
 				<to>
 					<name>KLINIKI_NODE_S_2</name>
-					<part>5</part>
+					<part>10</part>
 				</to>
 				<to>
 					<name>KLINIKI_NODE_E_3</name>
-					<part>10</part>
+					<part>15</part>
+				</to>
+				<to>
+					<name>KLINIKI_NODE_E_4</name>
+					<part>15</part>
+				</to>
+				<to>
+					<name>NORWIDA_NODE_E_3</name>
+					<part>5</part>
+				</to>
+				<to>
+					<name>NORWIDA_NODE_E_4</name>
+					<part>5</part>
 				</to>
 				<to>
 					<name>MOST_OUT_2</name>
-					<part>20</part>
-				</to>
-			</to_list>
-		</connection>
-		<connection>
-			<from>KLINIKI_NODE_S_1</from>
-			<to_list>
-				<to>
-					<name>NORWIDA_NODE_E_4</name>
-					<part>35</part>
-				</to>
-				<to>
-					<name>KLINIKI_NODE_W_2</name>
-					<part>25</part>
-				</to>
-				<to>
-					<name>KLINIKI_NODE_W_3</name>
-					<part>25</part>
-				</to>
-				<to>
-					<name>KLINIKI_NODE_E_4</name>
-					<part>15</part>
-				</to>
-			</to_list>
-		</connection>
-		<connection>
-			<from>NORWIDA_NODE_W_1</from>
-			<to_list>
-				<to>
-					<name>NORWIDA_NODE_E_4</name>
-					<part>80</part>
-				</to>
-				<to>
-					<name>KLINIKI_NODE_S_2</name>
-					<part>5</part>
-				</to>
-				<to>
-					<name>KLINIKI_NODE_W_3</name>
-					<part>10</part>
-				</to>
-				<to>
-					<name>KLINIKI_NODE_E_4</name>
-					<part>5</part>
-				</to>
-			</to_list>
-		</connection>
-		<connection>
-			<from>NORWIDA_NODE_W_2</from>
-			<to_list>
-				<to>
-					<name>NORWIDA_NODE_E_3</name>
-					<part>100</part>
-				</to>
-			</to_list>
-		</connection>
-		<connection>
-			<from>NORWIDA_NODE_E_1</from>
-			<to_list>
-				<to>
-					<name>NORWIDA_NODE_W_4</name>
-					<part>100</part>
-				</to>
-			</to_list>
-		</connection>
-		<connection>
-			<from>NORWIDA_NODE_E_2</from>
-			<to_list>
-				<to>
-					<name>NORWIDA_NODE_W_3</name>
-					<part>80</part>
-				</to>
-				<to>
-					<name>KLINIKI_NODE_S_2</name>
-					<part>5</part>
-				</to>
-				<to>
-					<name>KLINIKI_NODE_W_3</name>
-					<part>10</part>
-				</to>
-				<to>
-					<name>KLINIKI_NODE_E_4</name>
-					<part>5</part>
-				</to>
-			</to_list>
-		</connection>
-		<connection>
-			<from>KLINIKI_NODE_E_1</from>
-			<to_list>
-				<to>
-					<name>NORWIDA_NODE_E_4</name>
-					<part>15</part>
-				</to>
-				<to>
-					<name>KLINIKI_NODE_W_2</name>
-					<part>40</part>
-				</to>
-				<to>
-					<name>KLINIKI_NODE_W_3</name>
-					<part>45</part>
-				</to>
-			</to_list>
-		</connection>
-		<connection>
-			<from>KLINIKI_NODE_E_2</from>
-			<to_list>
-				<to>
-					<name>KLINIKI_NODE_W_1</name>
-					<part>100</part>
+					<part>50</part>
 				</to>
 			</to_list>
 		</connection>

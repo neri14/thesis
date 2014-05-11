@@ -3,14 +3,6 @@
 		<!-- ENTRANCES -->
 		<node>
 			<type>ENTRANCE</type>
-			<name>NORWIDA_NODE_W_1</name>
-		</node>
-		<node>
-			<type>ENTRANCE</type>
-			<name>NORWIDA_NODE_W_2</name>
-		</node>
-		<node>
-			<type>ENTRANCE</type>
 			<name>NORWIDA_NODE_E_1</name>
 		</node>
 		<node>
@@ -20,14 +12,6 @@
 		<!-- EXITS -->
 		<node>
 			<type>EXIT</type>
-			<name>NORWIDA_NODE_W_3</name>
-		</node>
-		<node>
-			<type>EXIT</type>
-			<name>NORWIDA_NODE_W_4</name>
-		</node>
-		<node>
-			<type>EXIT</type>
 			<name>NORWIDA_NODE_E_3</name>
 		</node>
 		<node>
@@ -35,6 +19,22 @@
 			<name>NORWIDA_NODE_E_4</name>
 		</node>
 		<!-- SIMPLES -->
+		<node>
+			<type>SIMPLE</type>
+			<name>NORWIDA_NODE_W_1</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>NORWIDA_NODE_W_2</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>NORWIDA_NODE_W_3</name>
+		</node>
+		<node>
+			<type>SIMPLE</type>
+			<name>NORWIDA_NODE_W_4</name>
+		</node>
 		<node>
 			<type>SIMPLE</type>
 			<name>NORWIDA_NODE_W_5</name>

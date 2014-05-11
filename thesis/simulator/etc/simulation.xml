@@ -7,12 +7,12 @@
 		<flows>
 			<flow>
 				<direction>WRON_IN_1</direction>
-				<outflow>90</outflow>
+				<outflow>360</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>WYSP_IN_1</direction>
-				<outflow>180</outflow>
+				<outflow>720</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
@@ -26,73 +26,58 @@
 				<start_time>0</start_time>
 			</flow>
 			<flow>
-				<direction>RONDO_NODE_E_7</direction>
-				<outflow>500</outflow>
-				<start_time>0</start_time>
-			</flow>
-			<flow>
-				<direction>RONDO_NODE_E_6</direction>
-				<outflow>500</outflow>
-				<start_time>0</start_time>
-			</flow>
-			<flow>
-				<direction>RONDO_NODE_E_5</direction>
-				<outflow>500</outflow>
-				<start_time>0</start_time>
-			</flow>
-			<flow>
-				<direction>SCZTN_NODE_N_1</direction>
-				<outflow>90</outflow>
-				<start_time>0</start_time>
-			</flow>
-			<flow>
-				<direction>SCZTN_NODE_W_1</direction>
-				<outflow>320</outflow>
-				<start_time>0</start_time>
-			</flow>
-			<flow>
-				<direction>SCZTN_NODE_W_2</direction>
-				<outflow>90</outflow>
-				<start_time>0</start_time>
-			</flow>
-			<flow>
-				<direction>SCZTN_NODE_S_1</direction>
-				<outflow>180</outflow>
-				<start_time>0</start_time>
-			</flow>
-			<flow>
-				<direction>NORWIDA_NODE_E_1</direction>
-				<outflow>900</outflow>
-				<start_time>0</start_time>
-			</flow>
-			<flow>
-				<direction>NORWIDA_NODE_E_2</direction>
-				<outflow>900</outflow>
-				<start_time>0</start_time>
-			</flow>
-			<flow>
-				<direction>NORWIDA_NODE_W_1</direction>
-				<outflow>900</outflow>
-				<start_time>0</start_time>
-			</flow>
-			<flow>
-				<direction>NORWIDA_NODE_W_2</direction>
-				<outflow>900</outflow>
-				<start_time>0</start_time>
-			</flow>
-			<flow>
 				<direction>KLINIKI_NODE_S_1</direction>
-				<outflow>600</outflow>
+				<outflow>720</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>KLINIKI_NODE_E_1</direction>
-				<outflow>1000</outflow>
+				<outflow>720</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>KLINIKI_NODE_E_2</direction>
-				<outflow>1000</outflow>
+				<outflow>720</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>NORWIDA_NODE_E_1</direction>
+				<outflow>720</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>NORWIDA_NODE_E_2</direction>
+				<outflow>720</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>PIAST_NODE_N_1</direction>
+				<outflow>720</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>PIAST_NODE_N_2</direction>
+				<outflow>720</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>SCZTN_NODE_N_1</direction>
+				<outflow>360</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>SCZTN_NODE_W_1</direction>
+				<outflow>720</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>SCZTN_NODE_W_2</direction>
+				<outflow>360</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>SCZTN_NODE_S_1</direction>
+				<outflow>360</outflow>
 				<start_time>0</start_time>
 			</flow>
 		</flows>
