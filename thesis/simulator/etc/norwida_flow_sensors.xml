@@ -1,0 +1,24 @@
+<world>
+	<flow_sensors>
+		<flow_sensor>
+			<name>NORWIDA_FLOW_W_1</name>
+			<node_name>NORWIDA_SPLIT_2</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>NORWIDA_FLOW_W_2</name>
+			<node_name>NORWIDA_NODE_W_5</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>NORWIDA_FLOW_E_1</name>
+			<node_name>NORWIDA_NODE_E_5</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>NORWIDA_FLOW_E_2</name>
+			<node_name>NORWIDA_SPLIT_1</node_name>
+		</flow_sensor>
+		<flow_sensor>
+			<name>NORWIDA_FLOW_S_1</name>
+			<node_name>KLINIKI_NODE_N_2</node_name>
+		</flow_sensor>
+	</flow_sensors>
+</world>

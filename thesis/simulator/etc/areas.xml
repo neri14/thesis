@@ -62,6 +62,35 @@
 			</queue_sensors>
 		</area>
 		<area>
+			<name>AREA_NORWIDA</name>
+			<scope>103</scope>
+			<actuators>
+				<name>NORWIDA_SIG_W_1</name>
+				<name>NORWIDA_SIG_W_2</name>
+				<name>NORWIDA_SIG_W_3</name>
+				<name>NORWIDA_SIG_E_1</name>
+				<name>NORWIDA_SIG_E_2</name>
+				<name>NORWIDA_SIG_E_3</name>
+				<name>NORWIDA_SIG_S_1</name>
+			</actuators>
+			<flow_sensors>
+				<name>NORWIDA_FLOW_W_1</name>
+				<name>NORWIDA_FLOW_W_2</name>
+				<name>NORWIDA_FLOW_E_1</name>
+				<name>NORWIDA_FLOW_E_2</name>
+				<name>NORWIDA_FLOW_S_1</name>
+			</flow_sensors>
+			<queue_sensors>
+				<name>NORWIDA_QUEUE_W_1</name>
+				<name>NORWIDA_QUEUE_W_2</name>
+				<name>NORWIDA_QUEUE_W_3</name>
+				<name>NORWIDA_QUEUE_E_1</name>
+				<name>NORWIDA_QUEUE_E_2</name>
+				<name>NORWIDA_QUEUE_E_3</name>
+				<name>NORWIDA_QUEUE_S_1</name>
+			</queue_sensors>
+		</area>
+		<area>
 			<name>AREA_SZCZYTNICKA</name>
 			<scope>105</scope>
 			<actuators>

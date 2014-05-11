@@ -1,0 +1,20 @@
+<world>
+	<priorities>
+		<priority>
+			<node_name>NORWIDA_JOIN_1</node_name>
+			<entrance>1</entrance>
+		</priority>
+		<priority>
+			<node_name>NORWIDA_JOIN_2</node_name>
+			<entrance>1</entrance>
+		</priority>
+		<priority>
+			<node_name>NORWIDA_X_1</node_name>
+			<entrance>0</entrance>
+		</priority>
+		<priority>
+			<node_name>NORWIDA_X_2</node_name>
+			<entrance>0</entrance>
+		</priority>
+	</priorities>
+</world>

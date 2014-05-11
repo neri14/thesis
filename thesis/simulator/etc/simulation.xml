@@ -61,8 +61,23 @@
 				<start_time>0</start_time>
 			</flow>
 			<flow>
-				<direction>KLINIKI_NODE_N_1</direction>
-				<outflow>180</outflow>
+				<direction>NORWIDA_NODE_E_1</direction>
+				<outflow>900</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>NORWIDA_NODE_E_2</direction>
+				<outflow>900</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>NORWIDA_NODE_W_1</direction>
+				<outflow>900</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>NORWIDA_NODE_W_2</direction>
+				<outflow>900</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
