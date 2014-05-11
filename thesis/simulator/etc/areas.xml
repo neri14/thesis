@@ -91,6 +91,36 @@
 			</queue_sensors>
 		</area>
 		<area>
+			<name>AREA_GRUNWALDZKA</name>
+			<scope>104</scope>
+			<actuators>
+				<name>GRUN_SIG_W_1</name>
+				<name>GRUN_SIG_W_2</name>
+				<name>GRUN_SIG_N_1</name>
+				<name>GRUN_SIG_N_2</name>
+				<name>GRUN_SIG_E_1</name>
+				<name>GRUN_SIG_S_1</name>
+				<name>GRUN_SIG_S_2</name>
+			</actuators>
+			<flow_sensors>
+				<name>GRUN_FLOW_W_1</name>
+				<name>GRUN_FLOW_W_2</name>
+				<name>GRUN_FLOW_N_1</name>
+				<name>GRUN_FLOW_N_2</name>
+				<name>GRUN_FLOW_E_1</name>
+				<name>GRUN_FLOW_S_1</name>
+			</flow_sensors>
+			<queue_sensors>
+				<name>GRUN_QUEUE_W_1</name>
+				<name>GRUN_QUEUE_W_2</name>
+				<name>GRUN_QUEUE_N_1</name>
+				<name>GRUN_QUEUE_N_2</name>
+				<name>GRUN_QUEUE_E_1</name>
+				<name>GRUN_QUEUE_S_1</name>
+				<name>GRUN_QUEUE_S_2</name>
+			</queue_sensors>
+		</area>
+		<area>
 			<name>AREA_SZCZYTNICKA</name>
 			<scope>105</scope>
 			<actuators>

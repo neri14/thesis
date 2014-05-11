@@ -1,20 +1,20 @@
 <world>
 	<nodes>
 		<!-- ENTRANCES -->
+		<!-- EXITS -->
+		<!-- SIMPLES -->
 		<node>
-			<type>ENTRANCE</type>
+			<type>SIMPLE</type>
 			<name>PIAST_NODE_N_1</name>
 		</node>
 		<node>
-			<type>ENTRANCE</type>
+			<type>SIMPLE</type>
 			<name>PIAST_NODE_N_2</name>
 		</node>
-		<!-- EXITS -->
 		<node>
-			<type>EXIT</type>
+			<type>SIMPLE</type>
 			<name>PIAST_NODE_N_3</name>
 		</node>
-		<!-- SIMPLES -->
 		<node>
 			<type>SIMPLE</type>
 			<name>PIAST_NODE_E_1</name>

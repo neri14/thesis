@@ -576,7 +576,11 @@ void world_description_parser::find_path(
 		const std::string& from, const std::string& to,
 		std::vector<std::string> visited, std::string prev)
 {
-	logger.debug()() << "check " << prev << "->" << from << "->" << to;
+	if (desc->nodes.find(from) == desc->nodes.end() || desc->nodes.find(to) == desc->nodes.end()) {
+		logger.error()() << "non existing node from or to: " << from << ", " << to;
+		return;
+	}
+	//logger.debug()() << "check " << prev << "->" << from << "->" << to;
 	BOOST_FOREACH(std::string v, visited) {
 		if (v == from) {
 			return;
@@ -594,9 +598,21 @@ void world_description_parser::find_path(
 	if (node_from->type == ENodeType_Intersect) {
 		world_node_handle node_prev = desc->nodes.find(prev)->second;
 		int ent = node_prev->find_connection_to(*node_from).second;
+
+
+		if (!node_from->exits[ent] || !node_from->exits[ent]->to.lock()) {
+			logger.error()() << "error finding path from " << from << " to " <<
+				to << " on intersect exit (" << ent << ")";
+			return;
+		}
 		find_path(node_from->exits[ent]->to.lock()->name, to, visited, from);
 	} else {
 		for (int i=0; i<node_from->exits.size(); ++i) {
+			if (!node_from->exits[i] || !node_from->exits[i]->to.lock()) {
+				logger.error()() << "error finding path from " << from << " to " <<
+					to << " on exit (" << i << ")";
+				return;
+			}
 			find_path(node_from->exits[i]->to.lock()->name, to, visited, from);
 		}
 	}

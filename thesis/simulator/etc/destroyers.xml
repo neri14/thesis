@@ -52,9 +52,16 @@
 			<node_name>NORWIDA_NODE_E_4</node_name>
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
-		<!--FIXME TEMP-->
 		<destroyer>
-			<node_name>PIAST_NODE_N_3</node_name>
+			<node_name>GRUN_NODE_W_3</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>GRUN_NODE_N_3</node_name>
+			<destroy_rate>3600</destroy_rate>
+		</destroyer>
+		<destroyer>
+			<node_name>GRUN_NODE_E_2</node_name>
 			<destroy_rate>3600</destroy_rate>
 		</destroyer>
 	</destroyers>

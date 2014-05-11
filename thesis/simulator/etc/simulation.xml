@@ -51,13 +51,28 @@
 				<start_time>0</start_time>
 			</flow>
 			<flow>
-				<direction>PIAST_NODE_N_1</direction>
-				<outflow>720</outflow>
+				<direction>GRUN_NODE_W_1</direction>
+				<outflow>360</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
-				<direction>PIAST_NODE_N_2</direction>
-				<outflow>720</outflow>
+				<direction>GRUN_NODE_W_2</direction>
+				<outflow>360</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>GRUN_NODE_N_1</direction>
+				<outflow>500</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>GRUN_NODE_N_2</direction>
+				<outflow>500</outflow>
+				<start_time>0</start_time>
+			</flow>
+			<flow>
+				<direction>GRUN_NODE_E_1</direction>
+				<outflow>360</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
