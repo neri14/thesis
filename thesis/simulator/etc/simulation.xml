@@ -7,57 +7,57 @@
 		<flows>
 			<flow>
 				<direction>WRON_IN_1</direction>
-				<outflow>360</outflow>
+				<outflow>500</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>WYSP_IN_1</direction>
-				<outflow>720</outflow>
+				<outflow>1000</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>MOST_IN_1</direction>
-				<outflow>720</outflow>
+				<outflow>1000</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>MOST_IN_2</direction>
-				<outflow>720</outflow>
+				<outflow>1000</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>KLINIKI_NODE_S_1</direction>
-				<outflow>720</outflow>
+				<outflow>1000</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>KLINIKI_NODE_E_1</direction>
-				<outflow>720</outflow>
+				<outflow>1000</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>KLINIKI_NODE_E_2</direction>
-				<outflow>720</outflow>
+				<outflow>1000</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>NORWIDA_NODE_E_1</direction>
-				<outflow>720</outflow>
+				<outflow>1000</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>NORWIDA_NODE_E_2</direction>
-				<outflow>720</outflow>
+				<outflow>1000</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>GRUN_NODE_W_1</direction>
-				<outflow>360</outflow>
+				<outflow>250</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>GRUN_NODE_W_2</direction>
-				<outflow>360</outflow>
+				<outflow>250</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
@@ -72,27 +72,27 @@
 			</flow>
 			<flow>
 				<direction>GRUN_NODE_E_1</direction>
-				<outflow>360</outflow>
+				<outflow>500</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>SCZTN_NODE_N_1</direction>
-				<outflow>360</outflow>
+				<outflow>500</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>SCZTN_NODE_W_1</direction>
-				<outflow>720</outflow>
+				<outflow>750</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>SCZTN_NODE_W_2</direction>
-				<outflow>360</outflow>
+				<outflow>250</outflow>
 				<start_time>0</start_time>
 			</flow>
 			<flow>
 				<direction>SCZTN_NODE_S_1</direction>
-				<outflow>360</outflow>
+				<outflow>500</outflow>
 				<start_time>0</start_time>
 			</flow>
 		</flows>
