@@ -212,7 +212,7 @@
 \instituteLogo{pwrlogo}
 
 \renewcommand\maketitle {
-   \pagenumbering{roman}
+   \pagenumbering{gobble}
    \thispagestyle{empty}
 
    \noindent
