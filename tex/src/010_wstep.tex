@@ -1,10 +1,11 @@
 \chapter{Wstęp}
 \section{Wprowadzenie}
-wprowadzenie w tematykę pracy
+TODO wprowadzenie w tematykę pracy
 \section{Cel pracy}
-cel pracy, motywacja
+TODO cel pracy, motywacja - coś o tym że celem pracy jest zastosowanie metod optymalizacji do sterowania ruchem.
+inny cel to porównanie opracowanego algorytmu z brakiem sterowania i sterowaniem stałoczasowym - stałym programem.
 \section{Układ pracy}
-krótki opis co w rozdziałach - możliwe że większość znajduje się w przeglądzie literatury
+TODO krótki opis co w rozdziałach - możliwe że większość znajduje się w przeglądzie literatury
 \section{Przegląd literatury}
 \subsection{Wymagania prawne dotyczące sygnalizacji świetlnej}
 Podstawowe zasady projektowania sygnalizacji świetlnej oraz jej programów opisuje Rozporządzenie Ministra Infrastruktury z dnia 3 lipca 2003 roku \cite{rozporzadzenie}.
@@ -19,14 +20,10 @@ Autorzy zauważają, że nawet najlepszy algorytm sterowania ruchem nie da dobry
 
 We wspomnianej pracy przedstawione zostały przykładowe struktury systemów adaptacyjnego sterowania ruchem drogowym co jest dobrym punktem wyjścia do projektowania inteligentnego systemu sterowania ruchem. Opis opracowanej struktury sterowania znajduje się w rozdziale \ref{sec:model_opis} na stronie \pageref{sec:model_opis}.
 
-TODO praca \cite{ruchaj}
+W swojej rozprawie doktorskiej \cite{ruchaj} Marcin Ruchaj przytacza algorytmy sterowania ruchem drogowym z podziałem na sterowanie stałoczasowe - ze stałym programem sygnalizacji, zmiennoczasowe - adaptujące się do warunków ruchu, a także sterowanie wykorzystujące logikę rozmytą czy metody sztucznej inteligencji. Metody sztucznej inteligencji, zastosowane do sterowania ruchem drogowym, przedstawiają w swojej pracy Tahere Royani Javad Haddadnia i Mohammad Alipoor \cite{royani+haddadnia+alipoor}. W swoim referacie proponują oni zastosowanie rozmytych sieci neuronowych do sterowania ruchem i algorytmu genetycznego w celu regulacji parametrów pracy sieci neuronowej.
 
 \subsection{Rozwiązania w symulacji ruchu drogowego}
 
-referencja \ref{chap:symulacja}
+Dla celów symulacji ruchu drogowego często wykorzystywane są automaty komórkowe. Zaletą zastosowania automatów komórkowych jest jego oparcie o proste zasady i wysoka wydajność obliczeniowa, ponieważ opiera się on jedynie o proste zasady. Powszechnie używany model symulujący ruch pojazdów opracowali Kai Nagel i Michael Schreckenberg w roku 1992 \cite{nasch}. Opisują oni automat komórkowy którego działanie opiera się na 4 etapach: przyśpieszeniu, hamowaniu, losowości i przesunięciu. Zastosowanie automatów komórkowych w symulacji różnych sytuacji ruchu drogowego opisuje w swojej pracy dyplomowej Maciej Bartodziej \cite{bartodziej}.
 
-TODO praca \cite{nasch}
-
-TODO praca \cite{bernas+placzek}
-
-TODO praca \cite{bartodziej}
+Ze względu na swoją prostotę automaty komórkowe można prosto modyfikować. Przykład symulacji ruchu drogowego w zmiennych warunkach pogodowych przedstawiają w swoim artykule Marcin Bernaś i Bartłomiej Płaczek \cite{bernas+placzek}. Dla celu niniejszej pracy opracowany został symulator stosujący automat komórkowy zmodyfikowany w celu umożliwienia symulacji zespołów skrzyżowań, dokładny opis automatu i jego modyfikacji znajduje się w rozdziale \ref{chap:symulacja} na stronie \pageref{chap:symulacja}.
