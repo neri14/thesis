@@ -31,7 +31,10 @@ Aby zapewnić że sytuacja tego typu jest możliwa należy zapewnić, że przyna
 \begin{equation}
 	\begin{array}{c}
 		U_i (n) = \left[ u_{i, j} (n) \right]_{j \in <1,s>}\\
-		i \in <1,o>
+		i \in <1,o>\\
+		u_{i, j} (n) \in \left\{ \textrm{CZERWONY, CZERWONO-ZOLTY, ZIELONY, ZOLTY} \right\}\\
+		o \in \mathbb{N}\\
+		s \in \mathbb{N}
 	\end{array}
 \end{equation}
 
@@ -44,13 +47,13 @@ s -- liczba sygnalizatorów w obszarze
 \begin{equation}
 	\begin{array}{c}
 		Z_i (n) = \left[ z_{i, j} (n) \right]_{j \in <1,r>}\\
-		i \in <1,o>
+		i \in <1,o>\\
+		z_{i, j} (n) \in \mathbb{N}\\
+		r \in \mathbb{N}
 	\end{array}
 \end{equation}
 
 z_{i,j} (n) \textrm{ -- przepływ pojazdów z kierunku j w i-tym obszarze w chwili n}
-
-o -- liczba obszarów sterowania
 
 r -- liczba wlotów do danego obszaru sterowania
 
@@ -58,10 +61,12 @@ r -- liczba wlotów do danego obszaru sterowania
 	\begin{array}{c}
 		X_i (n) = \left[
 			\begin{array}{c}
-				x_{i, j, 1} \\ x_{i, j, 2}
+				x_{i, j, 1} (n) \\ x_{i, j, 2} (n)
 			\end{array}
 		\right]_{j \in <1,s>}\\
-		i \in <1,o>
+		i \in <1,o>\\
+		x_{i, j, 1} (n) \in \mathbb{N}\\
+		x_{i, j, 2} (n) \in \mathbb{N}
 	\end{array}
 \end{equation}
 
@@ -69,9 +74,8 @@ x_{i, j, 1} (n) \textrm{ -- przepływ na dojeździe do j-tego sygnalizatora w i-
 
 x_{i, j, 2} (n) \textrm{ -- kolejka przed j-tym sygnalizatorem w i-tym obszarze}
 
-o -- liczba obszarów sterowania
-
-s -- liczba sygnalizatorów w obszarze
+\vspace{1.5cm}
+Przepływy pojazdów mierzone są w pojazdach na godzinę, stany kolejek mierzone są w postaci liczby pojazdów.
 
 \section{Wymagania sterowania ruchem drogowym}
 \label{sec:model_ograniczenia}
