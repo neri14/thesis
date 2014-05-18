@@ -70,6 +70,16 @@ void simple_algorithm::on_time_tick(int time_tick)
 			set_actuator_cb(o->get_name(), o->get_state());
 		}
 	}
+
+	{
+		common::my_logger_stream str = logger.debug();
+		str() << "current states are: ";
+
+		BOOST_FOREACH(alg_obj_type pair, objects) {
+			algorithm_object_handle o = pair.second;
+			str() << as_short_string(o->get_state()) << " ";
+		}
+	}
 }
 
 void simple_algorithm::parse_algorithm_data()

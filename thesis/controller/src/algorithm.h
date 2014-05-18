@@ -25,6 +25,8 @@ public:
 	virtual void on_time_tick(int time_tick) = 0;
 
 protected:
+	std::string as_short_string(EActuatorState state);
+
 	common::my_logger logger;
 	set_actuator_cb_type set_actuator_cb;
 	controlled_area_data area;

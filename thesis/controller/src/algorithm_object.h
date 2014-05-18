@@ -27,6 +27,9 @@ public:
 	void add_dependant(boost::weak_ptr<algorithm_object> obj);
 	void add_collision(boost::weak_ptr<algorithm_object> obj, int cooldown);
 
+	int get_current_state_timer();
+	bool is_during_state_change();
+
 private:
 	const std::vector<EActuatorState>& get_transition(EActuatorState from, EActuatorState to);
 

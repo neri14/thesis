@@ -7,6 +7,7 @@
 #include "event/payload/flow_sensor_state.h"
 #include "event/payload/queue_sensor_state.h"
 #include "event/payload/simulation_state_calculated.h"
+#include "event/payload/expected_flow_payload.h"
 
 namespace common {
 namespace dispatcher {
@@ -42,6 +43,9 @@ event_handle parse(proto_event_handle p_ev, int origin)
 			break;
 		case EEventType_SimulationStateCalculated:
 			ev->decode<simulation_state_calculated>(p_ev->payload());
+			break;
+		case EEventType_ExpectedFlow:
+			ev->decode<expected_flow_payload>(p_ev->payload());
 			break;
 	}
 

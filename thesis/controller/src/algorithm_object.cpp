@@ -77,6 +77,16 @@ void algorithm_object::notif_time_tick(int tick)
 	}
 }
 
+int algorithm_object::get_current_state_timer()
+{
+	return current_state_timer;
+}
+
+bool algorithm_object::is_during_state_change()
+{
+	return state_queue.size();
+}
+
 int algorithm_object::set_state(bool allow, int token)
 {
 	static int last_token = -1;

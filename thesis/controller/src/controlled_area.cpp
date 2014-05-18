@@ -83,35 +83,37 @@ bool controlled_area::parse_actuator(const boost::property_tree::ptree& pt)
 		} else if ("exits" == v.first) {
 			act.exits = v.second.get_value<int>();
 		} else if ("before" == v.first) {
+			detailed_data det;
 			BOOST_FOREACH(const ptree::value_type& v2, v.second) {
-				detailed_data det;
-				det.flow_sensor = v2.second.get_optional<std::string>("flow_sensor");
-				det.area = v2.second.get_optional<int>("area");
-				if (v2.second.get_child_optional("queue_sensors")) {
-					BOOST_FOREACH(const ptree::value_type& tree, v2.second.get_child("queue_sensors")) {
+				if (v2.first == "area") {
+					det.area = v2.second.get_value<int>();
+				} else if (v2.first == "flow_sensor") {
+					det.flow_sensor = v2.second.get_value<std::string>();
+				} else if (v2.first == "queue_sensors") {
+					BOOST_FOREACH(const ptree::value_type& tree, v2.second) {
 						if ("queue_sensor" == tree.first) {
 							det.queue_sensors.insert(tree.second.get_value<std::string>());
 						}
 					}
 				}
-
-				act.before.push_back(det);
 			}
+			act.before.push_back(det);
 		} else if ("after" == v.first) {
+			detailed_data det;
 			BOOST_FOREACH(const ptree::value_type& v2, v.second) {
-				detailed_data det;
-				det.flow_sensor = v2.second.get_optional<std::string>("flow_sensor");
-				det.area = v2.second.get_optional<int>("area");
-				if (v2.second.get_child_optional("queue_sensors")) {
-					BOOST_FOREACH(const ptree::value_type& tree, v2.second.get_child("queue_sensors")) {
+				if (v2.first == "area") {
+					det.area = v2.second.get_value<int>();
+				} else if (v2.first == "flow_sensor") {
+					det.flow_sensor = v2.second.get_value<std::string>();
+				} else if (v2.first == "queue_sensors") {
+					BOOST_FOREACH(const ptree::value_type& tree, v2.second) {
 						if ("queue_sensor" == tree.first) {
 							det.queue_sensors.insert(tree.second.get_value<std::string>());
 						}
 					}
 				}
-
-				act.after.push_back(det);
 			}
+			act.after.push_back(det);
 		}
 	}
 

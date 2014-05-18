@@ -1,6 +1,7 @@
 #include "algorithm.h"
 
 #include <boost/foreach.hpp>
+#include <boost/assign.hpp>
 
 namespace controller {
 
@@ -30,5 +31,16 @@ algorithm::algorithm(const std::string& name, set_actuator_cb_type cb, controlle
 
 algorithm::~algorithm()
 {}
+
+std::string algorithm::as_short_string(EActuatorState state)
+{
+	static std::map<EActuatorState, std::string> map = boost::assign::map_list_of
+		(EActuatorState_Off, " - ")(EActuatorState_Green, " G ")
+		(EActuatorState_Yellow, " Y ")(EActuatorState_Red, " R ")
+		(EActuatorState_RedYellow, "R-Y");
+
+	return map.find(state)->second;
+}
+
 
 } // namespace controller

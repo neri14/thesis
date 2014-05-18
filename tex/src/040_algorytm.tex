@@ -17,6 +17,8 @@ q \in <0.0, 1.0> \textrm{ -- wpływ aktualnego przepływu pojazdów na sterowani
 
 r \in <0.0, 1.0> \textrm{ -- wpływ aktualnych wielkości kolejek na sterowanie}
 
+t \in \mathbb{N} \textrm{ } t > 0 \textrm{ -- długość cyklu świetlnego}
+
 \vspace{1.5cm}
 \textbf{Stałe algorytmu}
 
@@ -104,7 +106,7 @@ Na końcu wybierany jest stan optymalny, o najwyższej funkcji oceny.
 \section{Uwzględnienie ograniczeń cyklów świetlnych}
 Podstawowym ograniczeniem, spośród wymienionych w rozdziale \label{sec:model_ograniczenia}, jakiego nie uwzględnia tak zdefiniowany algorytm jest ograniczenie faz cyklu świetlnego. Jak już zostało wspomniane  sygnały mogą być nadawane jedynie w zadanej sekwencji. Natomiast powyższy model podejmuje jedynie decyzję o wydaniu zgody na ruch.
 
-Za przestrzeganie tego jak i innych, czasowych, ograniczeń odpowiada dodatkowy komponent który przekazuje do obiektu sterowanego ostateczną decyzję. Zmiana sygnału powoduje utworzenie, przez ten komponent, sekwencji sygnałów które nastąpią w kolejnych chwilach czasu, dodatkowo uruchomienie sygnału zielonego jest odpowiednio opóźnione przez uwzględnienie czasów międzyzielonych. Również ograniczenia długości sygnałów żółtego i czerwono-żółtego są uwzględniane na tym etampie. Wspomniany komponent odpowiada również za wymuszenie uruchomienia sygnału czerwonego przynajmniej raz na cykl świetlny.
+Za przestrzeganie tego jak i innych, czasowych, ograniczeń odpowiada dodatkowy komponent który przekazuje do obiektu sterowanego ostateczną decyzję. Zmiana sygnału powoduje utworzenie, przez ten komponent, sekwencji sygnałów które nastąpią w kolejnych chwilach czasu, dodatkowo uruchomienie sygnału zielonego jest odpowiednio opóźnione przez uwzględnienie czasów międzyzielonych. Również ograniczenia długości sygnałów żółtego i czerwono-żółtego są uwzględniane na tym etampie. Wspomniany komponent odpowiada również za wymuszenie uruchomienia sygnału czerwonego, jak i zielonego, przynajmniej raz na cykl świetlny.
 
 \section{Metody oceny skuteczności algorytmu}
 Do oceny skuteczności algorytmu wykorzystać można określone na podstawie pracy Piotra Kawalca i Sylwii Sobieszuk-Durki \cite{kawalec+sobieszuk-durka} metody oceny. Są to:
