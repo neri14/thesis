@@ -1,135 +1,110 @@
-\chapter{Algorytm sterowania ruchem drogowym}
-Do wyznaczenia nowego stanu sygnalizatora używamy programowania dynamicznego przyjmując jako stan początkowy aktualny stan systemu sterowania. Ponieważ zakładamy, że zarówno zmienna stanu jak i sterowanie ma postać dyskretną, przygotowujemy tabele stanów które zawierają wszystkie możliwe stany dla, określonego parametrem, czasu w przód. Jako nowe sterowanie sygnalizatorów przyjmujemy takie które da najlepszy wynik.
+\section{Algorytm sterowania ruchem drogowym}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/kontroler.pdf}
+    \caption{Model sterowania kontrolera}
+    \label{fig:kontroler}
+\end{figure}
 
-\section{Programowanie dynamiczne}
-Na podstawie przykładów i zadań przygotowanych przez Katarzynę Jakowską-Suwalską \cite{jakowska-suwalska}.
-Programowanie dynamiczne polega na wieloetapowym rozwiązywaniu problemów decyzyjnych. Rozwiązaniem problemu programowania dynamicznego jest ciąg decyzji, który jest strategią optymalną, dla której funkcja oceny rozważanego problemu przyjmuje wartość ekstremalną.
+Jak widać na rysunku \ref{fig:model} i \ref{fig:kontroler}, kontroler, do wyznaczenia stanu sygnalizatorów wykorzystuje, stan obiektu sterowanego. Stan obiektu składa się z trzech zmiennych.
 
-Programowanie dynamiczne można zastosować do problemu którego stan końcowy zależy od stanów poprzedzających oraz opracowanej strategii. W przypadku sterowania ruchem drogowym wyznaczamy pewien przedział czasu dla którego chcemy wyznaczyć stan sygnalizacji. Chcemy również minimalizować funkcję celu (\ref{eq:f_celu}).
+\vspace{1.5cm}
+\textbf{Parametry algorytmu}
 
-W przypadku dyskretnego programowania dynamicznego wyznaczamy wszystkie możliwe stany na podstawie możliwych decyzji i wybieramy decyzje optymalne. Dla rozpatrywanego przykładu, zbiór możliwych decyzji składa się z prawidłowych stanów sygnalizatorów (takich które nie spowodują jednoczesnego zezwolenia ruchu strumieni kolizyjnych).
+p \in <0.0, 1.0> \textrm{ -- wpływ przewidywanego przepływu pojazdów na sterowanie}
 
-\subsection{Parametry modelu}
-b -- przepływ pojazdów po nadaniu sygnału zezwalającego na przejazd
+q \in <0.0, 1.0> \textrm{ -- wpływ aktualnego przepływu pojazdów na sterowanie}
 
-c -- długość cyklu świetlnego
+r \in <0.0, 1.0> \textrm{ -- wpływ aktualnych wielkości kolejek na sterowanie}
 
-p -- wpływ wielkości kolejek na sterowanie
+\vspace{1.5cm}
+\textbf{Stałe algorytmu}
 
-T -- długość odcinka czasu w przód na podstawie którego wyznaczamy stan sygnalizacji
+s \in \mathbb{N} \textrm{ -- liczba sygnalizatorów w kontrolowanym obszarze}
+
+m \in \mathbb{N} \textrm{ -- maksymalny możliwy do zmierzenia przepływ pojazdów}
 
 \begin{equation}
 	\begin{array}{c}
-		b \in \mathbb{N}\\
-		c \in \mathbb{N}\\
-		p \in <0.0, 1.0>\\
-		T \in \mathbb{N}
+		K = \left[ k_{i} \right]_{i \in <0,s>}\\
+		k_{i} \in \mathbb{N}
 	\end{array}
 \end{equation}
 
-\subsection{Model w przestrzeni stanu}
-Stan obiektu sterowania definiujemy jako:
+k_{i} \textrm{ -- maksymalna możliwa wielkość kolejki przed i-tym sygnalizatorem}
+
+\vspace{1.5cm}
+\textbf{Zmienne stanu}
 
 \begin{equation}
 	\begin{array}{c}
-		X^{(1)} (n) = [x^{(1)}_{i} (n)]_{i \in <1,s>}\\
+		X^{(1)} (n) = \left[ x^{(1)}_{i} (n) \right]_{i \in <0,s>}\\
 		x^{(1)}_{i} (n) \in \mathbb{N}
 	\end{array}
 \end{equation}
 
-x^{(1)}_{i} (n) \textrm{ -- wielkość kolejki przed i-tym sygnalizatorem w n-tej chwili czasu}
+x^{(1)}_{i} (n) \textrm{ -- przewidywany przyszły przepływ pojazdów w kierunku i-tego sygnalizatora}
 
-s -- liczba sygnalizatorów
+Przewidywany przepływ pojazdów jest wyznaczany na podstawie stanu sygnalizatorów sąsiadujacych kontrolerów.
 
 \begin{equation}
 	\begin{array}{c}
-		X^{(2)} (n) = [x^{(2)}_{i} (n)]_{i \in <1,s>}\\
+		X^{(2)} (n) = \left[ x^{(2)}_{i} (n) \right]_{i \in <0,s>}\\
 		x^{(2)}_{i} (n) \in \mathbb{N}
 	\end{array}
 \end{equation}
 
-x^{(2)}_{i} (n) \textrm{ -- czas trwania aktualnego sygnału na i-tym sygnalizatorze w n-tej chwili czasu}
-
-\vspace{1.5cm}
-Dany stan początkowy:
+x^{(2)}_{i} (n) \textrm{ -- przepływ pojazdów w kierunku i-tego sygnalizatora w chwili n}
 
 \begin{equation}
 	\begin{array}{c}
-		X^{(1)} (0) = K\\
-		X^{(2)} (0) = C
+		X^{(3)} (n) = \left[ x^{(3)}_{i} (n) \right]_{i \in <0,s>}\\
+		x^{(3)}_{i} (n) \in \mathbb{N}
 	\end{array}
 \end{equation}
 
-K -- wielkości kolejek w chwili czasu dla jakiej wyznaczamy stan sygnalizatorów
-
-C -- czas nadawania aktualnych sygnałów w chwili czasu dla jakiej wyznaczamy stan sygnalizatorów
+x^{(3)}_{i} (n) \textrm{ -- wielkość kolejki przed i-tym sygnalizatorem w chwili n}
 
 \vspace{1.5cm}
-Zakłócenia (przepływ pojazdów):
+\textbf{Algorytm}
+
+Proponowany jest poniższy algorytm wyznaczania nowego stanu sygnalizatorów.
+\begin{enumerate}
+	\item wyznaczenie wszystkich, zbiorów bezkolizyjnych stanów sygnalizatorów
+	\item wyliczenie wag sygnalizatorów
+	\item wyliczenie funkcji oceny jako sumy wag sygnalizatorów zezwalających na wjazd dla wyznaczonych wcześniej zbiorów
+	\item wyznaczenie optymalnego, o najwyższej wartości funkcji oceny, stanu
+\end{enumerate}
+
+\vspace{0.5cm}
+W pierwszym kroku algorytmu wyznaczane są wszystkie możliwe zbiory bezkolizyjnych stanów sygnalizatorów.
+Spośród tak wyznaczonych zbiorów możliwy jest późniejszy wybór takiego który będzie w danym momencie optymalny.
+
+\vspace{0.5cm}
+Kolejny krok pozwala wyznaczyć wagi zezwolnia na ruch przez każdy z sygnalizatorów.
 
 \begin{equation}
-	\begin{array}{c}
-		Z (n) = [z_{i} (n)]_{i \in <1,s>}\\
-		z_{i} (n) \in \mathbb{N}
-	\end{array}
+	w_{i} (n) = p \cdot \frac{x^{(1)}_{i} (n)}{m} + q \cdot \frac{x^{(2)}_{i} (n)}{m} + r \cdot \frac{x^{(3)}_{i} (n)}{k_{i}}
 \end{equation}
 
-z_{i} (n) \textrm{ -- przepływ pojazdów w kierunku i-tego sygnalizatora w chwili n}
+w_{i} (n) \textrm{ -- waga i-tego sygnalizatora w chwili n}
+
+\vspace{0.5cm}
+W następnym kroku, wyliczone wagi są sumowane aby wyznaczyć wartość funkcji oceny dla każdego, przygotowanego w pierwszym kroku, zbioru.
 
 \begin{equation}
-	Z (0) = P
+	Q (X(n), S') = \sum\limit_{i \in S'} w_{i}
 \end{equation}
 
-P -- wielkości przepływów w chwili czasu dla jakiej wyznaczamy stan sygnalizatorów
+S' \textrm{ -- wyznaczony zbiór sygnalizatorów}
 
-\vspace{1.5cm}
-Dla chwili czasu większej od zera przyjmujemy, że wielkość przepływu równa jest aktualnemu przepływowi jeśli strumień pojazdów nie jest sterowany przez sąsiedni kontroler. W przeciwnym wypadku wielkość przepływu równa jest przewidywanemu przepływowi udostępnianemu przez sąsiedni kontroler.
-
-\vspace{1.5cm}
-Wielkość wyjściowa (stany sygnalizatorów):
-\begin{equation}
-	\begin{array}{c}
-		U (n) = [u_{i} (n)]_{i \in <1,s>}\\
-		u_{i} \in {0, 1}
-	\end{array}
-\end{equation}
-
-u_{i} (n) \textrm{ -- stan i-tego sygnalizatora w chwili n, 1 - zezwolenie na wjazd, 0 - brak zezwolenia}
-
-\vspace{1.5cm}
-Równanie stanu:
-
-\begin{equation}
-	x^{(1)}_{i} (n+1) = x^{(1)}_{i} (n) + z_{i} (n) - u_{i} (n) \cdot b
-\end{equation}
-
-\begin{equation}
-	\begin{array}{c}
-		x^{(2)}_{i} (n+1) = 0 \textrm{ dla } u_{i} (n+1) \neq u_{i} (n)\\
-		x^{(2)}_{i} (n+1) = x^{(2)}_{i} (n) + 1 \textrm{ dla } u_{i} (n+1) = u_{i} (n)\\
-	\end{array}
-\end{equation}
-
-\vspace{1.5cm}
-Funkcja celu:
-
-\begin{equation}
-	\label{eq:f_celu}
-	g(X^{(1)} (n), X^{(2)} (n), U (n)) =
-		p \cdot \sum\limits_{i=1}^{s} \frac{x^{(1)}_{i} (n)}{l_{i}}
-		+ (1-p) \cdot \sum\limits_{i=1}^{s} \frac{(1-u_{i} (n)) \cdot x^{(2)}_{i} (n)}{c}
-\end{equation}
-
-l_{i} \textrm{ -- maksymalna mierzona wielkość kolejki przed i-tym sygnalizatorem}
+\vspace{0.5cm}
+Na końcu wybierany jest stan optymalny, o najwyższej funkcji oceny.
 
 \section{Uwzględnienie ograniczeń cyklów świetlnych}
-Podstawowym ograniczeniem, spośród wymienionych w rozdziale \label{sec:model_ograniczenia}, jakiego nie uwzględnia tak zdefiniowany problem programowania dynamicznego jest ograniczenie faz cyklu świetlnego. Jak już zostało wspomniane sygnały mogą być nadawane jedynie w sekwencji czerwony, czerwono-żółty, zielony, żółty, czerwony. Natomiast powyższy model podejmuje jedynie decyzję czy wydać zgodę na ruch czy nie.
+Podstawowym ograniczeniem, spośród wymienionych w rozdziale \label{sec:model_ograniczenia}, jakiego nie uwzględnia tak zdefiniowany algorytm jest ograniczenie faz cyklu świetlnego. Jak już zostało wspomniane  sygnały mogą być nadawane jedynie w zadanej sekwencji. Natomiast powyższy model podejmuje jedynie decyzję o wydaniu zgody na ruch.
 
-Za przestrzeganie tego jak i innych, czasowych, ograniczeń odpowiada komponent który przekazuje do obiektu sterowanego ostateczną decyzję.
-
-Zmiana sygnału powoduje utworzenie sekwencji sygnałów które nastąpią w kolejnych chwilach czasu, dodatkowo uruchomienie sygnału zielonego jest odpowiednio opóźnione przez uwzględnienie czasów międzyzielonych. Długości sygnałów żółtego i czerwono-żółtego są wprowadzane razem ze wspomnianą sekwencją. Również minimalna długość sygnału zielonego jest w ten sposób przedstawiana.
-
-Kolejnym elementem pracy wspomnianego komponentu jest wymuszenie uruchomienia sygnału czerwonego przynajmniej raz na cykl świetlny.
+Za przestrzeganie tego jak i innych, czasowych, ograniczeń odpowiada dodatkowy komponent który przekazuje do obiektu sterowanego ostateczną decyzję. Zmiana sygnału powoduje utworzenie, przez ten komponent, sekwencji sygnałów które nastąpią w kolejnych chwilach czasu, dodatkowo uruchomienie sygnału zielonego jest odpowiednio opóźnione przez uwzględnienie czasów międzyzielonych. Również ograniczenia długości sygnałów żółtego i czerwono-żółtego są uwzględniane na tym etampie. Wspomniany komponent odpowiada również za wymuszenie uruchomienia sygnału czerwonego przynajmniej raz na cykl świetlny.
 
 \section{Metody oceny skuteczności algorytmu}
 Do oceny skuteczności algorytmu wykorzystać można określone na podstawie pracy Piotra Kawalca i Sylwii Sobieszuk-Durki \cite{kawalec+sobieszuk-durka} metody oceny. Są to:
