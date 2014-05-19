@@ -5,6 +5,7 @@
 			<name>KLINIKI_SIG_N_1</name>
 			<exits>2</exits>
 			<before>
+				<area>103</area>
 				<flow_sensor>KLINIKI_FLOW_N_1</flow_sensor>
 				<queue_sensors>
 					<queue_sensor>KLINIKI_QUEUE_N_1</queue_sensor>
@@ -18,6 +19,7 @@
 			<name>KLINIKI_SIG_N_2</name>
 			<exits>1</exits>
 			<before>
+				<area>103</area>
 				<flow_sensor>KLINIKI_FLOW_N_1</flow_sensor>
 				<queue_sensors>
 					<queue_sensor>KLINIKI_QUEUE_N_2</queue_sensor>
@@ -28,6 +30,7 @@
 			<name>KLINIKI_SIG_W_1</name>
 			<exits>2</exits>
 			<before>
+				<area>108</area>
 				<flow_sensor>KLINIKI_FLOW_W_1</flow_sensor>
 				<queue_sensors>
 					<queue_sensor>KLINIKI_QUEUE_W_1</queue_sensor>
@@ -38,6 +41,7 @@
 			<name>KLINIKI_SIG_W_2</name>
 			<exits>1</exits>
 			<before>
+				<area>108</area>
 				<flow_sensor>KLINIKI_FLOW_W_2</flow_sensor>
 				<queue_sensors>
 					<queue_sensor>KLINIKI_QUEUE_W_2</queue_sensor>

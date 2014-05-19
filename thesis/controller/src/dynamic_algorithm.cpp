@@ -83,8 +83,8 @@ void dynamic_algorithm::dispatch_expected_flow_events(int tick)
 				EActuatorState_Green == objects[pair.first]->get_state()) {
 			int exp_flow = max_flow / area.actuators[pair.first].exits;
 
-			BOOST_FOREACH(int area, pair.second) {
-				area_flow_map[area] += exp_flow;
+			BOOST_FOREACH(int ar, pair.second) {
+				area_flow_map[ar] += exp_flow;
 			}
 		}
 	}
@@ -132,7 +132,7 @@ void dynamic_algorithm::on_expected_flow_update(common::dispatcher::event_handle
 	typedef std::pair<std::string, actuator_data> str_actuator_pair;
 	BOOST_FOREACH(str_actuator_pair act, area.actuators) {
 		BOOST_FOREACH (detailed_data before, act.second.before) {
-			if (before.area) {
+			if (before.area && before.area.get() == payload.origin_area) {
 				expected_flow[act.first] = 0;
 				act_names.insert(act.first);
 			}

@@ -5,6 +5,7 @@
 			<name>NORWIDA_SIG_W_1</name>
 			<exits>1</exits>
 			<before>
+				<area>107</area>
 				<flow_sensor>NORWIDA_FLOW_W_1</flow_sensor>
 				<queue_sensors>
 					<queue_sensor>NORWIDA_QUEUE_W_1</queue_sensor>
@@ -18,6 +19,7 @@
 			<name>NORWIDA_SIG_W_2</name>
 			<exits>1</exits>
 			<before>
+				<area>107</area>
 				<flow_sensor>NORWIDA_FLOW_W_1</flow_sensor>
 				<queue_sensors>
 					<queue_sensor>NORWIDA_QUEUE_W_2</queue_sensor>
@@ -28,6 +30,7 @@
 			<name>NORWIDA_SIG_W_3</name>
 			<exits>1</exits>
 			<before>
+				<area>107</area>
 				<flow_sensor>NORWIDA_FLOW_W_2</flow_sensor>
 				<queue_sensors>
 					<queue_sensor>NORWIDA_QUEUE_W_3</queue_sensor>
@@ -77,6 +80,7 @@
 			<name>NORWIDA_SIG_S_1</name>
 			<exits>1</exits>
 			<before>
+				<area>102</area>
 				<flow_sensor>NORWIDA_FLOW_S_1</flow_sensor>
 				<queue_sensors>
 					<queue_sensor>NORWIDA_QUEUE_S_1</queue_sensor>

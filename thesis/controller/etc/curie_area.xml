@@ -19,7 +19,7 @@
 			<name>CURIE_SIG_2</name>
 			<exits>1</exits>
 			<before>
-				<area>101</area>
+				<area>106</area>
 				<flow_sensor>CURIE_FLOW_2</flow_sensor>
 				<queue_sensors>
 					<queue_sensor>CURIE_QUEUE_2</queue_sensor>

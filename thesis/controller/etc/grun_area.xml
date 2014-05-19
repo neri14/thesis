@@ -67,6 +67,7 @@
 			<name>GRUN_SIG_S_1</name>
 			<exits>2</exits>
 			<before>
+				<area>107</area>
 				<flow_sensor>GRUN_FLOW_S_1</flow_sensor>
 				<queue_sensors>
 					<queue_sensor>GRUN_QUEUE_S_1</queue_sensor>
@@ -77,6 +78,7 @@
 			<name>GRUN_SIG_S_2</name>
 			<exits>1</exits>
 			<before>
+				<area>107</area>
 				<flow_sensor>GRUN_FLOW_S_1</flow_sensor>
 				<queue_sensors>
 					<queue_sensor>GRUN_QUEUE_S_2</queue_sensor>
