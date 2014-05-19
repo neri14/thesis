@@ -25,6 +25,8 @@ private:
 	void prepare_possible_states();
 	void create_possible_states(std::set<std::string> state, std::string actuator);
 
+	void dispatch_expected_flow_events(int tick);
+
 	int max_flow;
 	int cycle_time;
 	double expected_flow_factor;

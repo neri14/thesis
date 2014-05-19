@@ -60,6 +60,47 @@ void dynamic_algorithm::on_queue_sensor_update(const std::string& name, int time
 	}
 }
 
+void dynamic_algorithm::dispatch_expected_flow_events(int tick)
+{
+	std::map<std::string, std::set<int> > after_areas;
+	std::map<int, int> area_flow_map;
+
+	typedef std::pair<std::string, actuator_data> str_actuator_pair;
+	BOOST_FOREACH(str_actuator_pair act, area.actuators) {
+		after_areas[act.first] = std::set<int>();
+
+		BOOST_FOREACH (detailed_data dd, act.second.after) {
+			if (dd.area) {
+				after_areas[act.first].insert(dd.area.get());
+				area_flow_map[dd.area.get()] = 0;
+			}
+		}
+	}
+
+	typedef std::pair<std::string, std::set<int> > str_intset_pair;
+	BOOST_FOREACH(str_intset_pair pair, after_areas) {
+		if (!pair.second.empty() &&
+				EActuatorState_Green == objects[pair.first]->get_state()) {
+			int exp_flow = max_flow / area.actuators[pair.first].exits;
+
+			BOOST_FOREACH(int area, pair.second) {
+				area_flow_map[area] += exp_flow;
+			}
+		}
+	}
+
+	typedef std::pair<int, int> int_int_pair;
+	BOOST_FOREACH(int_int_pair pair, area_flow_map) {
+		EEventScope sc = static_cast<EEventScope>(pair.first);
+
+		logger.debug()() << "expected flow to area " << pair.first << " is " << pair.second;
+		common::dispatcher::payload_handle payload(
+			new common::dispatcher::expected_flow_payload(area.scope, pair.second, tick));
+		common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(
+			new common::dispatcher::event(EEventType_ExpectedFlow, sc, payload)));
+	}
+}
+
 void dynamic_algorithm::on_flow_sensor_update(const std::string& name, int time_tick, int flow)
 {
 	std::set<std::string> actuators;
@@ -158,6 +199,8 @@ void dynamic_algorithm::on_time_tick(int time_tick)
 			str() << as_short_string(o->get_state()) << " ";
 		}
 	}
+
+	dispatch_expected_flow_events(time_tick);
 }
 
 std::set<std::string> dynamic_algorithm::calculate_new_states()
