@@ -1,5 +1,7 @@
 #include "flow_sensor.h"
 
+#include <csv_writer.h>
+
 #include <config/config.h>
 #include <dispatcher/event/payload/flow_sensor_state.h>
 #include <dispatcher/event/payload/time_tick_payload.h>
@@ -19,6 +21,8 @@ flow_sensor::flow_sensor(std::string area_name_, EEventScope area_scope_,
 	time_tick_listener = common::dispatcher::get_dispatcher().register_listener(
 		EEventType_TimeTick, EEventScope_General,
 		boost::bind(&flow_sensor::on_time_tick, this, _1));
+
+	common::get_csv_writer().add_key(sensor_name);
 }
 
 flow_sensor::~flow_sensor()
@@ -47,6 +51,7 @@ void flow_sensor::on_time_tick(common::dispatcher::event_handle ev)
 	int passed = new_counter>=old_counter ? new_counter-old_counter : 0;
 	double flow = counter_history_limit>0 ? (3600.0*passed)/counter_history_limit : 0;
 
+	common::get_csv_writer().add_value(time_tick, sensor_name, flow);
 	logger.info()() << passed << " vehicles passed in last " << counter_history_limit <<
 		"s - current flow: " << flow << " vehicles per hour";
 

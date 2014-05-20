@@ -25,7 +25,7 @@ vehicle_handle creator::create(int time_tick)
 		int interval = get_interval(p->get_flow(time_tick));
 		int offset = p->get_offset();
 		if (interval && time_tick && time_tick % interval == offset) {
-			vehicles.push(vehicle_handle(new vehicle(p->get_cells(), max_vehicle_speed)));
+			vehicles.push(vehicle_handle(new vehicle(p->get_name(), p->get_cells(), max_vehicle_speed, time_tick)));
 		}
 	}
 

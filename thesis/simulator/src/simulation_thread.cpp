@@ -1,11 +1,14 @@
 #include "simulation_thread.h"
 
+#include <csv_writer.h>
+
 #include <dispatcher/event/payload/simulation_state_calculated.h>
 #include <dispatcher/event/payload/time_tick_payload.h>
 
 namespace simulator {
 namespace constant {
 const int wait_interval(10);
+const std::string time_tick_key("time_tick");
 }
 
 simulation_thread::simulation_thread(int duration_) :
@@ -14,7 +17,9 @@ simulation_thread::simulation_thread(int duration_) :
 	duration(duration_),
 	time_tick(0),
 	last_received_tick_calculated(-1)
-{}
+{
+	common::get_csv_writer().add_key(constant::time_tick_key);
+}
 
 simulation_thread::~simulation_thread()
 {
@@ -32,6 +37,8 @@ void simulation_thread::run_impl()
 {
 	while(keep_alive && time_tick < duration) {
 		logger.info()() << "time tick " << time_tick;
+		common::get_csv_writer().add_value(time_tick, constant::time_tick_key, time_tick);
+
 		common::dispatcher::payload_handle payload(
 			new common::dispatcher::time_tick_payload(time_tick));
 		common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(

@@ -1,5 +1,7 @@
 #include "simulation.h"
 
+#include <csv_writer.h>
+
 #include "../world/world_description.h"
 #include "../world/world_description_parser.h"
 #include "../world/world_description_validator.h"
@@ -22,6 +24,8 @@ namespace simulation {
 namespace constant {
 	int safety_cell_count_limit(10000);
 	int safety_multiplier(1);
+	std::string csv_key("average_speed_m_s");
+	std::string csv_key2("vehicle_count");
 }
 
 simulation::simulation(const std::string& desc_filename_) :
@@ -31,7 +35,10 @@ simulation::simulation(const std::string& desc_filename_) :
 	max_speed(0),
 	pending_time_tick(-1),
 	last_calculated_tick(-1)
-{}
+{
+	common::get_csv_writer().add_key(constant::csv_key);
+	common::get_csv_writer().add_key(constant::csv_key2);
+}
 
 simulation::~simulation()
 {
@@ -208,6 +215,7 @@ void simulation::run_destroyers(int time_tick)
 			std::set<vehicle_handle> vehicles_to_destroy;
 			BOOST_FOREACH(vehicle_handle veh, vehicles) {
 				if (veh->get_path().front().cell_h == cell_dest.first) {
+					veh->set_stop_tick(time_tick);
 					vehicles_to_destroy.insert(veh);
 				}
 			}
@@ -263,6 +271,9 @@ void simulation::calculate_new_vehicles_state()
 	}
 	int veh_cnt = vehicles.size();
 	avg = veh_cnt ? avg/veh_cnt : 0;
+
+	common::get_csv_writer().add_value(pending_time_tick, constant::csv_key, (int)(avg*7.5));
+	common::get_csv_writer().add_value(pending_time_tick, constant::csv_key2, veh_cnt);
 	logger.info()() << "average speed of " << veh_cnt << " vehicles is " << avg << " (number of cells " << cells_size << ")";
 }
 

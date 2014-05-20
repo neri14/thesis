@@ -1,5 +1,7 @@
 #include "queue_sensor.h"
 
+#include <csv_writer.h>
+
 #include <dispatcher/event/payload/queue_sensor_state.h>
 #include <dispatcher/event/payload/time_tick_payload.h>
 
@@ -29,6 +31,8 @@ queue_sensor::queue_sensor(std::string area_name_, EEventScope area_scope_,
 		EEventType_TimeTick, EEventScope_General,
 		boost::bind(&queue_sensor::on_time_tick, this, _1));
 	logger.debug()() << "created sensor exit_n " << exit_n << " entrance_n " << entrance_n;
+
+	common::get_csv_writer().add_key(sensor_name);
 }
 
 queue_sensor::~queue_sensor()
@@ -49,6 +53,7 @@ void queue_sensor::on_time_tick(common::dispatcher::event_handle ev)
 
 	int queue = count_occupied_cells();
 
+	common::get_csv_writer().add_value(time_tick, sensor_name, queue);
 	logger.info()() << "current queue " << queue << " / " << max_queue;
 	common::dispatcher::payload_handle payload(
 		new common::dispatcher::queue_sensor_state(sensor_name, queue, max_queue, time_tick));

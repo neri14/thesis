@@ -1,5 +1,7 @@
 #include "actuator.h"
 
+#include <csv_writer.h>
+
 #include <dispatcher/event/payload/actuator_finished_payload.h>
 #include <dispatcher/event/payload/time_tick_payload.h>
 
@@ -24,6 +26,8 @@ actuator::actuator(std::string area_name_,
 	time_tick_listener = common::dispatcher::get_dispatcher().register_listener(
 		EEventType_TimeTick, EEventScope_General,
 		boost::bind(&actuator::on_time_tick, this, _1));
+
+	common::get_csv_writer().add_key(actuator_name);
 }
 
 actuator::~actuator()
@@ -62,6 +66,8 @@ void actuator::on_time_tick(common::dispatcher::event_handle ev)
 		controlled_cell->set_exit_state(controlled_exit, pending_state.get());
 		pending_state = boost::none;
 	}
+
+	common::get_csv_writer().add_value(time_tick, actuator_name, controlled_cell->get_exit_state(controlled_exit));
 
 	logger.debug()() << "actuator finished";
 	common::dispatcher::payload_handle payload(
