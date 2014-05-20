@@ -12,7 +12,7 @@ namespace simulation {
 class creator
 {
 public:
-	creator(cell_handle cell_, int max_create_rate_, int max_vehicle_speed_);
+	creator(const std::string& name, cell_handle cell_, int max_create_rate_, int max_vehicle_speed_);
 	virtual ~creator();
 
 	vehicle_handle create(int time_tick);

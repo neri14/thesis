@@ -23,7 +23,7 @@ namespace simulation {
 
 namespace constant {
 	int safety_cell_count_limit(10000);
-	int safety_multiplier(1);
+	int safety_multiplier(3);
 	std::string csv_key("average_speed_m_s");
 	std::string csv_key2("vehicle_count");
 }
@@ -383,7 +383,7 @@ bool simulation::translate_nodes(world::world_description_handle desc)
 		cell_handle c(new cell(node.second->priority_entrance));
 
 		if (node.second->max_create_rate) {
-			creator_handle tmp(new creator(c, node.second->max_create_rate, desc->simulation->max_speed));
+			creator_handle tmp(new creator(node.first, c, node.second->max_create_rate, desc->simulation->max_speed));
 			creators.insert(std::make_pair(c, tmp));
 		}
 		if (node.second->max_destroy_rate) {
