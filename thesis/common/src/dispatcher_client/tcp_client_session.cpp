@@ -73,6 +73,7 @@ void tcp_client_session::start()
 
 void tcp_client_session::read_header()
 {
+	logger.debug()() << "client waiting for header";
 	boost::asio::async_read(socket, boost::asio::buffer(in_buffer, constant::header_size),
 		boost::bind(&tcp_client_session::read_message, this,
 			boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
@@ -81,6 +82,7 @@ void tcp_client_session::read_header()
 void tcp_client_session::read_message(const boost::system::error_code& error,
 	size_t bytes_transferred)
 {
+	logger.debug()() << "client received header";
 	if (!error) {
 		int size = 0;
 		try {
@@ -89,6 +91,7 @@ void tcp_client_session::read_message(const boost::system::error_code& error,
 			logger.error()() << "can't parse message header, killing connection";
 			session_exit_cb();
 		}
+		logger.debug()() << "client waiting for message";
 		boost::asio::async_read(socket, boost::asio::buffer(in_buffer, size),
 			boost::bind(&tcp_client_session::handle_read, this,
 				boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
@@ -101,6 +104,7 @@ void tcp_client_session::read_message(const boost::system::error_code& error,
 void tcp_client_session::handle_read(const boost::system::error_code& error,
 	size_t bytes_transferred)
 {
+	logger.debug()() << "client received message";
 	if (!error) {
 		parse_message(std::string(in_buffer, bytes_transferred));
 		read_header();
@@ -123,7 +127,9 @@ void tcp_client_session::parse_message(std::string str)
 
 void tcp_client_session::add_event(common::dispatcher::event_handle e)
 {
+	//logger.debug()() << "waiting for mtx_events";
 	boost::mutex::scoped_lock lock(mtx_events);
+	//logger.debug()() << "stop waiting for mtx_events";
 
 	if (EEventScope_Local != e->get_scope() && e->get_origin() != id) {
 		events.insert(e);
@@ -132,7 +138,9 @@ void tcp_client_session::add_event(common::dispatcher::event_handle e)
 
 void tcp_client_session::register_listener(EEventType type, EEventScope scope)
 {
+	//logger.debug()() << "waiting for mtx_listeners";
 	boost::mutex::scoped_lock lock(mtx_listeners);
+	//logger.debug()() << "stop waiting for mtx_listeners";
 	listeners.insert(std::make_pair(type, scope));
 }
 
@@ -143,7 +151,9 @@ void tcp_client_session::dispatch()
 
 void tcp_client_session::dispatch_impl()
 {
+	//logger.debug()() << "waiting for mtx_events";
 	boost::mutex::scoped_lock lock(mtx_events);
+	//logger.debug()() << "stop waiting for mtx_events";
 	if (events.empty()) {
 		lock.unlock();
 		dispatch_listeners();
@@ -168,9 +178,12 @@ void tcp_client_session::dispatch_impl()
 
 void tcp_client_session::dispatch_listeners()
 {
+	//logger.debug()() << "waiting for mtx_listeners";
 	boost::mutex::scoped_lock lock(mtx_listeners);
+	//logger.debug()() << "stop waiting for mtx_listeners";
 
 	if (listeners.empty()) {
+		lock.unlock();
 		distributor.session_finished();
 		return;
 	}

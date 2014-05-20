@@ -134,6 +134,7 @@ void tcp_server_session::dispatch_impl()
 		distributor.session_finished();
 		return;
 	}
+	logger.debug()() << "preparing event";
 
 	common::dispatcher::event_handle ev = *(events.begin());
 	events.erase(events.begin());
@@ -143,6 +144,7 @@ void tcp_server_session::dispatch_impl()
 	std::string str;
 	if (common::net::encode(proto, str)) {
 		memcpy(out_buffer, str.c_str(), str.length());
+		logger.debug()() << "writing event";
 		boost::asio::async_write(socket, boost::asio::buffer(out_buffer, str.length()),
 			boost::bind(&tcp_server_session::handle_write, this, boost::asio::placeholders::error));
 	} else {

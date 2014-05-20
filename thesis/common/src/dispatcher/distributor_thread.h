@@ -33,6 +33,8 @@ protected:
 	void stop_impl();
 
 	bool keep_alive;
+
+	boost::mutex dispatched_mtx;
 	int dispatched_count;
 
 	boost::mutex sessions_mtx;

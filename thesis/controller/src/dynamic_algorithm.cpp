@@ -29,16 +29,17 @@ dynamic_algorithm::~dynamic_algorithm()
 
 void dynamic_algorithm::on_queue_sensor_update(const std::string& name, int time_tick, int queue, int max_queue_)
 {
+	//logger.debug()() << "on_queue_sensor_update enter";
 	static int last_tick = 0;
 	if (last_tick < time_tick) {
 		last_tick = time_tick;
 
 		typedef std::pair<std::string, int> str_int_pair;
 		BOOST_FOREACH(str_int_pair pair, current_queue) {
-			pair.second = 0;
+			current_queue[pair.first] = 0;
 		}
 		BOOST_FOREACH(str_int_pair pair, max_queue) {
-			pair.second = 0;
+			max_queue[pair.first] = 0;
 		}
 	}
 
@@ -56,12 +57,14 @@ void dynamic_algorithm::on_queue_sensor_update(const std::string& name, int time
 	BOOST_FOREACH(std::string act, actuators) {
 		current_queue[act] += queue;
 		max_queue[act] += max_queue_;
-		logger.debug()() << "actutator " << act << " queue is " << current_queue[act];
+		logger.debug()() << "actutator " << act << " queue is " << current_queue[act] << " after adding " << queue;
 	}
+	//logger.debug()() << "on_queue_sensor_update leave";
 }
 
 void dynamic_algorithm::dispatch_expected_flow_events(int tick)
 {
+	//logger.debug()() << "dispatch_expected_flow_events enter";
 	std::map<std::string, std::set<int> > after_areas;
 	std::map<int, int> area_flow_map;
 
@@ -99,10 +102,12 @@ void dynamic_algorithm::dispatch_expected_flow_events(int tick)
 		common::dispatcher::get_dispatcher().dispatch(common::dispatcher::event_handle(
 			new common::dispatcher::event(EEventType_ExpectedFlow, sc, payload)));
 	}
+	//logger.debug()() << "dispatch_expected_flow_events leave";
 }
 
 void dynamic_algorithm::on_flow_sensor_update(const std::string& name, int time_tick, int flow)
 {
+	//logger.debug()() << "on_flow_sensor_update enter";
 	std::set<std::string> actuators;
 
 	typedef std::pair<std::string, actuator_data> str_actuator_pair;
@@ -117,10 +122,12 @@ void dynamic_algorithm::on_flow_sensor_update(const std::string& name, int time_
 	BOOST_FOREACH(std::string act, actuators) {
 		current_flow[act] = flow;
 	}
+	//logger.debug()() << "on_flow_sensor_update leave";
 }
 
 void dynamic_algorithm::on_expected_flow_update(common::dispatcher::event_handle ev)
 {
+	//logger.debug()() << "on_expected_flow_update enter";
 	BOOST_ASSERT(EEventType_ExpectedFlow == ev->get_type());
 	BOOST_ASSERT(static_cast<EEventScope>(area.scope) == ev->get_scope());
 	common::dispatcher::expected_flow_payload& payload =
@@ -144,10 +151,12 @@ void dynamic_algorithm::on_expected_flow_update(common::dispatcher::event_handle
 		logger.debug()() << "expected flow to actuator " << str << " is " << flow;
 		expected_flow[str] = flow;
 	}
+	//logger.debug()() << "on_expected_flow_update leave";
 }
 
 void dynamic_algorithm::on_time_tick(int time_tick)
 {
+	//logger.debug()() << "on_time_tick enter";
 	static int token = 0;
 
 	bool during_state_change = false;
@@ -201,10 +210,12 @@ void dynamic_algorithm::on_time_tick(int time_tick)
 	}
 
 	dispatch_expected_flow_events(time_tick);
+	//logger.debug()() << "on_time_tick leave";
 }
 
 std::set<std::string> dynamic_algorithm::calculate_new_states()
 {
+	//logger.debug()() << "calculate_new_states enter";
 	//1. calculate weight of every actuator
 	std::map<std::string, double> weight_map;
 
@@ -258,11 +269,13 @@ std::set<std::string> dynamic_algorithm::calculate_new_states()
 
 	//3. choose heighest weight state and return
 	logger.debug()() << "heighest weight " << hi_weight << " with " << hi_weight_set.size() << " actuators";
+	//logger.debug()() << "calculate_new_states leave";
 	return hi_weight_set;
 }
 
 double dynamic_algorithm::calculate_weight(std::set<std::string> state_set, std::map<std::string, double> weight_map)
 {
+	//logger.debug()() << "calculate_weight enter";
 	double weight = 0;
 
 	BOOST_FOREACH(std::string state, state_set) {
@@ -271,21 +284,25 @@ double dynamic_algorithm::calculate_weight(std::set<std::string> state_set, std:
 		}
 	}
 
+	//logger.debug()() << "calculate_weight leave";
 	return weight;
 }
 
 std::string dynamic_algorithm::as_string(EActuatorState state)
 {
+	//logger.debug()() << "as_string enter";
 	static std::map<EActuatorState, std::string> map = boost::assign::map_list_of
 		(EActuatorState_Off, "OFF")(EActuatorState_Green, "GREEN")
 		(EActuatorState_Yellow, "YELLOW")(EActuatorState_Red, "RED")
 		(EActuatorState_RedYellow, "RED-YELLOW");
 
+	//logger.debug()() << "as_string leave";
 	return map.find(state)->second;
 }
 
 void dynamic_algorithm::prepare_possible_states()
 {
+	//logger.debug()() << "prepare_possible_states enter";
 	std::set<std::string> state;
 	possible_states.insert(state);
 
@@ -295,17 +312,21 @@ void dynamic_algorithm::prepare_possible_states()
 	}
 
 	logger.info()() << "prepared " << possible_states.size() << " possible states";
+	//logger.debug()() << "prepare_possible_states leave";
 }
 
 void dynamic_algorithm::create_possible_states(std::set<std::string> state, std::string actuator)
 {
+	//logger.debug()() << "create_possible_states enter";
 	if (state.find(actuator) != state.end()) {
+	//	logger.debug()() << "create_possible_states leave";
 		return;
 	}
 
 	typedef std::pair<std::string, int> str_int_pair;
 	BOOST_FOREACH(str_int_pair collision, area.actuators[actuator].collides) {
 		if (state.find(collision.first) != state.end()) {
+	//		logger.debug()() << "create_possible_states leave";
 			return;
 		}
 	}
@@ -328,6 +349,7 @@ void dynamic_algorithm::create_possible_states(std::set<std::string> state, std:
 	BOOST_FOREACH(str_actuator_data_pair act, area.actuators) {
 		create_possible_states(state, act.first);
 	}
+	//logger.debug()() << "create_possible_states leave";
 }
 
 }
