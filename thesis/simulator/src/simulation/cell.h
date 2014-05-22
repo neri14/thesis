@@ -42,10 +42,10 @@ public:
 	virtual boost::weak_ptr<cell> get_next(int ex);
 
 	virtual bool is_occupied();
-	virtual void set_occupied(bool occupied_);
+	virtual void set_occupied(bool occupied_, int speed=0);
 
 	virtual int get_priority_entrance_number() const;
-	virtual bool prev_vehicle_moving(int margin, const cell* next_cell);
+	virtual bool prev_vehicle_moving(int margin, const cell* next_cell, int gap=0);
 
 	virtual void enable_destroyer_hack();
 	virtual bool get_entrances_count() const;
@@ -56,6 +56,7 @@ private:
 	int priority_entrance_number;
 	int vehicle_counter;
 
+	int vehicle_speed;
 	bool occupied;
 	bool destroyer_hack_enabled;
 

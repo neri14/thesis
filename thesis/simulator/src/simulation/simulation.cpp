@@ -23,7 +23,7 @@ namespace simulation {
 
 namespace constant {
 	int safety_cell_count_limit(10000);
-	int safety_multiplier(3);
+	int safety_multiplier_sim(3);
 	std::string csv_key("average_speed_m_s");
 	std::string csv_key2("vehicle_count");
 }
@@ -175,7 +175,7 @@ void simulation::run_creators(int time_tick)
 	BOOST_FOREACH(cell_creator_pair pair, creators) {
 		vehicle_handle v = pair.second->create(pending_time_tick);
 		if (v) {
-			pair.first->set_occupied(true);
+			pair.first->set_occupied(true, v->get_speed());
 			vehicles.insert(v);
 			++count;
 		}
@@ -267,7 +267,7 @@ void simulation::calculate_new_vehicles_state()
 			p_cells.front().cell_h->increment_vehicle_counter();
 			p_cells.pop();
 		}
-		p_cells.front().cell_h->set_occupied(true);
+		p_cells.front().cell_h->set_occupied(true, speed);
 	}
 	int veh_cnt = vehicles.size();
 	avg = veh_cnt ? avg/veh_cnt : 0;
@@ -330,7 +330,7 @@ bool simulation::can_enter_multientrance(std::queue<path_cell> p_cells)
 
 bool simulation::can_non_priority_enter(cell_handle cell_h)
 {
-	static int safety_margin = max_speed*constant::safety_multiplier;
+	static int safety_margin = max_speed*constant::safety_multiplier_sim;
 	cell_handle prev = cell_h->get_prev(cell_h->get_priority_entrance_number()).lock();
 
 	if (prev->is_occupied()) {

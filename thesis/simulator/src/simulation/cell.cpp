@@ -6,11 +6,14 @@ namespace constant {
 std::map<EExitState, bool> exit_allowed = boost::assign::map_list_of
 	(EExitState_Off, true) (EExitState_Red, false) (EExitState_RedYellow, true)
 	(EExitState_Green, true) (EExitState_Yellow, false);
+
+	int safety_multiplier_cell(3);
 } // namespace constant
 
 cell::cell(int priority_entrance) :
 	priority_entrance_number(priority_entrance),
 	vehicle_counter(0),
+	vehicle_speed(0),
 	occupied(false),
 	destroyer_hack_enabled(false),
 	logger("cell")
@@ -118,9 +121,10 @@ bool cell::is_occupied()
 	}
 }
 
-void cell::set_occupied(bool occupied_)
+void cell::set_occupied(bool occupied_, int speed)
 {
 	occupied = occupied_;
+	vehicle_speed = speed;
 }
 
 int cell::get_priority_entrance_number() const
@@ -128,7 +132,7 @@ int cell::get_priority_entrance_number() const
 	return priority_entrance_number;
 }
 
-bool cell::prev_vehicle_moving(int margin, const cell* next_cell)
+bool cell::prev_vehicle_moving(int margin, const cell* next_cell, int gap)
 {
 	if (!margin) {
 		return false;
@@ -139,9 +143,17 @@ bool cell::prev_vehicle_moving(int margin, const cell* next_cell)
 		return false;
 	}
 
-	bool result = occupied;
+	if (occupied) {
+		if (vehicle_speed * constant::safety_multiplier_cell >= gap) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	bool result = false;
 	for (int i=0; i<prev.size() && !result; ++i) {
-		result = prev.find(i)->second.lock()->prev_vehicle_moving(margin-1, this);
+		result = prev.find(i)->second.lock()->prev_vehicle_moving(margin-1, this, gap+1);
 	}
 	return result;
 }
