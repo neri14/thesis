@@ -44,7 +44,9 @@ private:
 	void run_destroyers(int time_tick);
 	void calculate_new_vehicles_state();
 	int calculate_gap(vehicle_handle veh, std::queue<path_cell> p_cells);
-	bool can_non_priority_enter(int safety_margin, cell_handle cell_h);
+
+	bool can_enter_multientrance(std::queue<path_cell> p_cells);
+	bool can_non_priority_enter(cell_handle cell_h);
 
 	bool translate_to_cell_representation(world::world_description_handle desc);
 

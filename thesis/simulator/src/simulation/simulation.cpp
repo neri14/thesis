@@ -285,46 +285,52 @@ int simulation::calculate_gap(vehicle_handle veh, std::queue<path_cell> p_cells)
 	}
 
 	int gap = 0;
-	bool is_on_multi_entrance_cell = p_cells.front().cell_h->get_entrances_count();
 	p_cells.pop();
 
 	bool can_proceed = true;
 	while(!p_cells.empty() && can_proceed && gap < max_speed) {
-		can_proceed = can_proceed && !p_cells.front().cell_h->is_occupied();
+		cell_handle cell_h = p_cells.front().cell_h;
 
-		//check if other entrance is priority
-		if (!is_on_multi_entrance_cell && can_proceed &&
-				p_cells.front().cell_h->get_priority_entrance_number() != p_cells.front().entrance) {
-			int safety_margin = max_speed*constant::safety_multiplier;
+		bool is_cell_multientrance = cell_h->get_entrances_count() > 1;
+		bool is_priority_entrance = is_cell_multientrance ?
+			cell_h->get_priority_entrance_number() == p_cells.front().entrance : true;
 
-			std::string name;
-			typedef std::pair<std::string, cell_handle> str_cell_type;
-			BOOST_FOREACH(str_cell_type sc, cell_names) {
-				if (sc.second == p_cells.front().cell_h) {
-					name = sc.first;
-				}
-			}
-
-			//logger.debug()() << "p_cells.front().entrance=" << p_cells.front().entrance;
-			//logger.debug()() << "name=" << name;
-
-			can_proceed = can_non_priority_enter(safety_margin, p_cells.front().cell_h);
-		}
-
-		if (can_proceed) {
-			++gap;
-			can_proceed = can_proceed && p_cells.front().cell_h->is_exit_allowed(p_cells.front().exit);
-			p_cells.pop();
+		if (cell_h->is_occupied()) {
+			can_proceed = false;
+		} else if (is_cell_multientrance && !can_enter_multientrance(p_cells)) {
+			can_proceed = false;
 		} else {
-			break;
+			can_proceed = can_proceed && cell_h->is_exit_allowed(p_cells.front().exit);
+			p_cells.pop();
+			++gap;
 		}
 	}
 
 	return gap;
 }
 
-bool simulation::can_non_priority_enter(int safety_margin, cell_handle cell_h)
+bool simulation::can_enter_multientrance(std::queue<path_cell> p_cells)
 {
+	while (!p_cells.empty()) {
+		bool is_multientrance = p_cells.front().cell_h->get_entrances_count() > 1;
+
+		if (p_cells.front().cell_h->is_occupied()) {
+			return false;
+		} else if (!is_multientrance) {
+			return true;
+		} else if (p_cells.front().cell_h->get_priority_entrance_number() == p_cells.front().entrance &&
+				can_non_priority_enter(p_cells.front().cell_h)) {
+			return false;
+		}
+
+		p_cells.pop();
+	}
+	return true;
+}
+
+bool simulation::can_non_priority_enter(cell_handle cell_h)
+{
+	static int safety_margin = max_speed*constant::safety_multiplier;
 	cell_handle prev = cell_h->get_prev(cell_h->get_priority_entrance_number()).lock();
 
 	if (prev->is_occupied()) {
@@ -341,7 +347,7 @@ bool simulation::translate_to_cell_representation(world::world_description_handl
 			logger.error()() << "translating nodes failed";
 			return false;
 		}
-		
+
 		if (!translate_actuators(desc)) {
 			logger.error()() << "translating actuators failed";
 			return false;
