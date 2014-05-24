@@ -19,6 +19,7 @@ public:
 	int get_speed() const;
 
 	void set_stop_tick(int tick);
+	int get_current_speed_time();
 
 	std::string last_visited;
 private:
@@ -30,6 +31,8 @@ private:
 	int stop_tick;
 
 	std::string path_name;
+
+	int current_speed_time;
 };
 typedef boost::shared_ptr<vehicle> vehicle_handle;
 

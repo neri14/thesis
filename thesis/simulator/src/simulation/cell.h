@@ -48,7 +48,7 @@ public:
 	virtual bool prev_vehicle_moving(int margin, const cell* next_cell, int gap=0);
 
 	virtual void enable_destroyer_hack();
-	virtual bool get_entrances_count() const;
+	virtual int get_entrances_count() const;
 
 private:
 	common::my_logger logger;

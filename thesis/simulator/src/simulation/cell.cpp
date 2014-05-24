@@ -163,7 +163,7 @@ void cell::enable_destroyer_hack()
 	destroyer_hack_enabled = true;
 }
 
-bool cell::get_entrances_count() const
+int cell::get_entrances_count() const
 {
 	return prev.size();
 }

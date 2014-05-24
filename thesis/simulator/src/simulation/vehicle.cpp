@@ -14,7 +14,8 @@ vehicle::vehicle(std::string path_name_, std::queue<path_cell> vehicle_path_, in
 	stop_count(0),
 	start_tick(start_tick_),
 	stop_tick(0),
-	path_name(path_name_)
+	path_name(path_name_),
+	current_speed_time(1)
 {}
 
 vehicle::~vehicle()
@@ -30,6 +31,13 @@ void vehicle::set_speed(int spd)
 	if (speed != 0 && spd == 0) {
 		++stop_count;
 	}
+
+	if (speed == spd) {
+		++current_speed_time;
+	} else {
+		current_speed_time = 1;
+	}
+
 	speed = spd;
 }
 
@@ -45,6 +53,11 @@ void vehicle::set_stop_tick(int tick)
 	common::get_csv_writer_opt().add_value(i, "name", path_name);
 	common::get_csv_writer_opt().add_value(i, "stops", stop_count);
 	common::get_csv_writer_opt().add_value(i, "time", stop_tick == 0 ? 0 : stop_tick-start_tick);
+}
+
+int vehicle::get_current_speed_time()
+{
+	return current_speed_time;
 }
 
 }

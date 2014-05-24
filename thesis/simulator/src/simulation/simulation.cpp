@@ -26,6 +26,8 @@ namespace constant {
 	int safety_multiplier_sim(3);
 	std::string csv_key("average_speed_m_s");
 	std::string csv_key2("vehicle_count");
+
+	int stuck_vehicle_removal_time(10);
 }
 
 simulation::simulation(const std::string& desc_filename_) :
@@ -236,6 +238,20 @@ void simulation::run_destroyers(int time_tick)
 	}*/
 }
 
+std::string get_next_node_name(std::queue<path_cell> queue, std::map<std::string, cell_handle> cell_names)
+{
+	typedef std::pair<std::string, cell_handle> str_cell_pair;
+	while (!queue.empty()) {
+		BOOST_FOREACH(str_cell_pair p, cell_names) {
+			if (queue.front().cell_h == p.second) {
+				return p.first;
+			}
+		}
+		queue.pop();
+	}
+	return "";
+}
+
 //model Nagela-Schreckenberga
 void simulation::calculate_new_vehicles_state()
 {
@@ -243,6 +259,8 @@ void simulation::calculate_new_vehicles_state()
 
 	int cells_size = cells.size();
 	double avg = 0;
+
+	std::set<vehicle_handle> veh_to_remove;
 	BOOST_FOREACH(vehicle_handle veh, vehicles) {
 		int speed = veh->get_speed();
 		std::queue<path_cell>& p_cells = veh->get_path();
@@ -268,7 +286,26 @@ void simulation::calculate_new_vehicles_state()
 			p_cells.pop();
 		}
 		p_cells.front().cell_h->set_occupied(true, speed);
+
+		if (speed == 0 && p_cells.front().cell_h->get_entrances_count() > 1) {
+			logger.error()() << "vehicle stopped on multientrance cell for " << veh->get_current_speed_time() << " seconds (" << get_next_node_name(p_cells, cell_names) << ")";
+
+			if (veh->get_current_speed_time() > constant::stuck_vehicle_removal_time) {
+				logger.error()() << "removing stuck vehicle (stopped for over " << constant::stuck_vehicle_removal_time << " seconds)";
+				p_cells.front().cell_h->set_occupied(false);
+				veh_to_remove.insert(veh);
+			}
+		}
 	}
+
+	int to_remove_size = veh_to_remove.size();
+	if (to_remove_size) {
+		logger.error()() << to_remove_size << " stuck vehicles being removed";
+	}
+	BOOST_FOREACH(vehicle_handle veh, veh_to_remove) {
+		vehicles.erase(veh);
+	}
+
 	int veh_cnt = vehicles.size();
 	avg = veh_cnt ? avg/veh_cnt : 0;
 
@@ -280,9 +317,10 @@ void simulation::calculate_new_vehicles_state()
 int simulation::calculate_gap(vehicle_handle veh, std::queue<path_cell> p_cells)
 {
 	if (!p_cells.empty() && !p_cells.front().cell_h->is_exit_allowed(p_cells.front().exit)) {
-//		logger.debug()() << "vehicle at signal";
 		return 0;
 	}
+
+	bool vehicle_curently_on_multientrance = p_cells.front().cell_h->get_entrances_count() > 1;
 
 	int gap = 0;
 	p_cells.pop();
@@ -292,15 +330,13 @@ int simulation::calculate_gap(vehicle_handle veh, std::queue<path_cell> p_cells)
 		cell_handle cell_h = p_cells.front().cell_h;
 
 		bool is_cell_multientrance = cell_h->get_entrances_count() > 1;
-		bool is_priority_entrance = is_cell_multientrance ?
-			cell_h->get_priority_entrance_number() == p_cells.front().entrance : true;
 
 		if (cell_h->is_occupied()) {
 			can_proceed = false;
-		} else if (is_cell_multientrance && !can_enter_multientrance(p_cells)) {
+		} else if (is_cell_multientrance && !can_enter_multientrance(p_cells, vehicle_curently_on_multientrance, gap)) {
 			can_proceed = false;
 		} else {
-			can_proceed = can_proceed && cell_h->is_exit_allowed(p_cells.front().exit);
+			can_proceed = cell_h->is_exit_allowed(p_cells.front().exit);
 			p_cells.pop();
 			++gap;
 		}
@@ -309,21 +345,39 @@ int simulation::calculate_gap(vehicle_handle veh, std::queue<path_cell> p_cells)
 	return gap;
 }
 
-bool simulation::can_enter_multientrance(std::queue<path_cell> p_cells)
+bool simulation::can_enter_multientrance(std::queue<path_cell> p_cells, bool vehicle_curently_on_multientrance, int gap)
 {
+	int cnt = 0;
+
 	while (!p_cells.empty()) {
 		bool is_multientrance = p_cells.front().cell_h->get_entrances_count() > 1;
 
-		if (p_cells.front().cell_h->is_occupied()) {
+		if (is_multientrance && p_cells.front().cell_h->is_occupied()) {
+			// if (vehicle_curently_on_multientrance) {
+			// 	logger.error()() << "VEH currently on multientrance and stopping (gap to first multientrance " << gap
+			// 		<< " , multientrance in row " << cnt << ") reason OCCUPIED_MULTIENTRANCE";
+			// }
+			return false;
+		} else if (!is_multientrance && p_cells.front().cell_h->is_occupied()) {
+			// if (vehicle_curently_on_multientrance) {
+			// 	logger.error()() << "VEH currently on multientrance and stopping (gap to first multientrance " << gap
+			// 		<< " , multientrance in row " << cnt << ") reason OCCUPIED_NON_MULTIENTRANCE";
+			// }
 			return false;
 		} else if (!is_multientrance) {
 			return true;
-		} else if (p_cells.front().cell_h->get_priority_entrance_number() == p_cells.front().entrance &&
-				can_non_priority_enter(p_cells.front().cell_h)) {
+		} else if (!vehicle_curently_on_multientrance &&
+				p_cells.front().cell_h->get_priority_entrance_number() != p_cells.front().entrance &&
+				!can_non_priority_enter(p_cells.front().cell_h)) {
+			// if (vehicle_curently_on_multientrance) {
+			// 	logger.error()() << "VEH currently on multientrance and stopping (gap to first multientrance " << gap
+			// 		<< " , multientrance in row " << cnt << ") reason NON_PRIORITY_MULTIENTRANCE";
+			// }
 			return false;
 		}
 
 		p_cells.pop();
+		++cnt;
 	}
 	return true;
 }
@@ -333,9 +387,6 @@ bool simulation::can_non_priority_enter(cell_handle cell_h)
 	static int safety_margin = max_speed*constant::safety_multiplier_sim;
 	cell_handle prev = cell_h->get_prev(cell_h->get_priority_entrance_number()).lock();
 
-	if (prev->is_occupied()) {
-		return false;
-	}
 	return !prev->prev_vehicle_moving(safety_margin, cell_h.get());
 }
 
