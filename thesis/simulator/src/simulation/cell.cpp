@@ -132,7 +132,7 @@ int cell::get_priority_entrance_number() const
 	return priority_entrance_number;
 }
 
-bool cell::prev_vehicle_moving(int margin, const cell* next_cell, int gap)
+bool cell::prev_vehicle_moving(int margin, const cell* next_cell, int max_speed, int gap)
 {
 	if (!margin) {
 		return false;
@@ -144,7 +144,7 @@ bool cell::prev_vehicle_moving(int margin, const cell* next_cell, int gap)
 	}
 
 	if (occupied) {
-		if (vehicle_speed * constant::safety_multiplier_cell >= gap) {
+		if (max_speed * constant::safety_multiplier_cell >= gap) {
 			return false;
 		} else {
 			return true;

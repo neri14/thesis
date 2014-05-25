@@ -169,6 +169,8 @@ void simulation::check_calculate_condition()
 
 void simulation::run_creators(int time_tick)
 {
+	static int rolling_created = 0;
+
 	logger.info()() << "creating vehicles";
 	int count = 0;
 	int waiting = 0;
@@ -198,7 +200,8 @@ void simulation::run_creators(int time_tick)
 		waiting += pair.second->get_queue_size();
 	}
 
-	logger.info()() << "created " << count << " vehicles - " << waiting << " waiting";
+	rolling_created += count;
+	logger.info()() << "[" << time_tick << "] created " << count << " vehicles (rolling sum " << rolling_created << ") - " << waiting << " waiting";
 }
 
 void simulation::run_destroyers(int time_tick)
@@ -230,7 +233,7 @@ void simulation::run_destroyers(int time_tick)
 	}
 
 	rolling += veh_count;
-	logger.info()() << "destroyed " << veh_count << " vehicles in " <<
+	logger.info()() << "[" << time_tick << "] destroyed " << veh_count << " vehicles in " <<
 		cell_count << " cells (rolling sum: " << rolling << ")";
 
 	/*if (veh_count != cell_count) {
@@ -256,10 +259,12 @@ std::string get_next_node_name(std::queue<path_cell> queue, std::map<std::string
 void simulation::calculate_new_vehicles_state()
 {
 	logger.info()() << "calculating new vehicles states";
+	static int rolling_removed_vehicles = 0;
 
 	int cells_size = cells.size();
 	double avg = 0;
 
+	std::map<vehicle_handle, int> speed_map;
 	std::set<vehicle_handle> veh_to_remove;
 	BOOST_FOREACH(vehicle_handle veh, vehicles) {
 		int speed = veh->get_speed();
@@ -276,16 +281,29 @@ void simulation::calculate_new_vehicles_state()
 			speed = gap;
 		}
 
-		veh->set_speed(speed);
-		avg += speed;
+		speed_map[veh] = speed;
+	}
 
+	BOOST_FOREACH(vehicle_handle veh, vehicles) {
 		//MOVE
+		int speed = speed_map[veh];
+
+		std::queue<path_cell>& p_cells = veh->get_path();
+
 		p_cells.front().cell_h->set_occupied(false);
 		for (int i=0; i<speed; ++i) {
+			if (next_cell_is_occupied(p_cells)) {
+				speed = i;
+				logger.error()() << "next cell is unexpectedly occupied, changing vehicle speed to " << speed;
+				break;
+			}
 			p_cells.front().cell_h->increment_vehicle_counter();
 			p_cells.pop();
 		}
 		p_cells.front().cell_h->set_occupied(true, speed);
+
+		veh->set_speed(speed);
+		avg += speed;
 
 		if (speed == 0 && p_cells.front().cell_h->get_entrances_count() > 1) {
 			logger.error()() << "vehicle stopped on multientrance cell for " << veh->get_current_speed_time() << " seconds (" << get_next_node_name(p_cells, cell_names) << ")";
@@ -300,7 +318,8 @@ void simulation::calculate_new_vehicles_state()
 
 	int to_remove_size = veh_to_remove.size();
 	if (to_remove_size) {
-		logger.error()() << to_remove_size << " stuck vehicles being removed";
+		rolling_removed_vehicles += to_remove_size;
+		logger.error()() << to_remove_size << " stuck vehicles being removed (" << rolling_removed_vehicles << ")";
 	}
 	BOOST_FOREACH(vehicle_handle veh, veh_to_remove) {
 		vehicles.erase(veh);
@@ -387,7 +406,18 @@ bool simulation::can_non_priority_enter(cell_handle cell_h)
 	static int safety_margin = max_speed*constant::safety_multiplier_sim;
 	cell_handle prev = cell_h->get_prev(cell_h->get_priority_entrance_number()).lock();
 
-	return !prev->prev_vehicle_moving(safety_margin, cell_h.get());
+	return !prev->prev_vehicle_moving(safety_margin, cell_h.get(), max_speed);
+}
+
+bool simulation::next_cell_is_occupied(std::queue<path_cell> p_cells)
+{
+	p_cells.pop();
+
+	if (p_cells.empty()) {
+		return false;
+	}
+
+	return p_cells.front().cell_h->is_occupied();
 }
 
 bool simulation::translate_to_cell_representation(world::world_description_handle desc)

@@ -45,7 +45,7 @@ public:
 	virtual void set_occupied(bool occupied_, int speed=0);
 
 	virtual int get_priority_entrance_number() const;
-	virtual bool prev_vehicle_moving(int margin, const cell* next_cell, int gap=0);
+	virtual bool prev_vehicle_moving(int margin, const cell* next_cell, int max_speed, int gap=0);
 
 	virtual void enable_destroyer_hack();
 	virtual int get_entrances_count() const;
