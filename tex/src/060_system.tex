@@ -89,12 +89,14 @@ Na potrzeby symulacji ruchu na przedstawionym obszarze model NaSch został zmody
 
 Ze względu na przedstawione ogranicznia symulatora, dane dotyczące ruchu w symulowanym obszarze zostały przybliżone. Przyjęte wartości przepływów pojazdów w punktach wejściowych przedstawione są na rysunku \ref{fig:mapa_ruch}.
 
-TODO opis działania czujników
+Symulatowane są również czujniki ruchu. Czujnik przepływu pojazdów oblicza aktualny przepływ pojazdów na podstawie liczby pojazdów które przecięły określoną komórkę w ciągu ostatnich 10 sekund (jest to parametr konfiguracyjny symulatora). Czujnik kolejki określa wielkość kolejki na wyznaczonym odcinku, przez zliczenie liczby pojazdów znajdujących się w komórkach tego odcinka. Symulowane czujniki odzwierciedlają kamery z oprogramowaniem pozwalającym na wykrywanie pojazdów i pętle indukcyjne montowane w jezdni.
+
+Symulator jest głównym źródłem czasu dla pozostałych komponentów systemu. Udostępnia on sygnał zegarowy o okresie jednej sekundy co wyzwala wyznaczenie nowego stanu sygnalizatorów przez kontrolery. Sygnał zegarowy jest odpowiednikiem sygnału 1PPS\footnote{one pulse per second (jeden impuls na sekundę) - elektroniczny sygnał synchronizacyjny, udostępniany między innymi przez satelity GPS} stosowanego powszechnie do synchronizacji.
 
 \section{Kontroler}
 \label{chap:kontroler}
-TODO opis kontrolera
+Kontroler został przygotowany do działania z różnymi, prostymi w dodaniu, algorytmami sterowania. Zmiana wybranego algorytmu spośród zaimplementowanych odbywa się poprzez edycję pliku konfiguracyjnego. Dla celu badań przygotowany został, poza opisanym algorytmem, algorytm sterowania przy użyciu stałoczasowego, wczytywanego, programu sygnalizacji.
 
 \section{Komunikacja}
 \label{chap:komunikacja}
-TODO opis komunikacji
+Symulowany system steroania ruchem wykorzystuje komunikację sieciową do połączenia komponentów. W założeniu wdrożony system wykorzystuje czujniki i kontrolery komunikujące się przy użyciu sieci ethernet. Przygotowany, symulowany, system wykorzystuje do komunikacji centralny serwer odpowiedzialny za wymianę zdarzeń pomiędzy komponentami przy użyciu dyspozytora zdarzeń. Komunikacja sieciowa odbywa się przy użyciu biblioteki \cite{protobuf} w celu serializacji i deserializacji wiadomości.
