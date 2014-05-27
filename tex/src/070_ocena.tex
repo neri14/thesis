@@ -1,5 +1,6 @@
 \chapter{Ocena działania algorytmu}
-Na przygotowanym systemie przeprowadzone zostały badania reakcji systemu na ruch drogowy o przepływach przedstawionych na rysunku \ref{fig:mapa_ruch}. Każda konfiguracja była badana przez jedną godzinę, a wielkości badane to: średnia liczba zatrzymań wszystkich pojazdów, średnia prędkość wszystkich pojazdów oraz średnie czasy przejazdu na trzech, wybranych, trasach, przedstawionych na rysunku \ref{fig:mapa_trasy}.
+\label{chap:ocena}
+Na przygotowanym systemie przeprowadzone zostały badania z wykorzystaniem ruchu drogowego o przepływach przedstawionych na rysunku \ref{fig:mapa_ruch}. Każda konfiguracja była badana przez jedną godzinę, a wielkości badane to: średnia liczba zatrzymań pojazdów, średnia prędkość pojazdów oraz średnie czasy przejazdu na trzech, wybranych, trasach, przedstawionych na rysunku \ref{fig:mapa_trasy}.
 
 \section{Wyniki badań}
 W tabeli \ref{tab:predkosc} przedstawione zostały wartości średniej liczby zatrzymań i średniej prędkości w zależności od typu i parametrów sterowania.
@@ -34,7 +35,7 @@ W tabeli \ref{tab:predkosc} przedstawione zostały wartości średniej liczby za
 		dynamiczna, 120s, p=0,1, q=0,1, r=0,8     & 10,72 &  9,35 km/h \\
 		\hline
 	\end{tabular}
-	\caption{Zależność średniej liczby zatrzymań i średniej prędkości od typu i parametrów sterowania}
+	\caption{Zależność średniej liczby zatrzymań i średniej prędkości od typu i parametrów sterowania, p - wpływ przewidywanego przepływu pojazdów na sterowanie, q - wpływ aktualnego przepływu pojazdów na sterowanie, r - wpływ aktualnej wielkości kolejek na sterowanie}
 	\label{tab:predkosc}
 \end{table}
 \FloatBarrier
@@ -47,7 +48,7 @@ W tabeli \ref{tab:predkosc} przedstawione zostały wartości średniej liczby za
 \FloatBarrier
 
 Na wykresie średniej liczby zatrzymań (rys. \ref{fig:wykres_liczba_zatrzyman}) możemy zaobserwować podstawową różnicę charakterystyki ruchu sterowanego i nie sterowanego.
-Niekontrolowany ruch wykazuje się dużą, w porównaniu z pozostałymi badanymi konfiguracjami, liczbą zatrzymań co może być spowodowane ruchem krokowym ruchem pojazdów czekających na przejazd, na przykład wyjeżdżających z ulicy podporządkowanej. Jest to analogiczne z ruchem pojazdów poruszających się w korku i często przejeżdżającymi zaledwie kilka metrów.
+Niekontrolowany ruch wykazuje się dużą, w porównaniu z pozostałymi badanymi konfiguracjami, liczbą zatrzymań co może być spowodowane skokowym ruchem pojazdów czekających na przejazd, na przykład wyjeżdżających z ulicy podporządkowanej. Jest to analogiczne z ruchem pojazdów poruszających się w korku i często przejeżdżającymi zaledwie kilka metrów.
 
 Badany algorytm dynamiczny charakteryzuje się również lepszą, mniejszą, liczbą zatrzymań pojazdów niż stałoczasowy program sygnalizacji.
 Spośród badanych wartości parametrów, najlepsza wydaje się konfiguracja podstawowa, o równej wielkości badanych parametrów, oraz konfiguracja faworyzująca spodziewany przepływ pojazdów otrzymany od sąsiadujących kontrolerów. Większa długość cyklu uzyskuje lepsze wyniki ze względu na rzadszą, wymuszoną, zmianę świateł.
@@ -61,11 +62,11 @@ Spośród badanych wartości parametrów, najlepsza wydaje się konfiguracja pod
 \end{figure}
 \FloatBarrier
 
-Wykres średniej prędkości pojazdów (rys. \ref{fig:wykres_predkosc}) pokazuje wpływ układu drogowego, w szczególności układu drogi głównej, na prędkość średnią całego układu w przypadku braku sterowania. W badanym układzie drogowym droga główna znajduje się pomiędzy obszarami określonymi na rysunku \ref{fig:mapa_czysta} jako most Grunwaldzki i plac Grunwaldzki. Jest to droga o dużym natężeniu ruchu co powoduje duży przepływ pojazdów na wspomnianej relacji i zwiększa średnią prędkość pojazdów.
+Wykres średniej prędkości pojazdów (rys. \ref{fig:wykres_predkosc}) ukazuje wpływ układu drogowego, w szczególności drogi głównej, na prędkość średnią całego układu w przypadku braku sterowania. W badanym układzie drogowym droga główna znajduje się pomiędzy obszarami określonymi na rysunku \ref{fig:mapa_czysta} jako most Grunwaldzki i plac Grunwaldzki. Jest to droga o dużym natężeniu ruchu co powoduje duży przepływ pojazdów na wspomnianej relacji i zwiększa średnią prędkość pojazdów.
 
 Najgorszą, najmniejszą, wielkością charakteryzuje się stałoczasowy program sygnalizacji, który najbardziej ogranicza średnią prędkość pojazdów.
 
-Badany algorytm sterowania uzyskuje pośrednie wyniki, ze wskazaniem na równe wartości parametrów. Studwudziesto sekundowy cykl również w tym przypadku uzyskuje lepsze wyniki niż mniejsze wielkości.
+Badany algorytm sterowania uzyskuje pośrednie wyniki, ze wskazaniem na równe wartości parametrów. Studwudziesto sekundowy cykl również w tym przypadku uzyskuje lepsze wyniki niż krótszy cykl.
 
 \FloatBarrier
 \begin{figure}[h]
@@ -77,7 +78,7 @@ Badany algorytm sterowania uzyskuje pośrednie wyniki, ze wskazaniem na równe w
 \FloatBarrier
 
 W dalszej części badane były czasy przejazdu na trzech wybranych trasach, przedstawionych na rysunku \ref{fig:mapa_trasy}.
-Trasa A, z mostu Grunwaldzkiego w kierunku mostu Szczytnickiego, oraz trasa B, z kierunku mostu Szczytnickiego do mostu Grunwaldzkiego jest wspomnianą wcześniej drogą główną, na której opóźnienia, w przypadku braku sterowania, powstają ze względu na tworzenie się korków. Trasa C z klinik (ulica Skłodowskiej-Curie) do mostu Grunwaldzkiego jest trasą podporządkowaną przez co ruch na niej zależy w dużym stopniu od ruchu na dwóch pozostałych trasach.
+Trasa A, z mostu Grunwaldzkiego w kierunku mostu Szczytnickiego, oraz trasa B, z kierunku mostu Szczytnickiego do mostu Grunwaldzkiego jest wspomnianą wcześniej drogą główną, na której opóźnienia, w przypadku braku sterowania, powstają ze względu na tworzenie się korków przy zjeździe z niej. Trasa C z klinik (ulica Skłodowskiej-Curie) do mostu Grunwaldzkiego jest trasą podporządkowaną przez co ruch na niej zależy w dużym stopniu od ruchu na dwóch pozostałych trasach.
 
 \FloatBarrier
 \begin{figure}[h]
@@ -104,9 +105,9 @@ Trasa A, z mostu Grunwaldzkiego w kierunku mostu Szczytnickiego, oraz trasa B, z
 	\label{tab:wykres_typ_sterowania_czas}
 \end{table}
 \FloatBarrier
-Przedstawione na wykresie \ref{fig:wykres_typ_sterowania_czas} i w tabeli \ref{tab:wykres_typ_sterowania_czas} zmierzone średnie czasy przejazdu na wybranych trasach przedstawiają podstawowe róznice w sterowaniu stałoczasowym o stałym programi i sterowaniu dynamicznym. Sterowanie stałoczasowe charakteryzuje się wyrównaniem czasów przejazdu na wybranych trasach, co w przypadku trasy C pokazuje zdecydowaną poprawę.
+Przedstawione na wykresie \ref{fig:wykres_typ_sterowania_czas} i w tabeli \ref{tab:wykres_typ_sterowania_czas} średnie czasy przejazdu na wybranych trasach przedstawiają podstawowe róznice w sterowaniu stałoczasowym o stałym programi i sterowaniu dynamicznym. Sterowanie stałoczasowe charakteryzuje się wyrównaniem czasów przejazdu na wybranych trasach, co w przypadku trasy C daje zdecydowaną poprawę.
 
-Badany algorytm dynamiczny wykazuje poprawę w przypadku tras A i B, jednak powoduje również pogorszenie sytuacji dla trasy C. Może to być spowodowane metodą wyznaczania następnego stanu sterowania. Wyliczana jest suma wag poszczególnych sygnalizatorów. W dojeździe do punktu kolizji tras A i B z trasą C, trasa C posiada 3 sygnalizatory natomiast A i B posiadają 6 sygnalizatorów na niekolidujących strumieniach ruchu.
+Badany algorytm dynamiczny wykazuje poprawę w przypadku tras A i B, jednak powoduje również pogorszenie sytuacji dla trasy C. Może to być spowodowane metodą wyznaczania następnego stanu sterowania. Wyliczana jest suma wag poszczególnych sygnalizatorów. Natomiast w dojeździe do punktu kolizji trasy C z trasami A i B, trasa C posiada 3 sygnalizatory natomiast A i B posiadają 6 sygnalizatorów na niekolidujących strumieniach ruchu.
 
 \FloatBarrier
 \begin{figure}[h]
@@ -139,7 +140,7 @@ Na wykresie \ref{fig:wykres_dlugosc_cyklu_czas} i w tabeli \ref{tab:wykres_dlugo
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{images/wykres_przewidywany_przeplyw_czas.png}
-    \caption{Wykres zależności średniego czasu przejazdu od wpływu przewidywanego przepływu na sterowanie (p) w sygnalizacji dynamicznej}
+    \caption{Wykres zależności średniego czasu przejazdu od wpływu (p) przewidywanego przepływu na sterowanie w sygnalizacji dynamicznej}
     \label{fig:wykres_przewidywany_przeplyw_czas}
 \end{figure}
 \FloatBarrier
@@ -156,7 +157,7 @@ Na wykresie \ref{fig:wykres_dlugosc_cyklu_czas} i w tabeli \ref{tab:wykres_dlugo
 		p=0,8 & 361,30 s & 279,42 s & 1581,82 s \\
 		\hline
 	\end{tabular}
-	\caption{Zależność średniego czasu przejazdu od wpływu przewidywanego przepływu na sterowanie (p) w sygnalizacji dynamicznej}
+	\caption{Zależność średniego czasu przejazdu od wpływu (p) przewidywanego przepływu na sterowanie w sygnalizacji dynamicznej}
 	\label{tab:wykres_przewidywany_przeplyw_czas}
 \end{table}
 \FloatBarrier
@@ -166,7 +167,7 @@ Wykres \ref{fig:wykres_przewidywany_przeplyw_czas} i tabela \ref{tab:wykres_prze
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{images/wykres_przeplyw_czas.png}
-    \caption{Wykres zależności średniego czasu przejazdu od wpływu aktualnego przepływu na sterowanie (q) w sygnalizacji dynamicznej}
+    \caption{Wykres zależności średniego czasu przejazdu od wpływu (q) aktualnego przepływu na sterowanie w sygnalizacji dynamicznej}
     \label{fig:wykres_przeplyw_czas}
 \end{figure}
 \FloatBarrier
@@ -183,11 +184,11 @@ Wykres \ref{fig:wykres_przewidywany_przeplyw_czas} i tabela \ref{tab:wykres_prze
 		q=0,8 & 511,69 s & 429,03 s & 1236,22 s \\
 		\hline
 	\end{tabular}
-	\caption{Zależność średniego czasu przejazdu od wpływu aktualnego przepływu na sterowanie (q) w sygnalizacji dynamicznej}
+	\caption{Zależność średniego czasu przejazdu od wpływu (q) aktualnego przepływu na sterowanie w sygnalizacji dynamicznej}
 	\label{tab:wykres_przeplyw_czas}
 \end{table}
 \FloatBarrier
-Kolejny wykres (\ref{fig:wykres_przeplyw_czas}) przedstawia zależność czasu przejazdu od aktualnego przepływu pojazdów. W przypadku zwiększenia tego parametru możemy zaobserwować minimalną poprawę dla trasy A przy zmianie wielkości parametru na 0,5, przy dalszym zwiększaniu wartości parametru wynik pogarsza się.
+Kolejny wykres (\ref{fig:wykres_przeplyw_czas}) przedstawia zależność czasu przejazdu od aktualnego przepływu pojazdów. W przypadku zwiększenia tego parametru, do wartości 0,5, możemy zaobserwować minimalną poprawę dla trasy A, przy dalszym zwiększaniu wartości parametru wynik pogarsza się.
 Widać również pewną poprawę wyniku dla trasy C i wartości parametru 0,8.
 Znaczenie tego parametru może być pomniejszone, przy wykonanych badaniach z wykorzystaniem dużego ruchu, ze względu na zmniejszenie przepływu w przypadku powstania korku. Zarówno pojazdy stojące w korku jak i brak pojazdów będzie odznaczał się wielkością przepływu 0 pojazdów na godzinę.
 
@@ -195,7 +196,7 @@ Znaczenie tego parametru może być pomniejszone, przy wykonanych badaniach z wy
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{images/wykres_kolejka_czas.png}
-    \caption{Wykres zależności średniego czasu przejazdu od wpływu aktualnej kolejki na sterowanie (r) w sygnalizacji dynamicznej}
+    \caption{Wykres zależności średniego czasu przejazdu od wpływu (r) aktualnej kolejki na sterowanie w sygnalizacji dynamicznej}
     \label{fig:wykres_kolejka_czas}
 \end{figure}
 \FloatBarrier
@@ -212,9 +213,9 @@ Znaczenie tego parametru może być pomniejszone, przy wykonanych badaniach z wy
 		r=0,8 & 385,92 s & 517,71 s & 1200,47 s \\
 		\hline
 	\end{tabular}
-	\caption{Zależność średniego czasu przejazdu od wpływu aktualnej kolejki na sterowanie (r) w sygnalizacji dynamicznej}
+	\caption{Zależność średniego czasu przejazdu od wpływu (r) aktualnej kolejki na sterowanie w sygnalizacji dynamicznej}
 	\label{tab:wykres_kolejka_czas}
 \end{table}
 \FloatBarrier
 Na wykresie \ref{fig:wykres_kolejka_czas} i w tabeli \ref{tab:wykres_kolejka_czas} przedstawiona została zależność czasu przejazdu od wpływu aktualnej kolejki na sterowanie. Można zaobserwować, że zwiększenie wpływu kolejki na sterowanie powoduje zwiększenia czasu przejazdu na drodze głównej (trasach A i B). Jednocześnie dla wielkości parametru 0,8 czas przejazdu na trasie podporządkowanej zmniejszył się.
-Podobnie jak w przypadku przepływu pojazdów, działanie tego parametru jest ograniczone. Znormalizowana wielkość kolejek będzie równa dla przeciążonej sieci drogowej
+Podobnie jak w przypadku przepływu pojazdów, działanie tego parametru jest ograniczone w obciążonej sieci drogowej. Ze względu na normalizację kolejek, gdy są one pełne, ich wielkości będą, z punktu widzenia algorytmu, równe.

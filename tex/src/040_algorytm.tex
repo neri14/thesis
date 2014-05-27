@@ -6,10 +6,12 @@
     \label{fig:kontroler}
 \end{figure}
 
-Jak widać na rysunku \ref{fig:model} i \ref{fig:kontroler}, kontroler, do wyznaczenia stanu sygnalizatorów wykorzystuje, stan obiektu sterowanego. Stan obiektu składa się z trzech zmiennych.
+Jak widać na rysunku \ref{fig:model} i \ref{fig:kontroler}, kontroler, do wyznaczenia sterowań sygnalizatorów wykorzystuje, stan obiektu sterowanego.
 
 \vspace{1.5cm}
 \textbf{Parametry algorytmu}
+Działanie kontrolera można konfigurować przy użyciu trzech parametrów:
+\vspace{0.5cm}
 
 p \in <0,0, 1,0> \textrm{ -- wpływ przewidywanego przepływu pojazdów na sterowanie}
 
@@ -23,6 +25,8 @@ t \in \mathbb{N} \textrm{ } t > 0 \textrm{ -- długość cyklu świetlnego}
 
 \vspace{1.5cm}
 \textbf{Stałe algorytmu}
+Stałe opisują niekonfigurowalne elementy kontrolowanego zespołu skrzyżowań.
+\vspace{0.5cm}
 
 s \in \mathbb{N} \textrm{ -- liczba sygnalizatorów w kontrolowanym obszarze}
 
@@ -39,6 +43,8 @@ k_{i} \textrm{ -- maksymalna możliwa wielkość kolejki przed i-tym sygnalizato
 
 \vspace{1.5cm}
 \textbf{Zmienne stanu}
+Stan sterowanego obszaru opisany jest trzema zmiennymi stanu:
+\vspace{0.5cm}
 
 \begin{equation}
 	\begin{array}{c}
@@ -85,18 +91,20 @@ W pierwszym kroku algorytmu wyznaczane są wszystkie możliwe zbiory bezkolizyjn
 Spośród tak wyznaczonych zbiorów możliwy jest późniejszy wybór takiego który będzie w danym momencie optymalny.
 
 \vspace{0.5cm}
-Kolejny krok pozwala wyznaczyć wagi zezwolnia na ruch przez każdy z sygnalizatorów.
+Drugi krok pozwala wyznaczyć wagi zezwolnia na ruch przez każdy z sygnalizatorów, zgodnie ze wzorem \ref{eq:wagi}.
 
 \begin{equation}
+\label{eq:wagi}
 	w_{i} (n) = p \cdot \frac{x^{(1)}_{i} (n)}{m} + q \cdot \frac{x^{(2)}_{i} (n)}{m} + r \cdot \frac{x^{(3)}_{i} (n)}{k_{i}}
 \end{equation}
 
 w_{i} (n) \textrm{ -- waga i-tego sygnalizatora w chwili n}
 
 \vspace{0.5cm}
-W następnym kroku, wyliczone wagi są sumowane aby wyznaczyć wartość funkcji oceny dla każdego, przygotowanego w pierwszym kroku, zbioru.
+W następnym kroku, wyliczone wagi są sumowane (\ref{eq:wagi_suma}) aby wyznaczyć wartość funkcji oceny dla każdego, przygotowanego w pierwszym kroku, zbioru.
 
 \begin{equation}
+\label{eq:wagi_suma}
 	Q (X(n), S') = \sum\limit_{i \in S'} w_{i}
 \end{equation}
 
@@ -106,16 +114,16 @@ S' \textrm{ -- wyznaczony zbiór sygnalizatorów}
 Na końcu wybierany jest stan optymalny, o najwyższej funkcji oceny.
 
 \section{Uwzględnienie ograniczeń cyklów świetlnych}
-Podstawowym ograniczeniem, spośród wymienionych w rozdziale \label{sec:model_ograniczenia}, jakiego nie uwzględnia tak zdefiniowany algorytm jest ograniczenie faz cyklu świetlnego. Jak już zostało wspomniane  sygnały mogą być nadawane jedynie w zadanej sekwencji. Natomiast powyższy model podejmuje jedynie decyzję o wydaniu zgody na ruch.
+Ograniczenie sekwencji faz cyklu świetlnego nie jest uwzględniane w działaniu powyżej zdefiniowanego algorytmum, podejmuje on jedynie decyzję o wydaniu zgody na ruch.
 
-Za przestrzeganie tego jak i innych, czasowych, ograniczeń odpowiada dodatkowy komponent który przekazuje do obiektu sterowanego ostateczną decyzję. Zmiana sygnału powoduje utworzenie, przez ten komponent, sekwencji sygnałów które nastąpią w kolejnych chwilach czasu, dodatkowo uruchomienie sygnału zielonego jest odpowiednio opóźnione przez uwzględnienie czasów międzyzielonych. Również ograniczenia długości sygnałów żółtego i czerwono-żółtego są uwzględniane na tym etampie. Wspomniany komponent odpowiada również za wymuszenie uruchomienia sygnału czerwonego, jak i zielonego, przynajmniej raz na cykl świetlny.
+Za przestrzeganie tego jak i innych, czasowych, ograniczeń odpowiada dodatkowy komponent który przekazuje do obiektu sterowanego ostateczną decyzję. Zmiana sygnału powoduje utworzenie sekwencji sygnałów które nastąpią w kolejnych chwilach czasu. Uruchomienie sygnału zielonego jest opóźnione przez uwzględnienie czasów międzyzielonych. Również ograniczenia długości sygnałów żółtego i czerwono-żółtego są aplikowane na tym etapie. Wspomniany komponent odpowiada też za wymuszenie uruchomienia sygnału czerwonego, jak i zielonego, przynajmniej raz na cykl świetlny.
 
 \section{Metody oceny skuteczności algorytmu}
 Do oceny skuteczności algorytmu wykorzystać można określone na podstawie pracy Piotra Kawalca i Sylwii Sobieszuk-Durki \cite{kawalec+sobieszuk-durka} metody oceny. Są to:
 \begin{itemize}
-	\item średnie czasy przejazdu pojazdów na wybranych kierunkach
-	\item liczba zatrzymań pojazdów
+	\item średnie czasy przejazdu pojazdów na wybranych trasach
+	\item średnialiczba zatrzymań pojazdów
 	\item średnia prędkość pojazdów
 \end{itemize}
 
-W ten sposób określone metody oceny można wykorzystać do porównania algorytmu z przypadkiem braku sterowania czy sterowaniem przy użyciu prostego, stałoczasowego, niezsynchronizowanego, programu sygnalizacji. Ocena wyników badań znajduje się w rozdziale \ref{chap:ocena}.
+Określone w ten sposób metody oceny można wykorzystać do porównania algorytmu z przypadkiem braku sterowania czy sterowaniem przy użyciu stałoczasowego, niezsynchronizowanego, programu sygnalizacji. Ocena wyników badań znajduje się w rozdziale \ref{chap:ocena}.

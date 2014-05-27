@@ -2,7 +2,7 @@
 System, przygotowany do badania algorytmu sterowania, składa się z trzech podstawowych komponentów:
 \begin{description}
 	\item[symulator] --
-		symulujący ruch drogowy, udostępniający dane z czujników i przyjmujący ustawienia sygnalizatorów.
+		symuluje ruch drogowy, udostępnia dane z czujników i przyjmuje ustawienia sygnalizatorów.
 		Jest on również źródłem czasu co pozwala na synchronizację działania całego systemu. Opisany w sekcji \ref{chap:symulacja}.
 	\item[kontroler] --
 		osobny dla każdego obszaru, otrzymuje dane z symulatora i wyznacza sterowania sygnalizatorów.
@@ -13,7 +13,7 @@ System, przygotowany do badania algorytmu sterowania, składa się z trzech pods
 \end{description}
 
 \section{Technologia}
-System sterowania został przygotowany w języku C++ w standardzie C++03 z wykorzystaniem biblioteki Boost 1.55.0 \cite{boost}. Do komunikacji sieciowej wykorzystano bibliotekę Google Protocol Buffer \cite{protobuf}. Przygotowane testy jednostkowe wykorzystują bibliotekę Google Test \cite{gtest}.
+System został przygotowany przy użyciu języka C++ w standardzie C++03 z wykorzystaniem biblioteki Boost 1.55.0 \cite{boost}. Do komunikacji sieciowej wykorzystano bibliotekę Google Protocol Buffer \cite{protobuf}. Przygotowane testy jednostkowe wykorzystują bibliotekę Google Test \cite{gtest}.
 
 Obszar symulowany wczytywany jest z plików XML z opisem w postaci grafowej. Pliki z opisem zawierają również obliczone czasy międzyzielone pomiędzy kolizyjnymi strumieniami ruchu.
 
@@ -27,11 +27,11 @@ Dla celów badania algorytmu przygotowany został opis obszaru okolic placu Grun
     \label{fig:mapa_czysta}
 \end{figure}
 
-Przygotowany obszar został oparty o rzeczywisty układ drogowy, jednakże został on uproszczony. Użyty obszar uwzględnia jedynie ruch samochodowy, nie uwzględnia on komunikacji miejskiej czy ruchu pieszego. Takie też zastosowanie ma opracowywany algorytm sterowania.
+Przygotowany obszar został oparty o rzeczywisty układ drogowy, jednakże został on uproszczony. Uwzględnia on jedynie ruch samochodowy, nie uwzględnia natomiast komunikacji miejskiej czy ruchu pieszego. Takie też zastosowanie ma opracowywany algorytm sterowania.
 
 Sterowany obszar podzielony został na osiem autonomicznych obszarów oznaczonych na rysunku \ref{fig:mapa_czysta}. Każdy z tych obszarów jest sterowany przez osobny kontroler.
 
-Model sterowanego obszaru generowany jest w postaci komórkowej, wymaganej przez symulator, na podstawie przygotowanej postaci grafowej obszaru.
+Model sterowanego obszaru generowany jest w postaci komórkowej, wymaganej przez symulator, na podstawie przygotowanego opisu obszaru w postaci grafowej.
 
 \section{Symulator}
 \label{chap:symulacja}
@@ -46,7 +46,7 @@ Automat komórkowy stworzony przez Nagela i Schreckenberga wykorzystuje jednowym
 	\item ruch
 \end{itemize}
 
-Pierwsza faza, faza przyspieszenia, oznacza zwiększenie prędkości każdego pojazdu, ale nie przekraczając maksymalnej dozwolonej
+Pierwsza faza, faza przyspieszenia, oznacza zwiększenie prędkości każdego pojazdu, ale nie przekraczając maksymalnej dozwolonej prędkości.
 Prędkość pojazdu wyrażana jest w liczbie komórek na sekundę.
 \begin {equation}
 	v_{faza_1} = min (v(n) + 1, v_{max})
@@ -68,9 +68,9 @@ W kolejnej fazie, z pewnym ustalonym prawdopodobieństwem, generowane jest spowo
 
 Ostatnią fazą jest faza ruchu. Każdy z pojazdów jest przesuwany o, ustaloną w poprzednich fazach, liczbę komórek.
 
-Podstawową zaletą tak zdefiniowanego modelu jest prostota jego implementacji i dokładność wystarczająca do badania zachowanie ruchu drogowego w różnych sytuacjach, co opisuje w swojej pracy Maciej Bartodziej \cite{bartodziej}. W swoich badaniach prezentuje on również możliwości prostych modyfikacji modelu, co jest krytyczne w przypadku niniejszej pracy.
+Podstawową zaletą tak zdefiniowanego modelu jest prostota jego implementacji i dokładność wystarczająca do badania zachowanie ruchu drogowego w różnych sytuacjach, co opisuje w swojej pracy Maciej Bartodziej \cite{bartodziej}. W swoich badaniach prezentuje on również możliwości prostych modyfikacji modelu, co jest istotne w przypadku przygotowywanego symulatora.
 
-Model NaSch prezentuje również pewne ograniczenia. Przede wszystkim jest on modelem dyskretnym, czas płynie w postaci kolejnych stanów. Natomiast pozycja pojazdów jest ograniczona do pojedynczych komórek. Ze względu na domyślną wielkość komórki o wartości 7,5 metra, prędkość pojazdów jest ograniczona do kilku wartości: 0, 7,5, 15 i 22,5 metra na sekundę, czyli odpowiednio 0, 27, 54 i 81 kilometrów na godzinę. Dla celów pracy magisterskiej przyjęta została maksymalna prędkość trzech komórek na sekundę -- 81 kilometrów na godzinę.
+Model NaSch prezentuje również pewne ograniczenia. Przede wszystkim jest on modelem dyskretnym, upływ czasu odzwierciedlany jest w postaci stanów dyskretnych. Jednocześnie pozycja pojazdów jest ograniczona do pojedynczych komórek. Ze względu na domyślną wielkość komórki o wartości 7,5 metra, prędkość pojazdów może przyjąć jedną z kilku wartości: 0, 7,5, 15 i 22,5 metra na sekundę, czyli odpowiednio 0, 27, 54 i 81 kilometrów na godzinę. Dla celów pracy magisterskiej przyjęta została maksymalna prędkość trzech komórek na sekundę -- 81 kilometrów na godzinę.
 
 \begin{figure}[h]
     \centering
@@ -79,7 +79,7 @@ Model NaSch prezentuje również pewne ograniczenia. Przede wszystkim jest on mo
     \label{fig:mapa_ruch}
 \end{figure}
 
-Na potrzeby symulacji ruchu na przedstawionym obszarze model NaSch został zmodyfikowany w celu przystosowania go do działania z ruchem na skrzyżowaniach i obsługę sterowania ruchem. Zmodyfikowane elementy to:
+Na potrzeby symulacji ruchu na przedstawionym obszarze model NaSch został zmodyfikowany w celu przystosowania go do działania z przecinającym się ruchem na skrzyżowaniach i obsługę sterowania ruchem. Model został zmodyfikowany poprzez:
 \begin{itemize}
 	\item usunięcie fazy losowości ze względu na chęć badania reakcji ruchu na zmiany w sterowaniu nie losową charakterystykę ruchu,
 	\item wprowadzenie elementów tworzących pojazdy zgodnie z przyjętym przepływem na punktach wejściowych do sterowanego obszaru,
@@ -87,16 +87,16 @@ Na potrzeby symulacji ruchu na przedstawionym obszarze model NaSch został zmody
 	\item modyfikacja fazy spowolnienia dla uwzględnienia konieczności zatrzymania się przed przecinającym strumieniem ruchu, w celu eliminacji blokowania innych pojazdów,
 \end{itemize}
 
-Ze względu na przedstawione ogranicznia symulatora, dane dotyczące ruchu w symulowanym obszarze zostały przybliżone. Przyjęte wartości przepływów pojazdów w punktach wejściowych przedstawione są na rysunku \ref{fig:mapa_ruch}.
+Ze względu na przedstawione ogranicznia symulatora, przyjęte zostały orientancyjne wartości przepływów pojazdów w punktach wejściowych, przedstawione na rysunku \ref{fig:mapa_ruch}.
 
-Symulatowane są również czujniki ruchu. Czujnik przepływu pojazdów oblicza aktualny przepływ pojazdów na podstawie liczby pojazdów które przecięły określoną komórkę w ciągu ostatnich 10 sekund (jest to parametr konfiguracyjny symulatora). Czujnik kolejki określa wielkość kolejki na wyznaczonym odcinku, przez zliczenie liczby pojazdów znajdujących się w komórkach tego odcinka. Symulowane czujniki odzwierciedlają kamery z oprogramowaniem pozwalającym na wykrywanie pojazdów i pętle indukcyjne montowane w jezdni.
+Symulatowane są również czujniki ruchu. Czujnik przepływu pojazdów oblicza aktualny przepływ pojazdów na podstawie liczby pojazdów które przecięły określoną komórkę w ciągu ostatnich 10 sekund (jest to parametr konfiguracyjny symulatora). Czujnik kolejki określa wielkość kolejki na wyznaczonym odcinku, przez zliczenie liczby pojazdów znajdujących się w komórkach danego odcinka. Symulowane czujniki odzwierciedlają kamery z oprogramowaniem pozwalającym na wykrywanie pojazdów i pętle indukcyjne montowane w jezdni.
 
-Symulator jest głównym źródłem czasu dla pozostałych komponentów systemu. Udostępnia on sygnał zegarowy o okresie jednej sekundy co wyzwala wyznaczenie nowego stanu sygnalizatorów przez kontrolery. Sygnał zegarowy jest odpowiednikiem sygnału 1PPS\footnote{one pulse per second (jeden impuls na sekundę) - elektroniczny sygnał synchronizacyjny, udostępniany między innymi przez satelity GPS} stosowanego powszechnie do synchronizacji.
+Symulator jest głównym źródłem czasu dla pozostałych komponentów systemu. Udostępnia on sygnał zegarowy o okresie jednej sekundy co wyzwala wyznaczenie nowego stanu sygnalizatorów przez kontrolery. Sygnał zegarowy jest odpowiednikiem sygnału 1PPS\footnote{one pulse per second (jeden impuls na sekundę) - elektroniczny sygnał synchronizacyjny, udostępniany między innymi przez satelity GPS} stosowanego powszechnie do synchronizacji działania układów elektronicznych.
 
 \section{Kontroler}
 \label{chap:kontroler}
-Kontroler został przygotowany do działania z różnymi, prostymi w dodaniu, algorytmami sterowania. Zmiana wybranego algorytmu spośród zaimplementowanych odbywa się poprzez edycję pliku konfiguracyjnego. Dla celu badań przygotowany został, poza opisanym algorytmem, algorytm sterowania przy użyciu stałoczasowego, wczytywanego, programu sygnalizacji.
+Kontroler został przygotowany do działania z różnymi, prostymi w modyfikacji, algorytmami sterowania. Zmiana wybranego algorytmu spośród zaimplementowanych odbywa się poprzez edycję pliku konfiguracyjnego. Dla celu badań przygotowany został, poza opisanym algorytmem, algorytm sterowania przy użyciu stałoczasowego, wczytywanego z pliku, programu sygnalizacji.
 
 \section{Komunikacja}
 \label{chap:komunikacja}
-Symulowany system steroania ruchem wykorzystuje komunikację sieciową do połączenia komponentów. W założeniu wdrożony system wykorzystuje czujniki i kontrolery komunikujące się przy użyciu sieci ethernet. Przygotowany, symulowany, system wykorzystuje do komunikacji centralny serwer odpowiedzialny za wymianę zdarzeń pomiędzy komponentami przy użyciu dyspozytora zdarzeń. Komunikacja sieciowa odbywa się przy użyciu biblioteki \cite{protobuf} w celu serializacji i deserializacji wiadomości.
+Symulowany system sterowania ruchem wykorzystuje komunikację sieciową do połączenia komponentów. W założeniu wdrożony system wykorzystywałby czujniki i kontrolery komunikujące się przy użyciu sieci ethernet. Przygotowany, symulowany, system wykorzystuje do komunikacji centralny serwer odpowiedzialny za wymianę zdarzeń pomiędzy komponentami przy użyciu dyspozytora zdarzeń. Komunikacja sieciowa odbywa się przy użyciu biblioteki protobuf \cite{protobuf} w celu serializacji i deserializacji wiadomości.

@@ -294,7 +294,7 @@
             \@abstractPL
          \end{abstract}
       
-         \vspace{1.5cm}
+         \vspace{3.5cm}
 
          \selectlanguage{english}
          \begin{abstract}
