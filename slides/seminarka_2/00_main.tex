@@ -48,9 +48,9 @@
  \frametitle{\vspace{22px}Plan prezentacji}
  \begin{itemize}
   \item{Sterowanie ruchem drogowym}
-  \item{Aktualne rozwiązania}
   \item{Cel pracy}
-  \item{Opis systemu}
+  \item{Opracowany system}
+  \item{Przykładowe wyniki badań}
   \item{Skrót Bibliografii}
  \end{itemize}
 \end{frame}
@@ -71,70 +71,88 @@
 \end{frame}
 
 \begin{frame}[shrink=5]
- \frametitle{\vspace{22px}Sterowanie ruchem drogowym}
- \includegraphics[scale=0.3]{schemat_1.pdf}\\
- {\tiny \textit{źródło: Rozporządzenie ministra infrastruktury z dnia 3 lipca 2003 r.}}
-\end{frame}
-
-\begin{frame}
- \frametitle{\vspace{22px}Sterowanie ruchem drogowym}
- Przepisy specyfikują wymagania dotyczące sterowania ruchem takie jak:
- \begin{itemize}
-  \item{Wymagania czasowe trwania sygnałów}
-  \item{Wymagania zapewniające bezpieczeństwo ruchu}
- \end{itemize}
- {\tiny Rozporządzenie ministra infrastruktury z dnia 3 lipca 2003 r. w sprawie szczegółowych warunków technicznych
- dla znaków i sygnałów drogowych oraz urządzeń bezpieczeństwa ruchu drogowego i warunków ich umieszczania na drogach.}
-\end{frame}
-
-\begin{frame}[shrink=5]
- \frametitle{\vspace{22px}Aktualne rozwiązania}
- \begin{itemize}
-  \item{ITS - Wrocław - obszarowe sterowania ruchem, priorytet komunikacji zbiorowej}
-  \item{Tristar - Trójmiasto - podobne do ITS, skupione na komunikacji zbiorowej}
- \end{itemize}
-\end{frame}
-
-\begin{frame}[shrink=5]
  \frametitle{\vspace{22px}Cel pracy}
  Opracowanie systemu sterowania ruchem drogowym na obszarze wzorowanym na okolicach placu Grunwaldzkiego we Wrocławiu.\\
- Porównanie opracowanego algorytmu sterowania ruchem z prostymi systemami sterowania.
+ Porównanie opracowanego algorytmu sterowania ruchem z prostymi systemami sterowania.\\
 \end{frame}
 
 \begin{frame}[shrink=5]
  \frametitle{\vspace{22px}Cel pracy}
- \begin{itemize}
-  \item{Badanie zachowania w zależności od natężenia na zadanych kierunkach}
-  \item{Badanie zachowania dla nagłych zmian w ruchu}
- \end{itemize}
+Stworzenie systemu który będzie dynamicznie reagował na zmienną charakterystykę ruchu drogowego oraz będzie stosował się do, wymaganych przez prawo, ograniczeń.
 \end{frame}
 
 \begin{frame}[shrink=5]
- \frametitle{\vspace{22px}Motywacja}
- Próba stworzenia systemu który nie trzyma się sztywnych ram programu sygnalizacji, jedynie stosuje się do zadanych ograniczeń.
+ \frametitle{\vspace{22px}Model opracowanego systemu}
+ \includegraphics[width=1.0\textwidth]{model.pdf}
+  \tiny{
+  \begin{description}
+   \item[U] -- wyznaczone przez kontrolery sterowania sygnalizatorów\\
+   \item[X] -- stan systemu - wartości czujników i stany sygnalizatorów\\
+   \item[Z] -- przepływ pojazdów wjeżdżających do danego obszaru sterowania\\
+  \end{description}
+   }
 \end{frame}
 
 \begin{frame}[shrink=5]
- \frametitle{\vspace{22px}Opis systemu}
- \begin{itemize}
-  \item{System rozproszony - obszar sterowania podzielony na podobszary (skrzyżowania) z własnymi sterownikami}
-  \item{Sterowniki komunikują się ze sobą informując o przewidywanym ruchu}
-  \item{Ciągła adaptacja do warunków ruchu}
-  \item{Użycie algorytmów związanych z teorią sterowania}
- \end{itemize}
+  \frametitle{\vspace{22px}Algorytm}
+  \begin{enumerate}
+    \item Wyznaczenie wszyskitch zbiorów bezkolizyjnych stanów sygnalizatorów
+    \item Wyliczenie wag sygnalizatorów
+    \item Wyliczenie wartości funkcji oceny, dla każdego ze zbiorów określonych w punkcie 1, jako sumy wag sygnalizatorów zezwalających na przejazd
+    \item Wyznaczenie optymalnego, o maksymalnej wartości funkcji oceny, stanu
+    \item Wyznaczenie sekwencji sygnałów doprowadzających stany sygnalizatorów do stanu optymalnego
+  \end{enumerate}
 \end{frame}
 
 \begin{frame}[shrink=5]
- \frametitle{\vspace{22px}Opis systemu}
- \includegraphics[scale=2]{schemat_0.pdf}
+  \frametitle{\vspace{22px}Algorytm - waga sygnalizatora}
+  $$w_{i} (n) = p \cdot \frac{x^{(1)}_{i} (n)}{m} + q \cdot \frac{x^{(2)}_{i} (n)}{m} + r \cdot \frac{x^{(3)}_{i} (n)}{k_{i}}$$\\
+  \tiny{
+  $w_{i} (n)$ -- waga i-tego sygnalizatora w chwili n\\
+  $x^{(1)}_{i} (n)$ -- przewidywany przepływ pojazdów z sąsiedniego obszaru w chwili n\\
+  $x^{(2)}_{i} (n)$ -- aktualny przepływ pojazdów przed i-tym sygnalizatorem w chwili n\\
+  $x^{(3)}_{i} (n)$ -- aktualna wielkość kolejki przed i-tym sygnalizatorem w chwili n\\
+  $m$ -- maksymalny możliwy do zmierzenia przepływ pojazdów\\
+  $k_{i}$ -- maksymalna wielkość kolejki przed i-tym sygnalizatorem\\
+  $p$ -- wpływ przewidywanego przepływu pojazdów na sterowanie\\
+  $q$ -- wpływ aktualnego przepływu pojazdów na sterowanie\\
+  $r$ -- wpływ aktualnej kolejki na sterowanie\\
+  }
+\end{frame}
+
+\begin{frame}[shrink=5]
+  \frametitle{\vspace{22px}Badany obszar}
+  \includegraphics[width=1.0\textwidth]{mapa_czysta.png}
+\end{frame}
+
+\begin{frame}[shrink=5]
+  \frametitle{\vspace{10px}Przykładowe wyniki\\\small{średnia liczba zatrzymań}}
+  \includegraphics[width=1.0\textwidth]{wyniki_1.png}
+\end{frame}
+
+\begin{frame}[shrink=5]
+  \frametitle{\vspace{10px}Przykładowe wyniki\\\small{średnia prędkość}}
+  \includegraphics[width=1.0\textwidth]{wyniki_2.png}
+\end{frame}
+
+\begin{frame}[shrink=5]
+  \frametitle{\vspace{10px}Przykładowe wyniki\\\small{średni czas przejazdu}}
+  \includegraphics[width=1.0\textwidth]{wyniki_3.png}\\
+  \tiny{
+  \begin{description}
+  \item[trasa A] -- most Grunwaldzki - most Szczytnicki
+  \item[trasa B] -- most Szczytnicki - most Grunwaldzki
+  \item[trasa C] -- kliniki - most Grunwaldzki
+  \end{description}
+  }
 \end{frame}
 
 \begin{frame}[shrink=5]
  \frametitle{\vspace{22px}Skrót Bibliografii}
  {\small
  \begin{itemize}
-  \item{Kawalec, Piotr; Sobieszuk-Durka, Sylwia: Metody i algorytmy obszarowego sterowania ruchem drogowym. Prace Naukowe Politechniki Warszawskiej, Warszawa 2011}
-  \item{Krawiec, Stanisław; Celiński, Ireneusz: Symulacja mikroskopowa ruchu w modelu obszarowym sieci drogowej. Prace Naukowe Politechniki Warszawskiej, Warszawa 2012}
+  \item{Bartodziej, M. Modelowanie ruchu ulicznego za pomocą automatów komórkowych. Politechnika Wrocławska, Wrocław, 2007}
+  \item{Kawalec, P., Sobieszuk-Durka, S. Metody i algorytmy obszarowego sterowania ruchem drogowym. Prace Naukowe Politechniki Warszawskiej, (80), 2011}
  \end{itemize}
  }
 \end{frame}
@@ -143,7 +161,7 @@
  \frametitle{\vspace{22px}Skrót Bibliografii}
  {\small
  \begin{itemize}
-  \item{Płaczek, Bartłomiej: Zastosowanie rozmytych automatów komórkowych do modelowania ruchu drogowego. Prace Naukowe Politechniki Warszawskiej, Warszawa 2012}
+  \item{Nagel K., Schreckenberg M. A cellular automaton model for freeway traffic. J. Phys. I France 2, 1992}
   \item{Rozporządzenie ministra infrastruktury z dnia 3 lipca 2003 r. w sprawie szczegółowych warunków technicznych
  dla znaków i sygnałów drogowych oraz urządzeń bezpieczeństwa ruchu drogowego i warunków ich umieszczania na drogach.}
  \end{itemize}
