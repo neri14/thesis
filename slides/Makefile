@@ -1,13 +1,14 @@
-all: seminarka_1
-
-run:
-	impressive -T 0 ./bin/out/sem_1.pdf
+all: seminarka_1 seminarka_2
 
 seminarka_1:
 	sh ./build/sem_1.sh
 
+seminarka_2:
+	sh ./build/sem_2.sh
+
 clean:
 	rm -rf ./bin/sem_1/*
+	rm -rf ./bin/sem_2/*
 	rm -rf ./bin/out/*
 
-.PHONY: all seminarka_1 clean
+.PHONY: all seminarka_1 seminarka_2 clean
