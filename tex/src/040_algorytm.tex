@@ -114,8 +114,16 @@ W następnym kroku, wyliczone wagi są sumowane (\ref{eq:wagi_suma}) aby wyznacz
 \vspace{0.5cm}
 Na końcu wybierany jest stan optymalny, o najwyższej funkcji oceny.
 
+\begin{equation}
+	S^{*} = arg\:max\:Q (X(n), S')
+\end{equation}
+
 \section{Uwzględnienie ograniczeń cyklów świetlnych}
 Ograniczenie sekwencji faz cyklu świetlnego nie jest uwzględniane w działaniu powyżej zdefiniowanego algorytmum, podejmuje on jedynie decyzję o wydaniu zgody na ruch.
+
+\begin{equation}
+	S^{*} \to U(n)
+\end{equation}
 
 Za przestrzeganie tego jak i innych, czasowych, ograniczeń odpowiada dodatkowy komponent który przekazuje do obiektu sterowanego ostateczną decyzję. Zmiana sygnału powoduje utworzenie sekwencji sygnałów które nastąpią w kolejnych chwilach czasu. Uruchomienie sygnału zielonego jest opóźnione przez uwzględnienie czasów międzyzielonych. Również ograniczenia długości sygnałów żółtego i czerwono-żółtego są aplikowane na tym etapie. Wspomniany komponent odpowiada też za wymuszenie uruchomienia sygnału czerwonego, jak i zielonego, przynajmniej raz na cykl świetlny.
 
