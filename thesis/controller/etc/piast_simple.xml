@@ -7,14 +7,14 @@
 			<name>PIAST_SIG_S_3</name>
 			<name>PIAST_SIG_S_4</name>
 		</actuators>
-		<time>40</time><!--sums to 100-->
+		<time>30</time><!--sums to 100-->
 	</state>
 	<state>
 		<actuators>
 			<name>PIAST_SIG_N_1</name>
 			<name>PIAST_SIG_N_2</name>
 		</actuators>
-		<time>10</time><!--sums to 100-->
+		<time>20</time><!--sums to 100-->
 	</state>
 	<state>
 		<actuators>

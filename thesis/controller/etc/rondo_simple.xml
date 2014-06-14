@@ -11,7 +11,7 @@
 		<actuators>
 			<name>RONDO_SIG_E_4</name>
 		</actuators>
-		<time>15</time><!--sums to 100-->
+		<time>10</time><!--sums to 100-->
 	</state>
 	<state>
 		<actuators>
@@ -23,6 +23,6 @@
 			<name>RONDO_SIG_W_3</name>
 			<name>RONDO_SIG_W_4</name>
 		</actuators>
-		<time>65</time><!--sums to 100-->
+		<time>70</time><!--sums to 100-->
 	</state>
 </simple_algorithm>
