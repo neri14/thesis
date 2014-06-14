@@ -85,10 +85,32 @@ Ograniczenia dotyczące sterowania ruchem drogowym zostały ustalone w rozporzą
 \subsection{Wymagania formalne}
 \begin{itemize}
 	\item Sekwencja sygnałów czerwony, czerwono-żółty\footnote{sygnał czerwony z żółtym, przygotowanie do jazdy}, zielony, żółty, czerwony
-	\item Długość sygnału żółtego powinna wynosić 3 sekundy
-	\item Długość sygnału czerwono-żółtego powinna wynosić 1 sekundę
-	\item Dla sygnalizacji akomodacyjnej/acyklicznej minimalna długość sygnału zielonego to 5 sekund
+	\item Długość sygnału żółtego powinna wynosić 3 sekundy (wzór \ref{formalne:zolty})
+	\item Długość sygnału czerwono-żółtego powinna wynosić 1 sekundę (wzór \ref{formalne:czerwono_zolty})
+	\item Dla sygnalizacji akomodacyjnej/acyklicznej minimalna długość sygnału zielonego to 5 sekund (wzór \ref{formalne:czerwono_zolty})
 \end{itemize}
+
+\begin{equation}
+	\label{formalne:zolty}
+	x_{i, j, 3} (n) = x_{i, j, 3} (n-1) = x_{i, j, 3} (n-2) = ZOLTY \Longrightarrow \left\{
+	\begin{array}{c}
+		x_{i, j, 3} (n-3) = ZIELONY\\
+		x_{i, j, 3} (n+1) = CZERWONY
+	\end{array}
+\end{equation}
+
+\begin{equation}
+	\label{formalne:czerwono_zolty}
+	x_{i, j, 3} (n) = CZERWONO-ZOLTY \Longrightarrow \left\{
+	\begin{array}{c}
+		x_{i, j, 3} (n-1) = CZERWONY\\
+		x_{i, j, 3} (n+1) = ZIELONY\\
+		x_{i, j, 3} (n+2) = ZIELONY\\
+		x_{i, j, 3} (n+3) = ZIELONY\\
+		x_{i, j, 3} (n+4) = ZIELONY\\
+		x_{i, j, 3} (n+5) = ZIELONY
+	\end{array}
+\end{equation}
 
 \subsection{Wymagania bezpieczeństwa}
 Rozporządzenie definiuje podział par strumieni ruchu na strumienie niekolizyjne, strumienie kolizyjne o dopuszczalnym jednoczesnym zezwoleniu na ruch oraz strumienie kolizyjne o niedopuszczalnym jednoczesnym zezwoleniu na ruch. Ze względów bezpieczeństwa, na potrzeby opracowywanego systemu przyjęto, że strumienie kolizyjne nigdy nie mogą otrzymać jednoczesnego zezwolenia na ruch.
