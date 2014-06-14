@@ -31,7 +31,7 @@ Stałe opisują niekonfigurowalne elementy kontrolowanego zespołu skrzyżowań.
 
 \begin{math} s \in \mathbb{N} \end{math} \textrm{ -- liczba sygnalizatorów w kontrolowanym obszarze}
 
-\begin{math} m \in \mathbb{N} \end{math} \textrm{ -- maksymalny możliwy do zmierzenia przepływ pojazdów}
+\begin{math} m \in \mathbb{N} \end{math} \textrm{ -- maksymalny możliwy do zmierzenia przepływ pojazdów [liczba pojazdów/godzina]}
 
 \begin{equation}
 	\begin{array}{c}
@@ -40,7 +40,7 @@ Stałe opisują niekonfigurowalne elementy kontrolowanego zespołu skrzyżowań.
 	\end{array}
 \end{equation}
 
-\begin{math} k_{i} \end{math} \textrm{ -- maksymalna możliwa wielkość kolejki przed i-tym sygnalizatorem}
+\begin{math} k_{i} \end{math} \textrm{ -- maksymalna możliwa wielkość kolejki przed i-tym sygnalizatorem [liczba pojazdów]}
 
 \vspace{1.5cm}
 \textbf{Zmienne stanu}
@@ -54,7 +54,7 @@ Stan sterowanego obszaru opisany jest trzema zmiennymi stanu:
 	\end{array}
 \end{equation}
 
-\begin{math} x^{(1)}_{i} (n) \end{math} \textrm{ -- przewidywany przyszły przepływ pojazdów w kierunku i-tego sygnalizatora}
+\begin{math} x^{(1)}_{i} (n) \end{math} \textrm{ -- przewidywany przyszły przepływ pojazdów w kierunku i-tego sygnalizatora [liczba pojazdów/godzina]}
 
 Przewidywany przepływ pojazdów jest wyznaczany na podstawie stanu sygnalizatorów sąsiadujacych kontrolerów.
 
@@ -65,7 +65,7 @@ Przewidywany przepływ pojazdów jest wyznaczany na podstawie stanu sygnalizator
 	\end{array}
 \end{equation}
 
-\begin{math} x^{(2)}_{i} (n) \end{math} \textrm{ -- przepływ pojazdów w kierunku i-tego sygnalizatora w chwili n}
+\begin{math} x^{(2)}_{i} (n) \end{math} \textrm{ -- przepływ pojazdów w kierunku i-tego sygnalizatora w chwili n [liczba pojazdów/godzina]}
 
 \begin{equation}
 	\begin{array}{c}
@@ -74,7 +74,7 @@ Przewidywany przepływ pojazdów jest wyznaczany na podstawie stanu sygnalizator
 	\end{array}
 \end{equation}
 
-\begin{math} x^{(3)}_{i} (n) \end{math} \textrm{ -- wielkość kolejki przed i-tym sygnalizatorem w chwili n}
+\begin{math} x^{(3)}_{i} (n) \end{math} \textrm{ -- wielkość kolejki przed i-tym sygnalizatorem w chwili n [liczba pojazdów]}
 
 \vspace{1.5cm}
 \textbf{Algorytm}
