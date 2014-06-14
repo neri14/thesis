@@ -79,6 +79,29 @@ Aby zapewnić że sytuacja tego typu jest możliwa należy wymusić przynajmniej
 
 \begin{math} x_{i, j, 3} (n) \end{math} \textrm{ -- stan j-tego sygnalizatora w i-tym obszarze}
 
+Równanie stanu można zdefiniować jako:
+\begin{equation}
+	\begin{array}{c}
+		x_{i, j, 1} (n+1) = \frac{in_{i, j} (n)}{3600} \\
+		x_{i, j, 2} (n+1) = x_{i, j, 2} (n) + x_{i, j, 1} (n) - \frac{out_{i, j} (n)}{3600}\\
+		x_{i, j, 3} (n+1) = u_{i, j} (n)
+	\end{array}
+\end{equation}
+gdzie:
+
+\begin{math} in_{i, j} (n) \end{math} \textrm{ -- przepływ pojazdów zbliżających się do j-tego sygnalizatora w i-tym obszarze w chwili n [liczba pojazdów/godzina]}
+
+\begin{math} out_{i, j} (n) \end{math} \textrm{ -- przepływ pojazdów mijających j-ty sygnalizator w i-tym obszarze w chwili n [liczba pojazdów/godzina]}
+
+\vspace{0.5cm}
+Wyjście sterowanego obiektu jest odzwierciedleniem stanu obiektu:
+\begin{equation}
+	\begin{array}{c}
+		Y_i (n) = X_i (n)
+	\end{array}
+\end{equation}
+
+
 \section{Wymagania sterowania ruchem drogowym}
 \label{sec:model_ograniczenia}
 Ograniczenia dotyczące sterowania ruchem drogowym zostały ustalone w rozporządzeniu ministra infrastruktury \cite{rozporzadzenie}. Wymagania te można sprowadzić do zestawu wymagań formalnych i wymagań bezpieczeństwa:
