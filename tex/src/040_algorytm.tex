@@ -1,4 +1,5 @@
-\section{Algorytm sterowania ruchem drogowym}
+\chapter{Algorytm sterowania ruchem drogowym}
+\section{Algorytm}
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{images/kontroler.pdf}
@@ -13,24 +14,24 @@ Jak widać na rysunku \ref{fig:model} i \ref{fig:kontroler}, kontroler, do wyzna
 Działanie kontrolera można konfigurować przy użyciu trzech parametrów:
 \vspace{0.5cm}
 
-p \in <0,0, 1,0> \textrm{ -- wpływ przewidywanego przepływu pojazdów na sterowanie}
+\begin{math} p \in <0, 1> \end{math} \textrm{ -- wpływ przewidywanego przepływu pojazdów na sterowanie}
 
-q \in <0,0, 1,0> \textrm{ -- wpływ aktualnego przepływu pojazdów na sterowanie}
+\begin{math} q \in <0, 1> \end{math} \textrm{ -- wpływ aktualnego przepływu pojazdów na sterowanie}
 
-r \in <0,0, 1,0> \textrm{ -- wpływ aktualnych wielkości kolejek na sterowanie}
+\begin{math} r \in <0, 1> \end{math} \textrm{ -- wpływ aktualnych wielkości kolejek na sterowanie}
 
-p + q + r = 1
+\begin{math} p + q + r = 1 \end{math}
 
-t \in \mathbb{N} \textrm{ } t > 0 \textrm{ -- długość cyklu świetlnego}
+\begin{math} t \in \mathbb{N} \textrm{ } t > 0 \end{math} \textrm{ -- długość cyklu świetlnego}
 
 \vspace{1.5cm}
 \textbf{Stałe algorytmu}
 Stałe opisują niekonfigurowalne elementy kontrolowanego zespołu skrzyżowań.
 \vspace{0.5cm}
 
-s \in \mathbb{N} \textrm{ -- liczba sygnalizatorów w kontrolowanym obszarze}
+\begin{math} s \in \mathbb{N} \end{math} \textrm{ -- liczba sygnalizatorów w kontrolowanym obszarze}
 
-m \in \mathbb{N} \textrm{ -- maksymalny możliwy do zmierzenia przepływ pojazdów}
+\begin{math} m \in \mathbb{N} \end{math} \textrm{ -- maksymalny możliwy do zmierzenia przepływ pojazdów}
 
 \begin{equation}
 	\begin{array}{c}
@@ -39,7 +40,7 @@ m \in \mathbb{N} \textrm{ -- maksymalny możliwy do zmierzenia przepływ pojazd�
 	\end{array}
 \end{equation}
 
-k_{i} \textrm{ -- maksymalna możliwa wielkość kolejki przed i-tym sygnalizatorem}
+\begin{math} k_{i} \end{math} \textrm{ -- maksymalna możliwa wielkość kolejki przed i-tym sygnalizatorem}
 
 \vspace{1.5cm}
 \textbf{Zmienne stanu}
@@ -53,7 +54,7 @@ Stan sterowanego obszaru opisany jest trzema zmiennymi stanu:
 	\end{array}
 \end{equation}
 
-x^{(1)}_{i} (n) \textrm{ -- przewidywany przyszły przepływ pojazdów w kierunku i-tego sygnalizatora}
+\begin{math} x^{(1)}_{i} (n) \end{math} \textrm{ -- przewidywany przyszły przepływ pojazdów w kierunku i-tego sygnalizatora}
 
 Przewidywany przepływ pojazdów jest wyznaczany na podstawie stanu sygnalizatorów sąsiadujacych kontrolerów.
 
@@ -64,7 +65,7 @@ Przewidywany przepływ pojazdów jest wyznaczany na podstawie stanu sygnalizator
 	\end{array}
 \end{equation}
 
-x^{(2)}_{i} (n) \textrm{ -- przepływ pojazdów w kierunku i-tego sygnalizatora w chwili n}
+\begin{math} x^{(2)}_{i} (n) \end{math} \textrm{ -- przepływ pojazdów w kierunku i-tego sygnalizatora w chwili n}
 
 \begin{equation}
 	\begin{array}{c}
@@ -73,7 +74,7 @@ x^{(2)}_{i} (n) \textrm{ -- przepływ pojazdów w kierunku i-tego sygnalizatora 
 	\end{array}
 \end{equation}
 
-x^{(3)}_{i} (n) \textrm{ -- wielkość kolejki przed i-tym sygnalizatorem w chwili n}
+\begin{math} x^{(3)}_{i} (n) \end{math} \textrm{ -- wielkość kolejki przed i-tym sygnalizatorem w chwili n}
 
 \vspace{1.5cm}
 \textbf{Algorytm}
@@ -98,7 +99,7 @@ Drugi krok pozwala wyznaczyć wagi zezwolnia na ruch przez każdy z sygnalizator
 	w_{i} (n) = p \cdot \frac{x^{(1)}_{i} (n)}{m} + q \cdot \frac{x^{(2)}_{i} (n)}{m} + r \cdot \frac{x^{(3)}_{i} (n)}{k_{i}}
 \end{equation}
 
-w_{i} (n) \textrm{ -- waga i-tego sygnalizatora w chwili n}
+\begin{math} w_{i} (n) \end{math} \textrm{ -- waga i-tego sygnalizatora w chwili n}
 
 \vspace{0.5cm}
 W następnym kroku, wyliczone wagi są sumowane (\ref{eq:wagi_suma}) aby wyznaczyć wartość funkcji oceny dla każdego, przygotowanego w pierwszym kroku, zbioru.
@@ -108,7 +109,7 @@ W następnym kroku, wyliczone wagi są sumowane (\ref{eq:wagi_suma}) aby wyznacz
 	Q (X(n), S') = \sum\limit_{i \in S'} w_{i}
 \end{equation}
 
-S' \textrm{ -- wyznaczony zbiór sygnalizatorów}
+\begin{math} S' \end{math} \textrm{ -- wyznaczony zbiór sygnalizatorów}
 
 \vspace{0.5cm}
 Na końcu wybierany jest stan optymalny, o najwyższej funkcji oceny.

@@ -37,11 +37,11 @@ Aby zapewnić że sytuacja tego typu jest możliwa należy wymusić przynajmniej
 	\end{array}
 \end{equation}
 
-u_{i,j} (n) \textrm{ -- stan j-tego sygnalizatora w i-tym obszarze w chwili n}
+\begin{math} u_{i,j} (n) \end{math} \textrm{ -- stan j-tego sygnalizatora w i-tym obszarze w chwili n}
 
-o -- liczba obszarów sterowania
+\begin{math} o \end{math} -- liczba obszarów sterowania
 
-s -- liczba sygnalizatorów w obszarze
+\begin{math} s \end{math} -- liczba sygnalizatorów w obszarze
 
 \begin{equation}
 	\begin{array}{c}
@@ -52,9 +52,9 @@ s -- liczba sygnalizatorów w obszarze
 	\end{array}
 \end{equation}
 
-z_{i,j} (n) \textrm{ -- przepływ pojazdów z kierunku j w i-tym obszarze w chwili n}
+\begin{math} z_{i,j} (n) \end{math} \textrm{ -- przepływ pojazdów z kierunku j w i-tym obszarze w chwili n}
 
-r -- liczba wlotów do danego obszaru sterowania
+\begin{math} r \end{math} -- liczba wlotów do danego obszaru sterowania
 
 \begin{equation}
 	\begin{array}{c}
@@ -70,14 +70,11 @@ r -- liczba wlotów do danego obszaru sterowania
 	\end{array}
 \end{equation}
 
-x_{i, j, 1} (n) \textrm{ -- przepływ na dojeździe do j-tego sygnalizatora w i-tym obszarze}
+\begin{math} x_{i, j, 1} (n) \end{math} \textrm{ -- przepływ na dojeździe do j-tego sygnalizatora w i-tym obszarze}
 
-x_{i, j, 2} (n) \textrm{ -- kolejka przed j-tym sygnalizatorem w i-tym obszarze}
+\begin{math} x_{i, j, 2} (n) \end{math} \textrm{ -- kolejka przed j-tym sygnalizatorem w i-tym obszarze}
 
-x_{i, j, 3} (n) \textrm{ -- stan j-tego sygnalizatora w i-tym obszarze}
-
-\vspace{0.5cm}
-Przepływy pojazdów mierzone są w pojazdach na godzinę, stany kolejek mierzone są w postaci liczby pojazdów.
+\begin{math} x_{i, j, 3} (n) \end{math} \textrm{ -- stan j-tego sygnalizatora w i-tym obszarze}
 
 \section{Wymagania sterowania ruchem drogowym}
 \label{sec:model_ograniczenia}
@@ -99,30 +96,30 @@ Zdefiniowano metodę obliczania czasów międzyzielonych dla kolizyjnych par str
 	t^{min}_{m} (i,j) = t_{z} + t_{e} (i,j) - t_{d} (i,j)
 \end{equation}
 
-t^{min}_{m} (i,j) \textrm{ -- minimalny czas międzyzielony dla pary strumieni (i,j) [s]}
+\begin{math} t^{min}_{m} (i,j) \end{math} \textrm{ -- minimalny czas międzyzielony dla pary strumieni (i,j) [s]}
 
-t_{z} \textrm{ -- długość sygnału żółtego dla strumienia ewakuującego się [s]}
+\begin{math} t_{z} \end{math} \textrm{ -- długość sygnału żółtego dla strumienia ewakuującego się [s]}
 
-t_{e} (i,j) \textrm{ -- czas ewakuacji strumienia i poza punkt kolizji ze strumieniem j [s]}
+\begin{math} t_{e} (i,j) \end{math} \textrm{ -- czas ewakuacji strumienia i poza punkt kolizji ze strumieniem j [s]}
 
-t_{d} (i,j) \textrm{ -- czas dojazdu strumienia j do punktu kolizji ze strumieniem i [s]}
+\begin{math} t_{d} (i,j) \end{math} \textrm{ -- czas dojazdu strumienia j do punktu kolizji ze strumieniem i [s]}
 
-t^{min}_{m} (i,j) = 0 \textrm{ jeśli obliczona wartość jest mniejsza od 0}
+\begin{math} t^{min}_{m} (i,j) = 0 \end{math} \textrm{ jeśli obliczona wartość jest mniejsza od 0}
 
 \begin{equation}
 	t_{e} (i,j) = \frac{s_{e} (i,j) + I_p}{v_{e} (i)}
 \end{equation}
 
-s_{e} (i,j) \textrm{ -- droga strumienia ewakuującego się od linii zatrzymania do punktu kolizji[m]}
+\begin{math} s_{e} (i,j) \end{math} \textrm{ -- droga strumienia ewakuującego się od linii zatrzymania do punktu kolizji[m]}
 
-I_p \textrm{ -- wartość wydłużająca drogę ewakuacji, dla strumienia pojazdów 10 metrów}
+\begin{math} I_p \end{math} \textrm{ -- wartość wydłużająca drogę ewakuacji, dla strumienia pojazdów 10 metrów}
 
-v_{e} (i) \textrm{ -- prędkość ewakuacji [m/s], prędkość dopuszczalna na wlocie, nie większa niż 14 m/s}
+\begin{math} v_{e} (i) \end{math} \textrm{ -- prędkość ewakuacji [m/s], prędkość dopuszczalna na wlocie, nie większa niż 14 m/s}
 
 \begin{equation}
 	t_{d} (i,j) = \frac{s_{d} (i,j)}{v_{d} (j)} + 1
 \end{equation}
 
-s_{d} (i,j) \textrm{ -- droga strumienia dojeżdżającego od linii zatrzymania do punktu kolizji [m]}
+\begin{math} s_{d} (i,j) \end{math} \textrm{ -- droga strumienia dojeżdżającego od linii zatrzymania do punktu kolizji [m]}
 
-v_{d} (i) \textrm{ -- prędkość ewakuacji [m/s], prędkość dopuszczalna na wlocie}
+\begin{math} v_{d} (i) \end{math} \textrm{ -- prędkość ewakuacji [m/s], prędkość dopuszczalna na wlocie}
