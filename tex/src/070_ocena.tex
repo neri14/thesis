@@ -222,3 +222,10 @@ Znaczenie tego parametru może być pomniejszone, przy wykonanych badaniach z wy
 \FloatBarrier
 Na wykresie \ref{fig:wykres_kolejka_czas} i w tabeli \ref{tab:wykres_kolejka_czas} przedstawiona została zależność czasu przejazdu od wpływu aktualnej kolejki na sterowanie. Można zaobserwować, że zwiększenie wpływu kolejki na sterowanie powoduje zwiększenia czasu przejazdu na drodze głównej (trasach A i B). Jednocześnie dla wielkości parametru 0,8 czas przejazdu na trasie podporządkowanej zmniejszył się.
 Podobnie jak w przypadku przepływu pojazdów, działanie tego parametru jest ograniczone w obciążonej sieci drogowej. Ze względu na normalizację kolejek, gdy są one pełne, ich wielkości będą, z punktu widzenia algorytmu, równe.
+
+\section{Wnioski}
+Badania pokazały, że zastosowanie proponowanego algorytmu pozwala na zmniejszenie liczby zatrzymań pojazdów, w porównaniu ze stałoczasowym programem sygnalizacji jak i brakiem sterowania. Brak sterowania, w tym przypadku, wykazuje się najgorszą charakterystyką ze względu na skokowy ruch pojazdów. Porównanie pokazuje również, że współpraca sygnalizatorów, w proponowanym algorytmie, pozwala na poprawę wyników.
+
+Porównanie średniej prędkości pojazdów ukazuje największy minus sygnalizacji stałoczasowej, jakim jest brak adaptacji do aktualnych warunków. Proponowana adaptacyjna sygnalizacja dynamiczna niweluje ten problem i uzyskuje lepsze wyniki.
+
+Badanie średniego czasu przejazdu na trzech, wskazanych na rysunku \ref{fig:mapa_trasy}, trasach pokazuje, iż zastosowanie proponowanego algorytmu pozwala na przyspieszenie ruchu na dwóch z badanych tras. Czas przejazdu trzecią trasą, uzyskującą gorszy wynik, można poprawić przez dopasowanie parametrów algorytmu, w szczególności wpływu aktualnego stanu czujników przepływu jak i wielkości kolejki.
