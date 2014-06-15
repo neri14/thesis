@@ -1,9 +1,9 @@
-\chapter{System sterowania ruchem drogowym}
+\chapter{Przygotowany system sterowania ruchem}
 System, przygotowany do badania algorytmu sterowania, składa się z trzech podstawowych komponentów:
 \begin{description}
 	\item[symulator] --
 		symuluje ruch drogowy, udostępnia dane z czujników i przyjmuje ustawienia sygnalizatorów.
-		Jest on również źródłem czasu co pozwala na synchronizację działania całego systemu. Opisany w sekcji \ref{chap:symulacja}.
+		Jest on również źródłem czasu co pozwala na synchronizację działania całego systemu. Opisany w rozdziale \ref{chap:symulacja}.
 	\item[kontroler] --
 		osobny dla każdego obszaru, otrzymuje dane z symulatora i wyznacza sterowania sygnalizatorów.
 		Może komunikować się z innymi kontrolerami w celu wymiany danych o sąsiednich obszarach. Więcej w sekcji \ref{chap:kontroler}.
@@ -17,6 +17,16 @@ System został przygotowany przy użyciu języka C++ w standardzie C++03 z wykor
 
 Obszar symulowany wczytywany jest z plików XML z opisem w postaci grafowej. Pliki z opisem zawierają również obliczone czasy międzyzielone pomiędzy kolizyjnymi strumieniami ruchu.
 
+\section{Kontroler}
+\label{chap:kontroler}
+Kontroler został przygotowany do działania z różnymi, prostymi w modyfikacji, algorytmami sterowania. Zmiana wybranego algorytmu spośród zaimplementowanych odbywa się poprzez edycję pliku konfiguracyjnego. Dla celu badań przygotowany został, poza opisanym algorytmem, algorytm sterowania przy użyciu stałoczasowego, wczytywanego z pliku, programu sygnalizacji.
+
+\section{Komunikacja}
+\label{chap:komunikacja}
+Symulowany system sterowania ruchem wykorzystuje komunikację sieciową do połączenia komponentów. W założeniu wdrożony system wykorzystywałby czujniki i kontrolery komunikujące się przy użyciu sieci ethernet. Przygotowany, symulowany, system wykorzystuje do komunikacji centralny serwer odpowiedzialny za wymianę zdarzeń pomiędzy komponentami przy użyciu dyspozytora zdarzeń. Komunikacja sieciowa odbywa się przy użyciu biblioteki protobuf \cite{protobuf} w celu serializacji i deserializacji wiadomości.
+
+\chapter{Symulator}
+\label{chap:symulacja}
 \section{Obszar badania algorytmu}
 Dla celów badania algorytmu przygotowany został opis obszaru okolic placu Grunwaldzkiego we Wrocławiu, przedstawionego na rysunku \ref{fig:mapa_czysta}.
 
@@ -34,7 +44,6 @@ Sterowany obszar podzielony został na osiem autonomicznych obszarów oznaczonyc
 Model sterowanego obszaru generowany jest w postaci komórkowej, wymaganej przez symulator, na podstawie przygotowanego opisu obszaru w postaci grafowej.
 
 \section{Symulator}
-\label{chap:symulacja}
 Dla celów wykonania badań przygotowany został symulator oparty o model Nagela - Schreckenberga, powszechnie znany jako model NaSch, opisany w pracy z 1992 roku \cite{nasch}. Model ten działa w oparciu o automat komórkowy i cztery proste fazy ruchu.
 
 Automat komórkowy stworzony przez Nagela i Schreckenberga wykorzystuje jednowymiarową tablicę komórek, gdzie każda z nich może pomieścić jeden pojazd. Wszystkie pojazdy poruszają się w tym samym kierunku z maksymalną prędkością 5 komórek na sekundę. W każdym kroku symulacji, na wszystkich pojazdach, wykonywane są 4 fazy ruchu:
@@ -92,11 +101,3 @@ Ze względu na przedstawione ogranicznia symulatora, przyjęte zostały orientan
 Symulatowane są również czujniki ruchu. Czujnik przepływu pojazdów oblicza aktualny przepływ pojazdów na podstawie liczby pojazdów które przecięły określoną komórkę w ciągu ostatnich 10 sekund (jest to parametr konfiguracyjny symulatora). Czujnik kolejki określa wielkość kolejki na wyznaczonym odcinku, przez zliczenie liczby pojazdów znajdujących się w komórkach danego odcinka. Symulowane czujniki odzwierciedlają kamery z oprogramowaniem pozwalającym na wykrywanie pojazdów i pętle indukcyjne montowane w jezdni.
 
 Symulator jest głównym źródłem czasu dla pozostałych komponentów systemu. Udostępnia on sygnał zegarowy o okresie jednej sekundy co wyzwala wyznaczenie nowego stanu sygnalizatorów przez kontrolery. Sygnał zegarowy jest odpowiednikiem sygnału 1PPS\footnote{one pulse per second (jeden impuls na sekundę) - elektroniczny sygnał synchronizacyjny, udostępniany między innymi przez satelity GPS} stosowanego powszechnie do synchronizacji działania układów elektronicznych.
-
-\section{Kontroler}
-\label{chap:kontroler}
-Kontroler został przygotowany do działania z różnymi, prostymi w modyfikacji, algorytmami sterowania. Zmiana wybranego algorytmu spośród zaimplementowanych odbywa się poprzez edycję pliku konfiguracyjnego. Dla celu badań przygotowany został, poza opisanym algorytmem, algorytm sterowania przy użyciu stałoczasowego, wczytywanego z pliku, programu sygnalizacji.
-
-\section{Komunikacja}
-\label{chap:komunikacja}
-Symulowany system sterowania ruchem wykorzystuje komunikację sieciową do połączenia komponentów. W założeniu wdrożony system wykorzystywałby czujniki i kontrolery komunikujące się przy użyciu sieci ethernet. Przygotowany, symulowany, system wykorzystuje do komunikacji centralny serwer odpowiedzialny za wymianę zdarzeń pomiędzy komponentami przy użyciu dyspozytora zdarzeń. Komunikacja sieciowa odbywa się przy użyciu biblioteki protobuf \cite{protobuf} w celu serializacji i deserializacji wiadomości.
