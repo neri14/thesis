@@ -67,9 +67,11 @@ Aby zapewnić że sytuacja tego typu jest możliwa należy wymusić przynajmniej
 			\end{array}
 		\right]_{j \in <1,s>}\\
 		i \in <1,o>\\
-		x_{i, j, 1} (n) \in \mathbb{N}\\
-		x_{i, j, 2} (n) \in \mathbb{N}\\
-		x_{i, j, 3} (n) \in \left\{ \textrm{CZERWONY, CZERWONO-ZOLTY, ZIELONY, ZOLTY} \right\}
+		x_{i, j, 1} (n) \in \mathbb{N} \;\;\; x_{i, j, 1} (n) \leq m\\
+		x_{i, j, 2} (n) \in \mathbb{N} \;\;\; x_{i, j, 2} (n) \leq k_{i, j}\\
+		x_{i, j, 3} (n) \in \left\{ \textrm{CZERWONY, CZERWONO-ZOLTY, ZIELONY, ZOLTY} \right\}\\
+		m \in \mathbb{N}\\
+		k_{i, j} \in \mathbb{N}
 	\end{array}
 \end{equation}
 
@@ -79,6 +81,11 @@ Aby zapewnić że sytuacja tego typu jest możliwa należy wymusić przynajmniej
 
 \begin{math} x_{i, j, 3} (n) \end{math} \textrm{ -- stan j-tego sygnalizatora w i-tym obszarze}
 
+\begin{math} m \end{math} \textrm{ -- maksymalny możliwy do zmierzenia przepływ pojazdów [liczba pojazdów/godzina]}
+
+\begin{math} k_{i, j} \end{math} \textrm{ -- maksymalna wielkość kolejki przed j-tym sygnalizatorem w i-tym obszarze [liczba pojazdów]}
+
+\vspace{0.5cm}
 Równanie stanu można zdefiniować jako:
 \begin{equation}
 	\begin{array}{c}
