@@ -79,16 +79,16 @@ Przewidywany przepływ pojazdów jest wyznaczany na podstawie stanu sygnalizator
 \vspace{1.5cm}
 \textbf{Algorytm}
 
-Proponowany jest poniższy algorytm wyznaczania nowego stanu sygnalizatorów.
+Proponowany jest poniższy algorytm wyznaczania optymalnych ustawień sygnalizatorów.
 \begin{enumerate}
-	\item wyznaczenie wszystkich, zbiorów bezkolizyjnych stanów sygnalizatorów
-	\item wyliczenie wag sygnalizatorów
-	\item wyliczenie funkcji oceny jako sumy wag sygnalizatorów zezwalających na wjazd dla wyznaczonych wcześniej zbiorów
-	\item wyznaczenie optymalnego, o najwyższej wartości funkcji oceny, stanu
+	\item wyznaczenie wszystkich, możliwych decyzji w postaci zbiorów bezkolizyjnych ustawień sygnalizatorów, takich których strumienie ruchu nie przecinają się,
+	\item wyliczenie wag sygnalizatorów, użytych później do wyznaczenia oceny decyzji, jak pokazano we wzorze \ref{eq:wagi}, im wyższa wartość wagi tym wyższy priorytet zezwolenia na ruch przez ten sygnalizator,
+	\item wyliczenie funkcji oceny (\ref{eq:wagi_suma}), dla wyznaczonych wcześniej możliwych decyzji, jako sumy wag sygnalizatorów zezwalających na ruch w ramach tej decyzji,
+	\item wyznaczenie optymalnej, o najwyższej wartości funkcji oceny, decyzji (\ref{eq:arg_max_q}).
 \end{enumerate}
 
 \vspace{0.5cm}
-W pierwszym kroku algorytmu wyznaczane są wszystkie możliwe zbiory bezkolizyjnych stanów sygnalizatorów.
+W pierwszym kroku algorytmu wyznaczane są wszystkie możliwe decyzje w postaci zbiorów bezkolizyjnych ustawień sygnalizatorów.
 Spośród tak wyznaczonych zbiorów możliwy jest późniejszy wybór takiego który będzie w danym momencie optymalny.
 
 \vspace{0.5cm}
@@ -102,21 +102,24 @@ Drugi krok pozwala wyznaczyć wagi zezwolnia na ruch przez każdy z sygnalizator
 \begin{math} w_{i} (n) \end{math} \textrm{ -- waga i-tego sygnalizatora w chwili n}
 
 \vspace{0.5cm}
-W następnym kroku, wyliczone wagi są sumowane (\ref{eq:wagi_suma}) aby wyznaczyć wartość funkcji oceny dla każdego, przygotowanego w pierwszym kroku, zbioru.
+W następnym kroku, wyliczone wagi są sumowane (\ref{eq:wagi_suma}) aby wyznaczyć wartość funkcji oceny dla każdej, z przygotowanych w pierwszym kroku, decyzji.
 
 \begin{equation}
 \label{eq:wagi_suma}
 	Q (X(n), S') = \sum\limit_{i \in S'} w_{i}
 \end{equation}
 
-\begin{math} S' \end{math} \textrm{ -- wyznaczony zbiór sygnalizatorów}
+\begin{math} S' \end{math} \textrm{ -- decyzja dla której wyznaczana jest wartość funkcji oceny}
 
 \vspace{0.5cm}
-Na końcu wybierany jest stan optymalny, o najwyższej funkcji oceny.
+Na końcu wybierana jest optymalna, o najwyższej funkcji oceny, decyzja (\ref{eq:arg_max_q}).
 
 \begin{equation}
+\label{eq:arg_max_q}
 	S^{*} = arg\:max\:Q (X(n), S')
 \end{equation}
+
+\begin{math} S^{*} \end{math} \textrm{ -- decyzja optymalna}
 
 \section{Uwzględnienie ograniczeń cyklów świetlnych}
 Ograniczenie sekwencji faz cyklu świetlnego nie jest uwzględniane w działaniu powyżej zdefiniowanego algorytmum, podejmuje on jedynie decyzję o wydaniu zgody na ruch.
