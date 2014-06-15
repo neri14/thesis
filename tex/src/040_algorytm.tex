@@ -7,10 +7,11 @@
     \label{fig:kontroler}
 \end{figure}
 
-Jak widać na rysunku \ref{fig:model} i \ref{fig:kontroler}, kontroler, do wyznaczenia sterowań sygnalizatorów wykorzystuje, stan obiektu sterowanego.
+Jak widać na rysunku \ref{fig:model} i \ref{fig:kontroler}, kontroler, do wyznaczenia ustawień sygnalizatorów, wykorzystuje wyjście sterowanego obiektu oparte o stan obiektu sterowanego.
 
 \vspace{1.5cm}
 \textbf{Parametry algorytmu}
+
 Działanie kontrolera można konfigurować przy użyciu trzech parametrów:
 \vspace{0.5cm}
 
@@ -26,6 +27,7 @@ Działanie kontrolera można konfigurować przy użyciu trzech parametrów:
 
 \vspace{1.5cm}
 \textbf{Stałe algorytmu}
+
 Stałe opisują niekonfigurowalne elementy kontrolowanego zespołu skrzyżowań.
 \vspace{0.5cm}
 
@@ -35,46 +37,47 @@ Stałe opisują niekonfigurowalne elementy kontrolowanego zespołu skrzyżowań.
 
 \begin{equation}
 	\begin{array}{c}
-		K = \left[ k_{i} \right]_{i \in <0,s>}\\
-		k_{i} \in \mathbb{N}
+		K_{i} = \left[ k_{i, j} \right]_{j \in <0,s>}\\
+		k_{i, j} \in \mathbb{N}
 	\end{array}
 \end{equation}
 
-\begin{math} k_{i} \end{math} \textrm{ -- maksymalna możliwa wielkość kolejki przed i-tym sygnalizatorem [liczba pojazdów]}
+\begin{math} k_{i, j} \end{math} \textrm{ -- maksymalna możliwa wielkość kolejki przed j-tym sygnalizatorem w i-tym obszarze [liczba pojazdów]}
 
 \vspace{1.5cm}
-\textbf{Zmienne stanu}
-Stan sterowanego obszaru opisany jest trzema zmiennymi stanu:
+\textbf{Wyjście obiektu sterowanego}
+
+Stan sterowanego obszaru odwzorowany jest w wyjściu obiektu i opisany jest trzema zmiennymi, do sterowania wykorzystywane są wyjścia wszyskich obszarów sterowanych w postaci pojedynczego stanu systemu:
 \vspace{0.5cm}
 
 \begin{equation}
 	\begin{array}{c}
-		X^{(1)} (n) = \left[ x^{(1)}_{i} (n) \right]_{i \in <0,s>}\\
-		x^{(1)}_{i} (n) \in \mathbb{N}
+		Y (n) = \left[ Y_{i} (n) \right]_{i \in <1,o>}
 	\end{array}
 \end{equation}
 
-\begin{math} x^{(1)}_{i} (n) \end{math} \textrm{ -- przewidywany przyszły przepływ pojazdów w kierunku i-tego sygnalizatora [liczba pojazdów/godzina]}
-
-Przewidywany przepływ pojazdów jest wyznaczany na podstawie stanu sygnalizatorów sąsiadujacych kontrolerów.
+\begin{math} o \end{math} \textrm{ -- liczba obszarów sterowania}
 
 \begin{equation}
+	Y_{i} (n) = \left[
 	\begin{array}{c}
-		X^{(2)} (n) = \left[ x^{(2)}_{i} (n) \right]_{i \in <0,s>}\\
-		x^{(2)}_{i} (n) \in \mathbb{N}
+		y_{i, j, 1} (n)\\
+		y_{i, j, 2} (n)\\
+		y_{i, j, 3} (n)\\
 	\end{array}
+	\right]_{j \in <1,s>}
 \end{equation}
 
-\begin{math} x^{(2)}_{i} (n) \end{math} \textrm{ -- przepływ pojazdów w kierunku i-tego sygnalizatora w chwili n [liczba pojazdów/godzina]}
+\begin{math} s \end{math} \textrm{ -- liczba sygnalizatorów w i-tym obszarze sterowania}
 
-\begin{equation}
-	\begin{array}{c}
-		X^{(3)} (n) = \left[ x^{(3)}_{i} (n) \right]_{i \in <0,s>}\\
-		x^{(3)}_{i} (n) \in \mathbb{N}
-	\end{array}
-\end{equation}
+\begin{math} y_{i, j, 1} (n) \end{math} \textrm{ -- przepływ na dojeździe do j-tego sygnalizatora w i-tym obszarze [pojazdy/godzina]}
 
-\begin{math} x^{(3)}_{i} (n) \end{math} \textrm{ -- wielkość kolejki przed i-tym sygnalizatorem w chwili n [liczba pojazdów]}
+\begin{math} y_{i, j, 2} (n) \end{math} \textrm{ -- kolejka przed j-tym sygnalizatorem w i-tym obszarze [liczba pojazdów]}
+
+\begin{math} y_{i, j, 3} (n) \end{math} \textrm{ -- stan j-tego sygnalizatora w i-tym obszarze}
+
+\vspace{0.5cm}
+Stany sygnalizatorów przekształcone są do postaci przewidywanego przepływu pojazdów w kierunku j-tego sygnalizatora w i-tym obszarze (\begin{math} f_{i, j} \end{math}).
 
 \vspace{1.5cm}
 \textbf{Algorytm}
@@ -96,7 +99,7 @@ Drugi krok pozwala wyznaczyć wagi zezwolnia na ruch przez każdy z sygnalizator
 
 \begin{equation}
 \label{eq:wagi}
-	w_{i} (n) = p \cdot \frac{x^{(1)}_{i} (n)}{m} + q \cdot \frac{x^{(2)}_{i} (n)}{m} + r \cdot \frac{x^{(3)}_{i} (n)}{k_{i}}
+	w_{i} (n) = p \cdot \frac{f_{i, j}}{m} + q \cdot \frac{y_{i, j, 1} (n)}{m} + r \cdot \frac{y_{i, j, 2} (n)}{k_{i}}
 \end{equation}
 
 \begin{math} w_{i} (n) \end{math} \textrm{ -- waga i-tego sygnalizatora w chwili n}
