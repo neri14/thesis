@@ -224,14 +224,14 @@
 	 & &\large{\bfseries{\rule{0pt}{0.5cm}\ Wydział Informatyki\ i\ Zarządzania}} \\[3pt]
 	 & &\ \ \large{kierunek studiów: Informatyka}\\
 	 & &\ \ specjalność: Internet i Technologie Mobilne\\
-	 & &\multicolumn{1}{c}{\rule{0pt}{2.5cm} \Large{Praca dyplomowa - magisterska}} \\
+	 & &\multicolumn{1}{c}{\rule{0pt}{2.0cm} \Large{Praca dyplomowa - magisterska}} \\
 	 & &\multicolumn{1}{p{13.5cm}}{\rule{0pt}{2cm}\centering\bfseries\sc\Large{\@title}} \\
 	 & &\multicolumn{1}{c}{\rule{0pt}{1.5cm}\large\@author} \\
-	 & &\multicolumn{1}{p{13.5cm}}{\rule{0pt}{2cm}\small\begin{flushright}\noindent słowa kluczowe:\\ \@slowaKluczowe\end{flushright}} \\
+	 & &\multicolumn{1}{p{13.5cm}}{\rule{0pt}{1cm}\small\begin{flushright}\noindent słowa kluczowe:\\ \@slowaKluczowe\end{flushright}} \\
 	 & & \multicolumn{1}{p{13.5cm}}{
 		\begin{flushright}
 					\begin{tabular}{p{12.0cm}}
-							 \small krókie streszczenie:\newline \@abstractSH
+							 \small krótkie streszczenie:\newline \@abstractSH
 					\end{tabular}
 		\end{flushright}
 %	 	\rule{0.5cm}{1cm}{\small kr?kie streszczenie:\newline \@abstractSH}
@@ -248,7 +248,19 @@
 					\end{tabular}
 		\end{center}
 		} \\
-	& & \rule{0pt}{0.7cm} \\
+  & & \multicolumn{1}{p{13.5cm}}{
+    \begin{flushright}
+          \begin{tabular}{p{12.0cm}}
+               \small
+               \textit{Do celów archiwalnych pracę dyplomową zakwalifikowano do:*}\\
+               \textit{a) kategorii A (akta wieczyste)}\\
+               \textit{b) kategorii BE 50 (po 50 latach podlegające ekspertyzie)}\\
+               \textit{* niepotrzebne skreślić}
+          \end{tabular}
+    \end{flushright}
+%   \rule{0.5cm}{1cm}{\small kr?kie streszczenie:\newline \@abstractSH}
+    } \\
+  & & \rule{0pt}{0.1cm} \\
 	&\multicolumn{1}{>{\columncolor[gray]{0.0}}p{0.57cm}|}{} & \multicolumn{1}{c}{\rule{0pt}{0.7cm} \large{Wrocław \@date}} 
 		
 \end{tabular*}
