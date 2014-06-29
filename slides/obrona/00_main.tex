@@ -1,0 +1,171 @@
+% -*- TeX:PL -*-
+% $Id: $
+\documentclass[17pt]{beamer}
+\usepackage[T1]{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{lipsum}
+\usepackage{multimedia}
+
+\author{}
+\title{Opracowanie inteligentnego systemu sterowania ruchem drogowym}
+ \subtitle{}
+ \date{}
+ \institute{autor: inż. Przemysław Rokosz\\\vspace{\baselineskip}promotor: dr inż. Grzegorz Filcek}
+ \subject{Opracowanie inteligentnego systemu sterowania ruchem drogowym}
+ \keywords{Inteligentny System Sterowania Ruchem Drogowym}
+ \titlegraphic{}
+
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+
+\setbeamersize{text margin left=0mm,text margin right=2.5mm}
+\usetheme[]{pwr}
+
+\setbeamertemplate{footline}
+{
+\leavevmode
+\hbox{
+\begin{beamercolorbox}[wd=.88\paperwidth,ht=2.5ex,dp=1.125ex,right]{title in head/foot}
+\end{beamercolorbox}
+\begin{beamercolorbox}[wd=.1\paperwidth,ht=2.5ex,dp=1.125ex,center]{title in head/foot}
+\usebeamerfont{author in head/foot} \insertframenumber/\inserttotalframenumber
+\end{beamercolorbox}
+}
+\vskip0pt%
+}
+
+\setbeamertemplate{navigation symbols}{}
+
+\hypersetup{
+ urlcolor=blue
+}
+
+\begin{document}
+\begin{frame}[plain,t]
+ \maketitle
+\end{frame}
+
+\begin{frame}[shrink=5]
+ \frametitle{\vspace{22px}Plan prezentacji}
+ \begin{itemize}
+  \item{Sterowanie ruchem drogowym}
+  \item{Cel pracy}
+  \item{Opracowany system}
+  \item{Przykładowe wyniki badań}
+  \item{Skrót Bibliografii}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}[shrink=5]
+ \frametitle{\vspace{22px}Sterowanie ruchem drogowym}
+ Podstawowe zadania sterowania ruchem
+ \begin{itemize}
+  \item{Maksymalizacja wykorzystania dróg}
+  \item{Zapobieganie tworzenia się korków}
+  \item{Poprawa bezpieczeństwa ruchu}
+ \end{itemize}
+ Wyzwania sterowania ruchem
+ \begin{itemize}
+  \item{Niedeterministyczny charakter ruchu}
+  \item{Nie zawsze możemy przewidzieć trasę pojazdu}
+ \end{itemize}
+\end{frame}
+
+\begin{frame}[shrink=5]
+ \frametitle{\vspace{22px}Cel pracy}
+ Opracowanie systemu sterowania ruchem drogowym na obszarze wzorowanym na okolicach placu Grunwaldzkiego we Wrocławiu.\\
+ Porównanie opracowanego algorytmu sterowania ruchem z prostymi systemami sterowania.\\
+\end{frame}
+
+\begin{frame}[shrink=5]
+ \frametitle{\vspace{22px}Cel pracy}
+Stworzenie systemu który będzie dynamicznie reagował na zmienną charakterystykę ruchu drogowego oraz będzie stosował się do, wymaganych przez prawo, ograniczeń.
+\end{frame}
+
+\begin{frame}[shrink=5]
+ \frametitle{\vspace{22px}Model opracowanego systemu}
+ \includegraphics[width=1.0\textwidth]{model.pdf}
+  \tiny{
+  \begin{description}
+   \item[U] -- wyznaczone przez kontrolery sterowania sygnalizatorów\\
+   \item[X] -- stan systemu - wartości czujników i stany sygnalizatorów\\
+   \item[Z] -- przepływ pojazdów wjeżdżających do danego obszaru sterowania\\
+  \end{description}
+   }
+\end{frame}
+
+\begin{frame}[shrink=5]
+  \frametitle{\vspace{22px}Algorytm}
+  \begin{enumerate}
+    \item Wyznaczenie wszyskitch zbiorów bezkolizyjnych stanów sygnalizatorów
+    \item Wyliczenie wag sygnalizatorów
+    \item Wyliczenie wartości funkcji oceny, dla każdego ze zbiorów określonych w punkcie 1, jako sumy wag sygnalizatorów zezwalających na przejazd
+    \item Wyznaczenie optymalnego, o maksymalnej wartości funkcji oceny, stanu
+    \item Wyznaczenie sekwencji sygnałów doprowadzających stany sygnalizatorów do stanu optymalnego
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[shrink=5]
+  \frametitle{\vspace{22px}Algorytm - waga sygnalizatora}
+  $$w_{i} (n) = p \cdot \frac{x^{(1)}_{i} (n)}{m} + q \cdot \frac{x^{(2)}_{i} (n)}{m} + r \cdot \frac{x^{(3)}_{i} (n)}{k_{i}}$$\\
+  \tiny{
+  $w_{i} (n)$ -- waga i-tego sygnalizatora w chwili n\\
+  $x^{(1)}_{i} (n)$ -- przewidywany przepływ pojazdów z sąsiedniego obszaru w chwili n\\
+  $x^{(2)}_{i} (n)$ -- aktualny przepływ pojazdów przed i-tym sygnalizatorem w chwili n\\
+  $x^{(3)}_{i} (n)$ -- aktualna wielkość kolejki przed i-tym sygnalizatorem w chwili n\\
+  $m$ -- maksymalny możliwy do zmierzenia przepływ pojazdów\\
+  $k_{i}$ -- maksymalna wielkość kolejki przed i-tym sygnalizatorem\\
+  $p$ -- wpływ przewidywanego przepływu pojazdów na sterowanie\\
+  $q$ -- wpływ aktualnego przepływu pojazdów na sterowanie\\
+  $r$ -- wpływ aktualnej kolejki na sterowanie\\
+  }
+\end{frame}
+
+\begin{frame}[shrink=5]
+  \frametitle{\vspace{22px}Badany obszar}
+  \includegraphics[width=1.0\textwidth]{mapa_czysta.png}
+\end{frame}
+
+\begin{frame}[shrink=5]
+  \frametitle{\vspace{10px}Przykładowe wyniki\\\small{średnia liczba zatrzymań}}
+  \includegraphics[width=1.0\textwidth]{wyniki_1.png}
+\end{frame}
+
+\begin{frame}[shrink=5]
+  \frametitle{\vspace{10px}Przykładowe wyniki\\\small{średnia prędkość}}
+  \includegraphics[width=1.0\textwidth]{wyniki_2.png}
+\end{frame}
+
+\begin{frame}[shrink=5]
+  \frametitle{\vspace{10px}Przykładowe wyniki\\\small{średni czas przejazdu}}
+  \includegraphics[width=1.0\textwidth]{wyniki_3.png}\\
+  \tiny{
+  \begin{description}
+  \item[trasa A] -- most Grunwaldzki - most Szczytnicki
+  \item[trasa B] -- most Szczytnicki - most Grunwaldzki
+  \item[trasa C] -- kliniki - most Grunwaldzki
+  \end{description}
+  }
+\end{frame}
+
+\begin{frame}[shrink=5]
+ \frametitle{\vspace{22px}Skrót Bibliografii}
+ {\small
+ \begin{itemize}
+  \item{Bartodziej, M. Modelowanie ruchu ulicznego za pomocą automatów komórkowych. Politechnika Wrocławska, Wrocław, 2007}
+  \item{Kawalec, P., Sobieszuk-Durka, S. Metody i algorytmy obszarowego sterowania ruchem drogowym. Prace Naukowe Politechniki Warszawskiej, (80), 2011}
+ \end{itemize}
+ }
+\end{frame}
+
+\begin{frame}[shrink=5]
+ \frametitle{\vspace{22px}Skrót Bibliografii}
+ {\small
+ \begin{itemize}
+  \item{Nagel K., Schreckenberg M. A cellular automaton model for freeway traffic. J. Phys. I France 2, 1992}
+  \item{Rozporządzenie ministra infrastruktury z dnia 3 lipca 2003 r. w sprawie szczegółowych warunków technicznych
+ dla znaków i sygnałów drogowych oraz urządzeń bezpieczeństwa ruchu drogowego i warunków ich umieszczania na drogach.}
+ \end{itemize}
+ }
+\end{frame}
+
+\end{document}
